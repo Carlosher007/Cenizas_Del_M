@@ -2,11 +2,11 @@ import React, { useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 export function OldMan(props) {
-  const old_man = useRef();
+  const group = useRef();
   const { nodes, materials, animations } = useGLTF("/assets/models/scene3/old_man/old-man-animated.glb");
   const { actions } = useAnimations(animations, group);
   return (
-    <group ref={old_man} {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature">
           <skinnedMesh
