@@ -35,12 +35,60 @@ export const getSceneDecisions = async (scene) => {
   }
 }
 
+// can be deleted if not used
 export const setSceneDecisions = async (scene, decisions) => {
   try {
     const { email } = useAuthStore.getState().userLogged
     await editUserGame(email, scene, decisions)
     setDecisions(decisions)
     return { type: 'success' }
+  } catch (err) {
+    console.log(err)
+    return { type: 'error' }
+  }
+}
+
+export const setSceneDecisionsFirebase = async (scene, decisions) => {
+  try {
+    const { email } = useAuthStore.getState().userLogged
+    await editUserGame(email, scene, decisions)
+    setDecisions(decisions)
+    return { type: 'success' }
+  } catch (err) {
+    console.log(err)
+    return { type: 'error' }
+  }
+}
+
+export const setSceneFireplace = async (scene) => {
+  try {
+    const { email } = useAuthStore.getState().userLogged
+    const res = await editUserGame(email, 'general', { scene })
+
+    if (res.success == true) {
+      console.log('Successfully updated')
+    } else {
+      console.log('An error has ocurred')
+    }
+
+  } catch (err) {
+    console.log(err)
+    return { type: 'error' }
+  }
+}
+
+
+export const setPlaceFirebase = async (place) => {
+  try {
+    const { email } = useAuthStore.getState().userLogged
+    const res = await editUserGame(email, 'general', { place })
+
+    if (res.success == true) {
+      console.log('An error has ocurred')
+    } else {
+      console.log(res)
+    }
+
   } catch (err) {
     console.log(err)
     return { type: 'error' }
