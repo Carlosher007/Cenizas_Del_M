@@ -206,4 +206,4 @@ const GameCircle = () => {
   );
 };
 
-export default GameCircle
+export default withLoading(GameCircle,2500)
