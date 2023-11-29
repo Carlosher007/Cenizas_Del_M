@@ -24,6 +24,7 @@ import { Survivor8 } from "../../../Characters/Survivor8";
 import { SmallLamp } from "../Items/SmallLamp";
 import { Safe } from "../Items/Safe";
 import withLoading from "../../../../components/design/WithLoading";
+import { useCircleGameStore } from "../../../../store/circle-game";
 
 const Underground = () => {
   const {
@@ -39,6 +40,7 @@ const Underground = () => {
     getDialogueLength,
     resetDialogue,
   } = useGameStore.getState();
+  const {resetCircleGame} = useCircleGameStore.getState()
   const [decisions, actionsGame] = useGameStore((state) => [
     state.decisions,
     state.actionsGame,
@@ -150,6 +152,20 @@ const Underground = () => {
     groupMeeting();
   }, [pressed, charla]);
 
+
+  useEffect(() => {
+    const groupMeeting = () => {
+      if (pressed === "r" && safe) {
+        setActionsGame("showBacklog", false);
+        resetCircleGame()
+        setPlace('game');
+        window.location.reload();
+      }
+    };
+
+    groupMeeting();
+  }, [pressed, charla]);
+
   useEffect(() => {
     if (actionsGame.choiceSharing) {
       setGameControls([]);
@@ -255,7 +271,7 @@ const Underground = () => {
             floatHeight={0}
             capsuleHalfHeight={0.91}
             friction={0.2}
-            dragDampingC={0.8}
+            dragDampingC={0.2}
             name="alex"
             animated
           >

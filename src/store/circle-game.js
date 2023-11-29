@@ -9,6 +9,7 @@ export const useCircleGameStore = create(devtools(persist((set, get) => ({
   parts: 8,
   coloredParts:[0,3,6,5],
   isPlaying: false,
+  firstTime: false,
 
   resetCircleGame: () => set((state) => ({
     level: 0,
@@ -17,6 +18,11 @@ export const useCircleGameStore = create(devtools(persist((set, get) => ({
     parts: 8,
     coloredParts:[0,3,6,2],
     isPlaying: false,
+    firstTime: false,
+  })),
+
+  setFirstTime: (firstTime) => set((state) => ({
+    firstTime
   })),
 
   setLevel: (level) => set((state) => ({
