@@ -11,12 +11,11 @@ import EnvironmentGame from './EnvironmentGame';
 import LineGame from './Line';
 
 const GameCircle = () => {
-  const { setColoredParts, setLevel, setIsPlaying, setWin } =
+  const { setColoredParts, setLevel, setIsPlaying, setWin , setFirstTime} =
     useCircleGameStore.getState();
-  const { setDialogue, setActionsGame, setPlace } = useGameStore.getState();
+  const { setDialogue, setActionsGame, setPlace , resetDialogue} = useGameStore.getState();
 
   useEffect(() => {
-
     const showIninitScript = () => {
       const script = getSceneScript(2, [], 'scriptCircleGameInit', '');
       const action = () => {
@@ -27,13 +26,14 @@ const GameCircle = () => {
     showIninitScript();
   }, []);
 
-  const [level, lives, win, parts, coloredParts] = useCircleGameStore(
+  const [level, lives, win, parts, coloredParts,firstTime] = useCircleGameStore(
     (state) => [
       state.level,
       state.lives,
       state.win,
       state.parts,
       state.coloredParts,
+      state.firstTime,
     ]
   );
 
@@ -44,18 +44,37 @@ const GameCircle = () => {
 
   useFrame((state) => {
     if (level === 0) {
-      state.camera.position.x = MathUtils.lerp(state.camera.position.x, 1, 0.1);
-      state.camera.position.z = MathUtils.lerp(state.camera.position.z, 5, 0.1);
+      if(!firstTime){
+        // window.location.reload();
+        setFirstTime(true)
+      }
+      // state.camera.position.x = MathUtils.lerp(2, 0, 0.1);
+      // state.camera.position.z = MathUtils.lerp(5, -5, 0.1);
+      //pongamos todas las componentes de la camara en 0
+      state.camera.position.x = 0;
+      state.camera.position.y = 0;
+      state.camera.position.z = 5;
     } else if (level === 1) {
-      state.camera.position.x = MathUtils.lerp(
-        state.camera.position.x,
-        -1,
-        0.1
-      );
-      state.camera.position.z = MathUtils.lerp(state.camera.position.z, 4, 0.1);
+      // state.camera.position.x = MathUtils.lerp(
+      //   state.camera.position.x,
+      //   3,
+      //   0.1
+      // );
+      // state.camera.position.z = MathUtils.lerp(state.camera.position.z, 8, 0.1);
+      state.camera.position.x = 2;
+      state.camera.position.y = 0;
+      state.camera.position.z = 5;
     } else if (level === 2) {
-      state.camera.position.x = MathUtils.lerp(state.camera.position.x, 2, 0.1);
-      state.camera.position.z = MathUtils.lerp(state.camera.position.z, 5, 0.1);
+      // state.camera.position.x = MathUtils.lerp(state.camera.position.x, 0, 0.1);
+      // state.camera.position.z = MathUtils.lerp(state.camera.position.z, 3, 0.1);
+      //   state.camera.position.y = MathUtils.lerp(
+      //     state.camera.position.y,
+      //     1.5,
+      //     0.1
+      //   );
+        state.camera.position.x = -2;
+        state.camera.position.y = 0;
+        state.camera.position.z = 5;
     }
   });
 
@@ -149,6 +168,7 @@ const GameCircle = () => {
             console.log('me fui');
             setActionsGame('winMiniGame', false);
             setPlace('bunker')
+            resetDialogue()
           };
           setDialogue({ script, action });
         };
@@ -161,6 +181,7 @@ const GameCircle = () => {
             console.log('me fui');
             setActionsGame('winMiniGame', true);
             setPlace('chooseObjects')
+            resetDialogue();
           };
           setDialogue({ script, action });
         };
@@ -185,4 +206,4 @@ const GameCircle = () => {
   );
 };
 
-export default withLoading(GameCircle);
+export default GameCircle
