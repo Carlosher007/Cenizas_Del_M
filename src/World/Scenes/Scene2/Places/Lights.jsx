@@ -151,6 +151,13 @@ const Lights = () => {
         distance={12}
         color={0xd0a676}
       />
+
+      <pointLight
+        position={[30, 3, 19]}
+        intensity={globalIntensity}
+        distance={12}
+        color={0xffffff}
+      />
     </>
   );
 };

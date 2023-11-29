@@ -194,6 +194,11 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     {
       author: '<strong>Superviviente A</strong>',
       text: 'Veo que tienes una mochila, ¿hay algo útil que nos pueda servir a todos?'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: '¿Debería compartir mis cosas con ellos? Parecen amigables, pero estas son situaciones difíciles.',
+      choice: true
     }
   ]
 

@@ -3,6 +3,7 @@ import Gif from "../../../../components/design/FondoGif";
 import { useGameStore } from "../../../../store/game";
 import { getSceneScript } from "../../../../utils/script";
 import withLoading from "../../../../components/design/WithLoading";
+import { setSceneFireplace, setPlaceFirebase, setSceneDecisionsFirebase } from "../../../../api/game";
 
 const Calle = () => {
   const { setDialogue, setChoice, setDecision, setScene, setPlace,setIsChoice } =
@@ -25,6 +26,8 @@ const Calle = () => {
 
   useEffect(() => {
     const showFirstDialog = () => {
+      setPlaceFirebase("Calle")
+
       setChoice([]);
       setTimeout(() => {
         const script = getSceneScript(1, [], "scriptNews");
@@ -50,14 +53,21 @@ const Calle = () => {
       if (decisions.followedCrowd) {
         const script = getSceneScript(1, [], "scriptGoToBunker");
         const action = () => {
+          setSceneFireplace(2)
+          setPlaceFirebase('bunker')
+          setSceneDecisionsFirebase('scene1', {'hasKey': false})
           setScene(2);
           setPlace('bunker');
           setDecision("hazKey", false);
+
         };
         setDialogue({ script, action });
       } else if (decisions.continueGirlfriendSearch) {
         const script = getSceneScript(1, [], "scriptGoToSofia");
         const action = () => {
+          setSceneFireplace(2)
+          setPlaceFirebase('bunker')
+          setSceneDecisionsFirebase('scene1', {'hasKey': true})
           setScene(2);
           setPlace('bunker')
           setDecision("hazKey", true);

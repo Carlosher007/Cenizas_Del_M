@@ -1,76 +1,93 @@
-import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
+import React, { useEffect, useRef } from "react";
+import { useGLTF, useAnimations } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 export function Survivor7(props) {
-  const { nodes, materials } = useGLTF("/assets/models/character/Survivor7.glb");
+  const group = useRef();
+  const { nodes, materials, animations } = useGLTF("/assets/models/character/Survivor7.glb");
+  const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    actions.S7_talking.play();
+  }, []);
+
   return (
-    <group {...props} dispose={null}>
-      <primitive object={nodes.Hips} />
-      <skinnedMesh
-        name="EyeLeft"
-        geometry={nodes.EyeLeft.geometry}
-        material={materials.Wolf3D_Eye}
-        skeleton={nodes.EyeLeft.skeleton}
-        morphTargetDictionary={nodes.EyeLeft.morphTargetDictionary}
-        morphTargetInfluences={nodes.EyeLeft.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="EyeRight"
-        geometry={nodes.EyeRight.geometry}
-        material={materials.Wolf3D_Eye}
-        skeleton={nodes.EyeRight.skeleton}
-        morphTargetDictionary={nodes.EyeRight.morphTargetDictionary}
-        morphTargetInfluences={nodes.EyeRight.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Wolf3D_Head"
-        geometry={nodes.Wolf3D_Head.geometry}
-        material={materials.Wolf3D_Skin}
-        skeleton={nodes.Wolf3D_Head.skeleton}
-        morphTargetDictionary={nodes.Wolf3D_Head.morphTargetDictionary}
-        morphTargetInfluences={nodes.Wolf3D_Head.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Wolf3D_Teeth"
-        geometry={nodes.Wolf3D_Teeth.geometry}
-        material={materials.Wolf3D_Teeth}
-        skeleton={nodes.Wolf3D_Teeth.skeleton}
-        morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
-        morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Body.geometry}
-        material={materials.Wolf3D_Body}
-        skeleton={nodes.Wolf3D_Body.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Outfit_Bottom.geometry}
-        material={materials.Wolf3D_Outfit_Bottom}
-        skeleton={nodes.Wolf3D_Outfit_Bottom.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Outfit_Footwear.geometry}
-        material={materials.Wolf3D_Outfit_Footwear}
-        skeleton={nodes.Wolf3D_Outfit_Footwear.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Outfit_Top.geometry}
-        material={materials.Wolf3D_Outfit_Top}
-        skeleton={nodes.Wolf3D_Outfit_Top.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Hair.geometry}
-        material={materials.Wolf3D_Hair}
-        skeleton={nodes.Wolf3D_Hair.skeleton}
-      />
-      <skinnedMesh
-        name="Wolf3D_Beard"
-        geometry={nodes.Wolf3D_Beard.geometry}
-        material={materials.Wolf3D_Beard}
-        skeleton={nodes.Wolf3D_Beard.skeleton}
-        morphTargetDictionary={nodes.Wolf3D_Beard.morphTargetDictionary}
-        morphTargetInfluences={nodes.Wolf3D_Beard.morphTargetInfluences}
-      />
+    <group ref={group} {...props} dispose={null}>
+      <group name="Scene">
+        <group name="Armature002">
+          <skinnedMesh
+            name="EyeLeft002"
+            geometry={nodes.EyeLeft002.geometry}
+            material={materials.Wolf3D_Eye}
+            skeleton={nodes.EyeLeft002.skeleton}
+            morphTargetDictionary={nodes.EyeLeft002.morphTargetDictionary}
+            morphTargetInfluences={nodes.EyeLeft002.morphTargetInfluences}
+          />
+          <skinnedMesh
+            name="EyeRight002"
+            geometry={nodes.EyeRight002.geometry}
+            material={materials.Wolf3D_Eye}
+            skeleton={nodes.EyeRight002.skeleton}
+            morphTargetDictionary={nodes.EyeRight002.morphTargetDictionary}
+            morphTargetInfluences={nodes.EyeRight002.morphTargetInfluences}
+          />
+          <skinnedMesh
+            name="Wolf3D_Beard002"
+            geometry={nodes.Wolf3D_Beard002.geometry}
+            material={materials.Wolf3D_Beard}
+            skeleton={nodes.Wolf3D_Beard002.skeleton}
+            morphTargetDictionary={nodes.Wolf3D_Beard002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Wolf3D_Beard002.morphTargetInfluences}
+          />
+          <skinnedMesh
+            name="Wolf3D_Body002"
+            geometry={nodes.Wolf3D_Body002.geometry}
+            material={materials.Wolf3D_Body}
+            skeleton={nodes.Wolf3D_Body002.skeleton}
+          />
+          <skinnedMesh
+            name="Wolf3D_Hair002"
+            geometry={nodes.Wolf3D_Hair002.geometry}
+            material={materials.Wolf3D_Hair}
+            skeleton={nodes.Wolf3D_Hair002.skeleton}
+          />
+          <skinnedMesh
+            name="Wolf3D_Head002"
+            geometry={nodes.Wolf3D_Head002.geometry}
+            material={materials.Wolf3D_Skin}
+            skeleton={nodes.Wolf3D_Head002.skeleton}
+            morphTargetDictionary={nodes.Wolf3D_Head002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Wolf3D_Head002.morphTargetInfluences}
+          />
+          <skinnedMesh
+            name="Wolf3D_Outfit_Bottom002"
+            geometry={nodes.Wolf3D_Outfit_Bottom002.geometry}
+            material={materials.Wolf3D_Outfit_Bottom}
+            skeleton={nodes.Wolf3D_Outfit_Bottom002.skeleton}
+          />
+          <skinnedMesh
+            name="Wolf3D_Outfit_Footwear002"
+            geometry={nodes.Wolf3D_Outfit_Footwear002.geometry}
+            material={materials.Wolf3D_Outfit_Footwear}
+            skeleton={nodes.Wolf3D_Outfit_Footwear002.skeleton}
+          />
+          <skinnedMesh
+            name="Wolf3D_Outfit_Top002"
+            geometry={nodes.Wolf3D_Outfit_Top002.geometry}
+            material={materials.Wolf3D_Outfit_Top}
+            skeleton={nodes.Wolf3D_Outfit_Top002.skeleton}
+          />
+          <skinnedMesh
+            name="Wolf3D_Teeth002"
+            geometry={nodes.Wolf3D_Teeth002.geometry}
+            material={materials["Wolf3D_Teeth.002"]}
+            skeleton={nodes.Wolf3D_Teeth002.skeleton}
+            morphTargetDictionary={nodes.Wolf3D_Teeth002.morphTargetDictionary}
+            morphTargetInfluences={nodes.Wolf3D_Teeth002.morphTargetInfluences}
+          />
+          <primitive object={nodes.Hips} />
+        </group>
+      </group>
     </group>
   );
 }
