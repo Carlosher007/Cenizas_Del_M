@@ -1,22 +1,39 @@
 /* eslint-disable no-unused-vars */
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { useCircleGameStore } from './circle-game'
+
+const {resetCircleGame} = useCircleGameStore.getState()
 
 export const useGameStore = create(devtools(persist((set, get) => ({
   scene: 0,
   place: 'Introduction',
   backlog: [],
-  decisionsScene1: {},
-  actionsScene1: { showD1: false, showD2: false, showBacklog: false },
+  decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false },
+  actionsGame: { showD1: false, showD2: false, showBacklog: false, winMiniGame: false, showOverlay:false },
   dialogue: [],
+  choice: [],
+  isChoice: false,
+  isLoading: false,
 
-  reset: () => set((state) => ({
-    scene: 0,
-    place: 'Introduction',
-    backlog: [],
-    decisionsScene1: {},
-    actionsScene1: { showD1: false, showD2: false, showBacklog: false },
-    dialogue: []
+
+  reset: () => {
+    resetCircleGame();
+    set((state) => ({
+      scene: 0,
+      place: 'Introduction',
+      backlog: [],
+      decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false },
+      actionsGame: { showD1: false, showD2: false, showBacklog: false, winMiniGame: false, showOverlay: false },
+      dialogue: [],
+      choice: [],
+      isChoice: false,
+      isLoading: false,
+    }));
+  },
+
+  setIsLoading: (isLoading) => set((state) => ({
+    isLoading
   })),
 
   setScene: (scene) => set((state) => ({
@@ -28,20 +45,20 @@ export const useGameStore = create(devtools(persist((set, get) => ({
   })),
 
   addToBacklog: (item) => set((state) => ({
-    backlog: state.backlog.length < 4 ? [...state.backlog, item] : state.backlog
+    backlog: state.backlog.length < 4 && !state.backlog.includes(item) ? [...state.backlog, item] : state.backlog
+  })),
+
+  resetBacklog: () => set((state) => ({
+    backlog: []
   })),
 
   removeFromBacklog: (item) => set((state) => ({
     backlog: state.backlog.filter((backlogItem) => backlogItem !== item)
   })),
 
-  setDecisionsScene1: (decisions) => set((state) => ({
-    decisionsScene1: decisions
-  })),
-
-  setDecisionScene1: (decision, value) => set((state) => ({
-    decisionsScene1: {
-      ...state.decisionsScene1,
+  setDecision: (decision, value) => set((state) => ({
+    decisions: {
+      ...state.decisions,
       [decision]: value
     }
   })),
@@ -50,18 +67,34 @@ export const useGameStore = create(devtools(persist((set, get) => ({
     dialogue
   })),
 
+  setChoice: (choice) => set((state) => ({
+    choice
+  })),
+
   resetDialogue: () => set((state) => ({
     dialogue: []
   })),
+  resetChoice: () => set((state) => ({
+    choice: []
+  })),
 
-  setActionsScene1: (action, value) => set((state) => ({
-    actionsScene1: {
-      ...state.actionsScene1,
+  setActionsGame: (action, value) => set((state) => ({
+    actionsGame: {
+      ...state.actionsGame,
       [action]: value
     }
   })),
 
-  getActionsScene1: (action) => get().actionsScene1[action]
+  getDialogueLength: () => get().dialogue.length,
+
+  getActionsGame: (action) => get().actionsGame[action],
+
+  getDecisions: () => get().decisions,
+
+  setIsChoice: (isChoice) => set((state) => ({
+    isChoice
+  })),
 }), {
   name: 'game'
-})))
+}
+)))

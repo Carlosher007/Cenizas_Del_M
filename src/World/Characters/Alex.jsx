@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useAnimations, useGLTF } from '@react-three/drei';
+import React, { useRef } from 'react';
 
 export function Alex(props) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF("/assets/models/character/alex_main.glb");
-  const { actions } = useAnimations(animations, group);
+  const { nodes, materials, animations } = useGLTF(
+    '/assets/models/character/alex_main.glb'
+  );
+  const { actionsGame } = useAnimations(animations, group);
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -99,4 +101,4 @@ export function Alex(props) {
   );
 }
 
-useGLTF.preload("/assets/models/character/alex_main.glb");
+useGLTF.preload('/assets/models/character/alex_main.glb');

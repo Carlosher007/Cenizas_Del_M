@@ -10,11 +10,13 @@ const ACTIONS_KEYBOARD_MAP = {
   Digit1: 'd1',
   Digit2: 'd2',
   Digit3: 'd3',
-  Digit4: 'd4'
+  Digit4: 'd4',
+  ArrowUp: 'up',
+  ArrowDown: 'down'
 }
 
 export const useKeyboard = () => {
-  const [actions, setActions] = useState({
+  const [actionsGame, setActionsGame] = useState({
     continue: false,
     moveForward: false,
     moveBackward: false,
@@ -24,7 +26,9 @@ export const useKeyboard = () => {
     d1: false,
     d2: false,
     d3: false,
-    d4: false
+    d4: false,
+    up: false,
+    down: false
   })
 
   useEffect(() => {
@@ -33,9 +37,9 @@ export const useKeyboard = () => {
       const action = ACTIONS_KEYBOARD_MAP[code]
 
       if (action) {
-        // if (actions[action]) return
+        // if (actionsGame[action]) return
 
-        setActions(prevActions => ({
+        setActionsGame(prevActions => ({
           ...prevActions,
           [action]: true
         }))
@@ -47,9 +51,9 @@ export const useKeyboard = () => {
       const action = ACTIONS_KEYBOARD_MAP[code]
 
       if (action) {
-        // if (!actions[action]) return
+        // if (!actionsGame[action]) return
 
-        setActions(prevActions => ({
+        setActionsGame(prevActions => ({
           ...prevActions,
           [action]: false
         }))
@@ -65,5 +69,5 @@ export const useKeyboard = () => {
     }
   }, [])
 
-  return actions
+  return actionsGame
 }

@@ -8,6 +8,7 @@ import Game from './pages/Game'
 import Init from './pages/Init'
 import Menu from './pages/Menu'
 import Backlog from './components/design/Backlog'
+import Test from './components/design/Test'
 
 const App = () => {
   return (
@@ -24,7 +25,7 @@ const App = () => {
         <Route
           path='/menu' element={
             <ProtectedRoute>
-              <LayoutInit>
+              <LayoutInit> 
                 <Menu />
               </LayoutInit>
             </ProtectedRoute>
@@ -40,7 +41,7 @@ const App = () => {
         <Route
           path='/test' element={
             <ProtectedRoute>
-              <Backlog />
+              <Test />
             </ProtectedRoute>
           }
         />

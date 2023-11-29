@@ -16,10 +16,12 @@
     "@react-three/fiber": "8.15.9",
     "@react-three/flex": "1.0.1",
     "@react-three/rapier": "1.1.2",
-    "ecctrl": "^1.0.38",
+    "ecctrl": "^1.0.48",
     "firebase": "10.5.2",
     "framer-motion": "10.16.4",
     "howler": "2.2.4",
+    "jotai": "^2.6.0",
+    "leva": "^0.9.35",
     "nanoid": "5.0.2",
     "nes.css": "2.3.0",
     "node-sass": "9.0.0",
@@ -44,11 +46,6 @@
     "standard": "17.1.0",
     "tailwindcss": "3.3.5",
     "vite": "4.4.5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "./node_modules/standard/eslintrc.json"
-    ]
   },
   "browserslist": {
     "production": [

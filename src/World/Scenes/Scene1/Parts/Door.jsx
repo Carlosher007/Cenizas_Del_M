@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
+import { Howl } from 'howler'
 
 const Door = ({ doorRef, isOpen, targetRotation, position }) => {
   const { nodes, materials } = useGLTF(
@@ -9,6 +10,12 @@ const Door = ({ doorRef, isOpen, targetRotation, position }) => {
   const [oneTimeRun, setOneTimeRun] = React.useState(true)
   useFrame(() => {
     if (isOpen && doorRef.current && oneTimeRun) {
+      const doorSound = new Howl({
+        src: ['assets/sounds/door.wav']
+      })
+      doorSound.currentTime = 0
+      doorSound.volume(0.3)
+      doorSound.play() 
       const duration = 500
       const frames = 60
       const initialRotation = doorRef.current.rotation.y

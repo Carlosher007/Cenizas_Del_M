@@ -1,25 +1,23 @@
-import { useGameStore } from '../../store/game'
-import * as images from '../../utils/backlog/images-backlog'
+import { useGameStore } from '../../store/game';
+import * as images from '../../utils/backlog/images-backlog';
 
 const Backlog = () => {
-  const [backlog] = useGameStore((state) => [state.backlog])
-  const { getActionsScene1 } = useGameStore.getState()
-  const showBacklog = getActionsScene1('showBacklog')
-
-  if (!showBacklog) return null
-  console.log(backlog.length)
+  const [backlog] = useGameStore((state) => [state.backlog]);
+  const { getActionsGame } = useGameStore.getState();
+  const showBacklog = getActionsGame('showBacklog');
+  if (!showBacklog) return null;
 
   return (
-    <div className='flex bss items-center justify-center  '>
+    <div className="flex bss items-center justify-center  ">
       <div>
         <img
-          src='/assets/images/backlog/backlog.png'
-          alt='Backlog'
-          className='mr-2'
+          src="/assets/images/backlog/backlog.png"
+          alt="Backlog"
+          className="mr-2"
           style={{ height: '120px' }}
         />
       </div>
-      <div className='flex'>
+      <div className="flex">
         {backlog.map((item) => (
           <div
             key={item}
@@ -29,9 +27,9 @@ const Backlog = () => {
               padding: '3px',
               border: 'solid 5px #b6805a',
               borderRadius: '10px / 10px',
-              transform: 'translateX(-130%)'
+              transform: 'translateX(-130%)',
             }}
-            className='w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 '
+            className="w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 "
           >
             <img
               src={images[item]}
@@ -51,9 +49,9 @@ const Backlog = () => {
                   padding: '20px',
                   border: 'solid 5px #b6805a',
                   borderRadius: '10px / 10px',
-                  transform: 'translateX(-130%)'
+                  transform: 'translateX(-130%)',
                 }}
-                className='w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 '
+                className="w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 "
               />
             ))}
           </>
@@ -69,9 +67,9 @@ const Backlog = () => {
                   padding: '20px',
                   border: 'solid 5px #b6805a',
                   borderRadius: '10px / 10px',
-                  transform: 'translateX(-130%)'
+                  transform: 'translateX(-130%)',
                 }}
-                className='w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 '
+                className="w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 "
               />
             ))}
           </>
@@ -87,9 +85,9 @@ const Backlog = () => {
                   padding: '20px',
                   border: 'solid 5px #b6805a',
                   borderRadius: '10px / 10px',
-                  transform: 'translateX(-130%)'
+                  transform: 'translateX(-130%)',
                 }}
-                className='w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 '
+                className="w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 "
               />
             ))}
           </>
@@ -105,16 +103,16 @@ const Backlog = () => {
                   padding: '20px',
                   border: 'solid 5px #b6805a',
                   borderRadius: '10px / 10px',
-                  transform: 'translateX(-130%)'
+                  transform: 'translateX(-130%)',
                 }}
-                className='w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 '
+                className="w-16 h-16 mr-1 rounded-md flex items-center justify-center min-w-16 min-h-16 "
               />
             ))}
           </>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Backlog
+export default Backlog;

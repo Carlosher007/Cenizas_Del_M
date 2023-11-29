@@ -1,7 +1,7 @@
 import { editUserGame, getUserGame } from '../db/user-collection'
 import { useAuthStore } from '../store/auth'
 import { useGameStore } from '../store/game'
-const { setScene, setPlace, setDecisionsScene1 } = useGameStore.getState()
+const { setScene, setPlace, setDecisions } = useGameStore.getState()
 
 export const setSceneInGame = async (scene) => {
   try {
@@ -27,7 +27,7 @@ export const getSceneDecisions = async (scene) => {
   try {
     const { email } = useAuthStore.getState().userLogged
     const { data } = await getUserGame(email, scene)
-    setDecisionsScene1(data)
+    setDecisions(data)
     return { type: 'success', data }
   } catch (err) {
     console.log(err)
@@ -39,7 +39,7 @@ export const setSceneDecisions = async (scene, decisions) => {
   try {
     const { email } = useAuthStore.getState().userLogged
     await editUserGame(email, scene, decisions)
-    setDecisionsScene1(decisions)
+    setDecisions(decisions)
     return { type: 'success' }
   } catch (err) {
     console.log(err)

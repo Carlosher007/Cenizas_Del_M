@@ -3338,8 +3338,6 @@ export function LivingRoom(props) {
         rotation={[Math.PI, 0, Math.PI]}
       />
       <mesh
-        
-        
         geometry={nodes.Stairs_03.geometry}
         material={materials.LowPolyInterior_MAIN}
         position={[-0.647, 0.11, 5.178]}

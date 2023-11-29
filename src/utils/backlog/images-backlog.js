@@ -1,2 +1,7 @@
 export { default as flashlight } from './flash-light.png'
+export { default as medical } from './medical.png'
 export { default as key } from './key.png'
+export { default as food } from './food.png'
+export { default as tools } from './tools.png'
+export { default as devicePower } from './device-power.png'
+export { default as wokiToki } from './woki-toki.png'

@@ -5,7 +5,10 @@ import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import Ecctrl, { EcctrlAnimation } from "ecctrl";
 import { Howl } from "howler";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
+import Backlog from "../../../../components/design/Backlog";
+import Loader from "../../../../components/design/Loader";
+import withLoading from "../../../../components/design/WithLoading";
 import { keyboardControls } from "../../../../hooks/useControls";
 import { useGameStore } from "../../../../store/game";
 import { getSceneScript } from "../../../../utils/script";
@@ -17,7 +20,6 @@ import { Phone } from "../Items/Phone";
 import Lights from "../Lights";
 import { LivingRoom } from "../Places/LivingRoom";
 import Door from "./Door";
-import Backlog from "../../../../components/design/Backlog";
 
 const Sala = () => {
   const alexRef = useRef();
@@ -25,14 +27,20 @@ const Sala = () => {
   const {
     setPlace,
     setDialogue,
-    setActionsScene1,
-    setDecisionScene1,
-    getActionsScene1,
+    setChoice,
+    setActionsGame,
+    setDecision,
+    getActionsGame,
+    getDecisions,
     addToBacklog,
     removetoBacklog,
+    getDialogueLength,
     resetDialogue,
   } = useGameStore.getState();
-  const [decisionsScene1] = useGameStore((state) => [state.decisionsScene1]);
+  const [decisions, actionsGame] = useGameStore((state) => [
+    state.decisions,
+    state.actionsGame,
+  ]);
 
   const alexURL = "/assets/models/character/alex_main.glb";
 
@@ -47,25 +55,28 @@ const Sala = () => {
     action1: "pickup",
   };
 
-  useFrame(() => {
-    if (alexRef.current) {
-      console.log("Alex Position:", alexRef.current.position.toArray());
-    }
-  });
-
   useEffect(() => {
     const showFirstDialog = () => {
-      const showD2 = getActionsScene1("showD2");
+      const showD2 = getActionsGame("showD2");
       if (!showD2) {
-        setTimeout(() => {
-          const script = getSceneScript(1, [], "scriptFirstDialog");
-          setDialogue(script);
-          setActionsScene1("showD1", true);
-        }, 4000);
+        setGameControls([]);
+        setPlayPhoneSound(true);
+        const script = getSceneScript(1, [], "scriptFirstDialog");
+        const action = () => {
+          setActionsGame("showD1", true);
+        };
+        setDialogue({ script, action });
       }
     };
 
     showFirstDialog();
+  }, []);
+
+  const [gravity, setGravity] = useState([0, -1, 0]);
+  useEffect(() => {
+    setTimeout(() => {
+      setGravity([0, -10, 0]);
+    }, 5000);
   }, []);
 
   const [interactionTxtPosition, setinteractionTxtPosition] = useState([
@@ -75,9 +86,10 @@ const Sala = () => {
   const [interactionTxtRotation, setinteractionTxtRotation] = useState(
     -Math.PI
   );
-  const [interactionTxtBackgroundPosition, setinteractionTxtBackgroundPosition] = useState(
-    -5, -4, 6.2,
-  );
+  const [
+    interactionTxtBackgroundPosition,
+    setinteractionTxtBackgroundPosition,
+  ] = useState(-5, -4, 6.2);
 
   const telSound = new Howl({
     src: ["/assets/sounds/tel.wav"],
@@ -89,42 +101,87 @@ const Sala = () => {
   const [key, setKey] = useState(false);
   const [door, setDoor] = useState(false);
   const [pressed, setPressed] = useState("none");
+  const [lastPressed, setLastPressed] = useState("none");
+  const [listenersAdded, setListenersAdded] = useState(false);
+  const [wPressed, setWPressed] = useState(false);
+  const [aPressed, setAPressed] = useState(false);
+  const [sPressed, setSPressed] = useState(false);
+  const [dPressed, setDPressed] = useState(false);
 
-  const handleKeyDown = (e) => {
-    if (e.code === "KeyR") {
-      setPressed("r");
-    }
-  };
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      setLastPressed("none");
+      if (e.code === "KeyR") {
+        setPressed("r");
+      } else if (e.code === "Enter") {
+        setPressed("enter");
+      } else if (e.code === "KeyW") {
+        setWPressed(true);
+      } else if (e.code === "KeyA") {
+        setAPressed(true);
+      } else if (e.code === "KeyS") {
+        setSPressed(true);
+      } else if (e.code === "KeyD") {
+        setDPressed(true);
+      }
+    };
 
-  const handleKeyUp = (e) => {
-    if (e.code === "KeyR") {
+    const handleKeyUp = (e) => {
       setPressed("none");
-    }
-  };
+      if (e.code === "KeyR") {
+        setLastPressed("r");
+      } else if (e.code === "Enter") {
+        setLastPressed("enter");
+      } else if (e.code === "KeyW") {
+        setWPressed(false);
+      } else if (e.code === "KeyA") {
+        setAPressed(false);
+      } else if (e.code === "KeyS") {
+        setSPressed(false);
+      } else if (e.code === "KeyD") {
+        setDPressed(false);
+      }
+    };
 
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("keyup", handleKeyUp);
+    if (!listenersAdded) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
+      setListenersAdded(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (pressed === "r" && telephone) {
-      const showD2 = getActionsScene1("showD2");
+      const showD2 = getActionsGame("showD2");
       if (!showD2) {
+        setPlayPhoneSound(false);
+        setGameControls([]);
         telSound.currentTime = 0;
         telSound.volume = 0.2;
         telSound.play();
-        const script = getSceneScript(1, decisionsScene1, "scriptConversation");
-        setDialogue(script);
-        setActionsScene1("showD2", true);
+        const decisions = getDecisions();
+        const script = getSceneScript(1, decisions, "scriptConversation1");
+        const action = () => {
+          setActionsGame("showD2", true);
+        };
+        setDialogue({ script, action });
       } else {
         console.log("Ya llame a mi madre");
       }
     }
   }, [pressed, telephone]);
 
+  const grabSound = new Howl({
+    src: ["/assets/sounds/item.wav"],
+  });
+
   useEffect(() => {
     if (pressed === "r" && backpack) {
-      setDecisionScene1("hasBackpack", true);
-      setActionsScene1("showBacklog", true);
+      grabSound.volume(0.5);
+      grabSound.play();
+      setBackpack(false);
+      setDecision("hasBackpack", true);
+      setActionsGame("showBacklog", true);
     }
   }, [pressed, backpack]);
 
@@ -132,35 +189,66 @@ const Sala = () => {
     if (
       pressed === "r" &&
       flashlight &&
-      decisionsScene1.hasBackpack &&
-      !decisionsScene1.hasFlashlight
+      !decisions.hasBackpack &&
+      !decisions.flashlight
     ) {
-      setDecisionScene1("hasFlashlight", true);
+      setGameControls([]);
+      const script = getSceneScript(1, [], "warningsSala");
+      const auxScript = [];
+      auxScript.push(script[0]);
+      setDialogue({ script: auxScript });
+    }
+    if (
+      pressed === "r" &&
+      flashlight &&
+      decisions.hasBackpack &&
+      !decisions.flashlight
+    ) {
+      grabSound.volume(0.5);
+      grabSound.play();
+      setFlashlight(false);
+      setDecision("hasFlashlight", true);
       addToBacklog("flashlight");
     }
   }, [pressed, flashlight]);
 
   useEffect(() => {
-    if (
-      pressed === "r" &&
-      key &&
-      decisionsScene1.hasBackpack &&
-      !decisionsScene1.hasKey
-    ) {
-      setDecisionScene1("hasKey", true);
+    if (pressed === "r" && key && decisions.hasBackpack && !decisions.hasKey) {
+      setDecision("hasKey", true);
       addToBacklog("key");
     }
-  }, [pressed, flashlight]);
+  }, [pressed, key]);
 
   useEffect(() => {
-    if (pressed === 'r' && door && decisionsScene1.hasBackpack) {
-      setDecisionScene1('openDoor', true)
-      setPlace('Calle')
-      setActionsScene1('showBacklog', false);
-      resetDialogue()
-      window.location.reload()
+    if (pressed === "r" && door && !actionsGame.showD2) {
+      setGameControls([]);
+      const script = getSceneScript(1, [], "warningsSala");
+      const auxScript = [];
+      auxScript.push(script[2]);
+      setDialogue({ script: auxScript });
+      return;
     }
-  }, [pressed, door])
+
+    if (pressed === "r" && door && !decisions.hasBackpack) {
+      setGameControls([]);
+      const script = getSceneScript(1, [], "warningsSala");
+      const auxScript = [];
+      auxScript.push(script[1]);
+      setDialogue({ script: auxScript });
+      return;
+    }
+    if (
+      pressed === "r" &&
+      door &&
+      decisions.hasBackpack &&
+      actionsGame.showD2
+    ) {
+      setPlace("Calle");
+      setActionsGame("showBacklog", false);
+      resetDialogue();
+      window.location.reload();
+    }
+  }, [pressed, door]);
 
   const livingRoomDoorRef = useRef();
   const kitchenDoorRef = useRef();
@@ -184,6 +272,55 @@ const Sala = () => {
   const [bathroomDoorOpened, setBathroomDoorOpened] = useState(false);
   const [bathroom2DoorOpened, setBathroom2DoorOpened] = useState(false);
   const [speed, setSpeed] = useState(8);
+  const [playPhoneSound, setPlayPhoneSound] = useState(false);
+  const [walking, setWalking] = useState(false);
+
+  useEffect(() => {
+    const walkSound = new Howl({
+      src: ["/assets/sounds/walk.wav"],
+    });
+    if (walking && gameControls.length > 0) {
+      const interval = setInterval(() => {
+        walkSound.volume(0.2);
+        walkSound.play();
+      }, 500);
+      return () => clearInterval(interval);
+    } else if (!walking) {
+      walkSound.stop();
+    }
+  }, [walking]);
+
+  useEffect(() => {
+    if (wPressed || aPressed || sPressed || dPressed) {
+      setWalking(true);
+    } else if (!wPressed && !aPressed && !sPressed && !dPressed) {
+      setWalking(false);
+    }
+  }, [wPressed, aPressed, sPressed, dPressed]);
+
+  const [gameControls, setGameControls] = useState(keyboardControls);
+  useEffect(() => {
+    if (lastPressed === "enter") {
+      const dialogueLength = getDialogueLength();
+      const showD1 = getActionsGame("showD1");
+      if (dialogueLength === 0) {
+        setGameControls(keyboardControls);
+      } else {
+        setGameControls([]);
+      }
+    }
+  }, [lastPressed]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (playPhoneSound) {
+        telSound.currentTime = 0;
+        telSound.volume(0.15);
+        telSound.play();
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [playPhoneSound]);
 
   useEffect(() => {
     if (pressed === "r") {
@@ -259,8 +396,8 @@ const Sala = () => {
         position={[-5.83, 2.35, 11.4]}
       />
       <Lights />
-      <Physics>
-        <KeyboardControls map={keyboardControls}>
+      <Physics gravity={gravity}>
+        <KeyboardControls map={gameControls}>
           <Ecctrl
             position={[0, 0, 0]}
             autoBalance={false}
@@ -268,7 +405,11 @@ const Sala = () => {
             capsuleRadius={0.35}
             floatHeight={0}
             capsuleHalfHeight={0.91}
-            friction={0.2}
+            friction={0.1}
+            dragDampingC={0.5}
+            camMaxDis={-5}
+            camInitDis={-4}
+            camCollision={false}
             name="alex"
             animated
           >
@@ -286,7 +427,7 @@ const Sala = () => {
                 setinteractionTxtPosition([-6.8, 0.6, 0.9]);
                 setinteractionTxtBackgroundPosition([-6.801, 0.6, 0.9]);
                 setinteractionTxt("Tecla R para contestar");
-                setinteractionTxtRotation(Math.PI/2);
+                setinteractionTxtRotation(Math.PI / 2);
               }
             }
           }}
@@ -299,54 +440,60 @@ const Sala = () => {
         >
           <Phone scale={0.01} position={[-6.8, -0.8, 0.8]} rotation-y={0} />
         </RigidBody>
-        {!decisionsScene1.hasFlashlight && (
-          <RigidBody
-            type="fixed"
-            colliders="cuboid"
-            onCollisionEnter={({ manifold, target, other }) => {
-              if (other.rigidBodyObject) {
-                if (other.rigidBodyObject.name === "alex") {
-                  setFlashlight(true);
-                  setinteractionTxtPosition([6.8, 0.6, 0.8]);
-                  setinteractionTxtBackgroundPosition([6.81, 0.6, 0.9]);
-                  setinteractionTxt("Presiona R para recoger");
-                  setinteractionTxtRotation(-Math.PI/2);
+        {!decisions.hasFlashlight && (
+          <>
+            <RigidBody
+              type="fixed"
+              colliders="cuboid"
+              onCollisionEnter={({ manifold, target, other }) => {
+                if (other.rigidBodyObject) {
+                  if (other.rigidBodyObject.name === "alex") {
+                    setFlashlight(true);
+                    setinteractionTxtPosition([6.8, 0.6, 0.8]);
+                    setinteractionTxtBackgroundPosition([6.81, 0.6, 0.9]);
+                    setinteractionTxt("Presiona R para recoger");
+                    setinteractionTxtRotation(-Math.PI / 2);
+                  }
                 }
-              }
-            }}
-            onCollisionExit={({ manifold, target, other }) => {
-              setFlashlight(false);
-              setinteractionTxtPosition([-5, -4, 6.2]);
-              setinteractionTxtBackgroundPosition([-5, -4, 6.2]);
-            }}
-          >
+              }}
+              onCollisionExit={({ manifold, target, other }) => {
+                setFlashlight(false);
+                setinteractionTxtPosition([-5, -4, 6.2]);
+                setinteractionTxtBackgroundPosition([-5, -4, 6.2]);
+              }}
+            >
+              <CuboidCollider
+                position={[6.8, -0.75, 0.8]}
+                args={[0.5, 1.1, 0.5]}
+              />
+            </RigidBody>
             <Flashlight
               position={[6.8, -0.75, 0.8]}
               scale={0.65}
               rotation-y={1}
             />
-          </RigidBody>
+          </>
         )}
-        {!decisionsScene1.hasKey && (
+        {!decisions.hasKey && (
           <RigidBody
             type="fixed"
             colliders="cuboid"
-            onCollisionEnter={({ manifold, target, other }) => {
-              if (other.rigidBodyObject) {
-                if (other.rigidBodyObject.name === "alex" && !key) {
-                  setKey(true);
-                  setinteractionTxtPosition([-3.5, 0.6, -2.6]);
-                  setinteractionTxtBackgroundPosition([-3.5, 0.6, -2.601]);
-                  setinteractionTxt("Presiona R para recoger");
-                  setinteractionTxtRotation(0);
-                }
-              }
-            }}
-            onCollisionExit={({ manifold, target, other }) => {
-              setKey(false);
-              setinteractionTxtPosition([-5, -4, 6.2]);
-              setinteractionTxtBackgroundPosition([-5, -4, 6.2]);
-            }}
+            // onCollisionEnter={({ manifold, target, other }) => {
+            //   if (other.rigidBodyObject) {
+            //     if (other.rigidBodyObject.name === 'alex' && !key) {
+            //       setKey(true);
+            //       setinteractionTxtPosition([-3.5, 0.6, -2.6]);
+            //       setinteractionTxtBackgroundPosition([-3.5, 0.6, -2.601]);
+            //       setinteractionTxt('Presiona R para recoger');
+            //       setinteractionTxtRotation(0);
+            //     }
+            //   }
+            // }}
+            // onCollisionExit={({ manifold, target, other }) => {
+            //   setKey(false);
+            //   setinteractionTxtPosition([-5, -4, 6.2]);
+            //   setinteractionTxtBackgroundPosition([-5, -4, 6.2]);
+            // }}
           >
             <Key scale={0.5} position={[-3.5, -0.7, -2.9]} />
           </RigidBody>
@@ -367,9 +514,9 @@ const Sala = () => {
         >
           <mesh
             rotation={[Math.PI / 2, Math.PI / 4.6, 0]}
-            position={[1.2, -0.6, 10.4]}
+            position={[1.2, -0.5, 10.4]}
           >
-            <planeGeometry attach="geometry" args={[9, 2.4]} />
+            <planeGeometry attach="geometry" args={[8.5, 2.4]} />
             <meshBasicMaterial attach="material" color="white" opacity={0.7} />
           </mesh>
         </RigidBody>
@@ -426,39 +573,39 @@ const Sala = () => {
         {livingRoomDoorOpened && (
           <RigidBody type="fixed">
             {" "}
-            <CuboidCollider 
+            <CuboidCollider
               position={[-5.7, 0.125, 7.2]}
               args={[0.05, 1.1, 1]}
             />{" "}
           </RigidBody>
         )}
         <RigidBody type="fixed">
-            {" "}
-            <CuboidCollider
-              onCollisionEnter={({ other }) => {
-                if (other.rigidBodyObject) {
-                  if (other.rigidBodyObject.name === "alex") {
-                    setinteractionTxtPosition([-7.1, 1, 9]);
-                    setinteractionTxtBackgroundPosition([-7.11, 1, 9]);
-                    setinteractionTxtRotation(Math.PI/2);
-                    if(decisionsScene1.hasBackpack){
-                      setinteractionTxt("Presiona R para abrir");
-                      setDoor(true);
-                    } else {
-                      setinteractionTxt("Necesito mi mochila");
-                      setDoor(false);
-                    }  
+          {" "}
+          <CuboidCollider
+            onCollisionEnter={({ other }) => {
+              if (other.rigidBodyObject) {
+                if (other.rigidBodyObject.name === "alex") {
+                  setinteractionTxtPosition([-7.1, 1, 9]);
+                  setinteractionTxtBackgroundPosition([-7.11, 1, 9]);
+                  setinteractionTxtRotation(Math.PI / 2);
+                  if (decisions.hasBackpack) {
+                    setinteractionTxt("Presiona R para abrir");
+                    setDoor(true);
+                  } else {
+                    setinteractionTxt("Necesito mi mochila");
+                    setDoor(false);
                   }
                 }
-              }}
-              onCollisionExit={() => {
-                setinteractionTxtPosition([-5, -4, 11.4]);
-                setinteractionTxtBackgroundPosition([-5, -4, 11.4]);
-                setDoor(false);
-              }}
-              position={[-7.2, 0.125, 9]}
-              args={[0.05, 1.1, 1]}
-            />{" "}
+              }
+            }}
+            onCollisionExit={() => {
+              setinteractionTxtPosition([-5, -4, 11.4]);
+              setinteractionTxtBackgroundPosition([-5, -4, 11.4]);
+              setDoor(false);
+            }}
+            position={[-7.2, 0.125, 9]}
+            args={[0.05, 1.1, 1]}
+          />{" "}
         </RigidBody>
         {!kitchenDoorOpened && (
           <RigidBody
@@ -655,7 +802,7 @@ const Sala = () => {
             />{" "}
           </RigidBody>
         )}
-        {!decisionsScene1.hasBackpack && (
+        {!decisions.hasBackpack && (
           <>
             <RigidBody
               type="fixed"
@@ -714,4 +861,4 @@ const Sala = () => {
   );
 };
 
-export default Sala;
+export default withLoading(Sala, 2500);
