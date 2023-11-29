@@ -148,7 +148,7 @@ const GameCircle = () => {
           const action = () => {
             console.log('me fui');
             setActionsGame('winMiniGame', false);
-            // setPlace('algo')
+            setPlace('bunker')
           };
           setDialogue({ script, action });
         };
@@ -160,6 +160,7 @@ const GameCircle = () => {
           const action = () => {
             console.log('me fui');
             setActionsGame('winMiniGame', true);
+            setPlace('chooseObjects')
           };
           setDialogue({ script, action });
         };

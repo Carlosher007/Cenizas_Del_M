@@ -151,6 +151,17 @@ const Underground = () => {
   }, [pressed, charla]);
 
   useEffect(() => {
+    const groupMeeting = () => {
+      if (pressed === "r" && safe) {
+        setActionsGame("showBacklog", false);
+        setPlace('game');
+      }
+    };
+
+    groupMeeting();
+  }, [pressed, charla]);
+
+  useEffect(() => {
     if (actionsGame.choiceSharing) {
       setGameControls([]);
       const script = getSceneScript(2, [], 'scriptAnsweringSurvivorsResources', '');
@@ -255,7 +266,7 @@ const Underground = () => {
             floatHeight={0}
             capsuleHalfHeight={0.91}
             friction={0.2}
-            dragDampingC={0.8}
+            dragDampingC={0.2}
             name="alex"
             animated
           >
