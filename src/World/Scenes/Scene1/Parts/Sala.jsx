@@ -866,8 +866,4 @@ const Sala = () => {
   );
 };
 
-<<<<<<< HEAD
-export default withLoading(Sala, 2500);
-=======
 export default Sala;
->>>>>>> origin/scene3
