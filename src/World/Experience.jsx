@@ -1,14 +1,11 @@
-import { Html } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { Leva } from 'leva';
-import { Suspense, useState } from 'react';
-import { useGameStore } from '../store/game';
-import ShowDialogues from './Dialogues/ShowDialogues';
-import Introduction from './Scenes/Introudction/Introduction';
-import Scene1 from './Scenes/Scene1/Scene1';
-import { Overlay } from './Scenes/Scene2/Places/ChooseObjects/Overlay';
-import { cameraSettings } from './camera/cameraSetting';
-import Scene2 from './Scenes/Scene2/Scene2';
+import { Canvas } from '@react-three/fiber'
+import { useGameStore } from '../store/game'
+import ShowDialogues from './Dialogues/ShowDialogues'
+import Introduction from './Scenes/Introudction/Introduction'
+import Scene1 from './Scenes/Scene1/Scene1'
+import { cameraSettings } from './camera/cameraSetting'
+import { Html } from '@react-three/drei'
+import Scene3 from './Scenes/scene3/Scene3'
 
 const Experience = () => {
   const [scene, actionsGame] = useGameStore((state) => [
@@ -30,7 +27,8 @@ const Experience = () => {
       >
         {scene === 0 && <Introduction />}
         {scene === 1 && <Scene1 />}
-        {scene === 2 && <Scene2/> }
+        {scene === 2 && <Scene3 />}
+        {/* {scene === 3 && <Scene3} */}
       </Canvas>
       <ShowDialogues className="z-50" />
       {actionsGame.showOverlay && (
