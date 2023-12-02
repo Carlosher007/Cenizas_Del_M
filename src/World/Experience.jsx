@@ -6,6 +6,7 @@ import Scene1 from './Scenes/Scene1/Scene1'
 import { cameraSettings } from './camera/cameraSetting'
 import { Html } from '@react-three/drei'
 import Scene3 from './Scenes/scene3/Scene3'
+import { useState } from 'react'
 
 const Experience = () => {
   const [scene, actionsGame] = useGameStore((state) => [

@@ -27,7 +27,7 @@ const City = () => {
   return (
     <>
       <Lights />
-      <Physics debug>
+      <Physics colliders={false} debug>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
             position={[0, 0, 0]}
@@ -41,11 +41,11 @@ const City = () => {
             animated
           >
             <EcctrlAnimation characterURL={alexURL} animationSet={animationSet}>
-              <Alex position={[0, -2, 0]} scale={1.65} />
+              <Alex position={[0, -1.25, 0]} scale={1.65} />
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
-        <DeadCity position-y={-3} />
+        <DeadCity position-y={-2} scale={1.5}/>
       </Physics>
     </>
   );

@@ -9,7 +9,7 @@ export function DeadCity(props) {
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -17,7 +17,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_7}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -25,7 +25,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_92}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -33,7 +33,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_93}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -41,7 +41,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_94}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -49,7 +49,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_95}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -57,7 +57,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_96}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -65,7 +65,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_97}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -73,7 +73,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_8}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -81,7 +81,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_9}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -89,7 +89,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_10}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -97,7 +97,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_11}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -105,7 +105,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_12}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -113,7 +113,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_13}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -121,7 +121,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_14}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -129,7 +129,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_15}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -137,7 +137,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_16}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -145,7 +145,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -153,7 +153,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_17}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -161,7 +161,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_18}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -169,7 +169,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_19}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -177,7 +177,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_20}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -185,7 +185,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_21}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -193,7 +193,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_22}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -201,7 +201,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_23}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -209,7 +209,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_24}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -217,7 +217,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_25}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -225,7 +225,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_26}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -233,7 +233,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_0}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -241,7 +241,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_27}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -249,7 +249,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_28}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -257,7 +257,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_29}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -265,7 +265,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_30}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -274,7 +274,7 @@ export function DeadCity(props) {
           />
         </RigidBody>
 
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -282,7 +282,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_32}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -290,7 +290,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_33}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -298,7 +298,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_34}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -306,7 +306,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_35}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -314,7 +314,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_36}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -322,7 +322,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_1}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -330,7 +330,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_37}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -338,7 +338,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_38}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -346,7 +346,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_39}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -354,7 +354,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_40}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -362,7 +362,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_41}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -370,7 +370,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_42}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -379,7 +379,7 @@ export function DeadCity(props) {
           />
         </RigidBody>
 
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -387,7 +387,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_44}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -395,7 +395,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_45}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -403,7 +403,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_46}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -411,7 +411,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_2}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -419,7 +419,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_47}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -427,7 +427,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_48}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -435,7 +435,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_49}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -443,7 +443,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_50}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -451,7 +451,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_51}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -459,7 +459,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_52}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -467,7 +467,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_53}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -475,7 +475,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_54}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -483,7 +483,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_55}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -491,7 +491,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_56}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -499,7 +499,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_3}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -507,7 +507,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_57}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -515,7 +515,7 @@ export function DeadCity(props) {
             material={materials.Merged_materials}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody colliders="trimesh" type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -523,7 +523,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_58}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -531,7 +531,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_59}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -539,7 +539,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_60}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody colliders="trimesh" type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -547,7 +547,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_61}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -555,7 +555,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_62}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -563,7 +563,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_63}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody colliders="trimesh" type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -571,7 +571,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_64}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -579,7 +579,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_65}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -587,7 +587,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_4}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -596,7 +596,7 @@ export function DeadCity(props) {
           />
         </RigidBody>
 
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody colliders="trimesh" type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -604,7 +604,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_67}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -612,7 +612,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_68}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -620,7 +620,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_69}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -628,7 +628,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_70}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -636,7 +636,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_71}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -644,7 +644,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_72}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -652,7 +652,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_73}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -660,7 +660,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_73}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -668,7 +668,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_73}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -676,7 +676,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_5}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -684,7 +684,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_74}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -692,7 +692,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_75}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
@@ -700,7 +700,7 @@ export function DeadCity(props) {
             material={materials.Model001_Material092_76}
           />
         </RigidBody>
-        <RigidBody colliders="cuboid" type="fixed">
+        <RigidBody type="fixed">
           <mesh
             castShadow
             receiveShadow
