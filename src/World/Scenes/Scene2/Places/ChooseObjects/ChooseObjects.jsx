@@ -188,4 +188,4 @@ const ChooseObjects = () => {
   );
 };
 
-export default withLoading(ChooseObjects, 8000);
+export default withLoading(ChooseObjects, 8000)

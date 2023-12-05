@@ -4,13 +4,21 @@ import { useGameStore } from '../../store/game';
 import { Dialogue } from './Dialogue';
 
 const ContainerDialogue = ({ content, action }) => {
-  const { resetDialogue, setIsChoice } = useGameStore.getState();
+  const { resetDialogue, setIsChoice, resetChoice } = useGameStore.getState();
   const { continueKey } = useKeyboard();
   const [index, setIndex] = useState(0);
   const [author, setAuthor] = useState(content[0].author);
   const [text, setText] = useState(content[0].text);
   const [finish, setFinish] = useState(false);
   const [tempIsChoise, tempSetIsChoise] = useState(false);
+
+  useEffect(() => {
+    const dialog = content[index];
+    if (!dialog.choice) {
+      tempSetIsChoise(false);
+      setIsChoice(false);
+    }
+  },[]);
 
   useEffect(() => {
     if (continueKey) {
@@ -31,6 +39,7 @@ const ContainerDialogue = ({ content, action }) => {
             setText(dialog.text);
           } else {
             resetDialogue();
+            resetChoice();
             setFinish(true);
             if (action) {
               action();
@@ -38,6 +47,7 @@ const ContainerDialogue = ({ content, action }) => {
           }
         } else {
           resetDialogue();
+          resetChoice();
           setFinish(true);
           if (action) {
             action();

@@ -164,10 +164,6 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
 
   const scripMeetingSurvivors = [
     {
-      author: '<strong> ... </strong>',
-      text: 'Alex se acerca a un grupo de supervivientes que parecen solidarios.'
-    },
-    {
       author: '<strong>Alex</strong>',
       text: 'Hola, soy Alex. ¿Cómo están todos aquí? ¿Cómo han estado lidiando con toda esta situación?'
     },
@@ -196,7 +192,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       text: 'Veo que tienes una mochila, ¿hay algo útil que nos pueda servir a todos?'
     },
     {
-      author: '<strong>Alex</strong>',
+      author: '<strong> ... </strong>',
       text: '¿Debería compartir mis cosas con ellos? Parecen amigables, pero estas son situaciones difíciles.',
       choice: true
     }
@@ -218,7 +214,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       author: '<strong>Alex</strong>',
       text: 'Sí, tengo una ' + stringSharingResources
     },
-    ((!hasFlashlight && !hasKey) || (!wantsToShareKey && !wantsToShareFlashlight))  &&
+    (!wantsToShareKey && !wantsToShareFlashlight) &&
     {
       author: '<strong>Superviviente A</strong>',
       text: '(desconfiado) Mmm, ya veo'
