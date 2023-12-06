@@ -18,7 +18,7 @@ const ContainerDialogue = ({ content, action }) => {
       tempSetIsChoise(false);
       setIsChoice(false);
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (continueKey) {
@@ -40,6 +40,7 @@ const ContainerDialogue = ({ content, action }) => {
           } else {
             resetDialogue();
             resetChoice();
+            setIsChoice(false);
             setFinish(true);
             if (action) {
               action();
@@ -48,6 +49,8 @@ const ContainerDialogue = ({ content, action }) => {
         } else {
           resetDialogue();
           resetChoice();
+          // cambio que podria afectar
+          setIsChoice(false);
           setFinish(true);
           if (action) {
             action();

@@ -1,7 +1,7 @@
 import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Leva } from 'leva';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useGameStore } from '../store/game';
 import ShowDialogues from './Dialogues/ShowDialogues';
 import Introduction from './Scenes/Introudction/Introduction';
@@ -15,6 +15,13 @@ const Experience = () => {
     state.scene,
     state.actionsGame,
   ]);
+  const {setPlace,setScene} = useGameStore.getState();
+
+  useEffect(() => {
+    setScene(1)
+    setPlace('Calle')
+  },[])
+
   const [requestPointerLock, setRequestPointerLock] = useState(true);
   return (
     <>

@@ -99,10 +99,10 @@ const Underground = () => {
     setActionsGame('showOverlay', false);
 
     const resetDialogueWithoutInteraction = () => {
-      resetDialogue()
-    }
+      resetDialogue();
+    };
     resetDialogueWithoutInteraction();
-    setActionsGame('showBacklog',true)
+    setActionsGame('showBacklog', true);
   }, []);
 
   const [gameControls, setGameControls] = useState(keyboardControls);
@@ -139,6 +139,13 @@ const Underground = () => {
     setDecision('wantsToShareFlashlight', false);
   };
 
+  const actionsOpenSafeInGroup = () => {
+    setDecision('openSafeInGroup', true);
+  };
+
+  const actionsOpenSafeAlone = () => {
+    setDecision('openSafeAlone', true);
+  };
 
   useEffect(() => {
     const groupMeeting = () => {
@@ -173,27 +180,105 @@ const Underground = () => {
     };
 
     groupMeeting();
+
+    const showDialogueAfterDecisionChoosing = () => {
+      if (
+        !getActionsGame('showD2S2') &&
+        getActionsGame('choiceSharing') &&
+        pressed === 'r' &&
+        charla
+      ) {
+        setGameControls([]);
+        const script = getSceneScript(
+          2,
+          decisions,
+          'scriptAnsweringSurvivorsResources',
+          ''
+        );
+        const actions = () => {
+          setActionsGame('showD2S2', true);
+        };
+        setDialogue({ script, actions });
+      }
+    };
+
+    showDialogueAfterDecisionChoosing();
+
+    const showScriptTraitorFound = () => {
+      if (
+        pressed === 'r' &&
+        charla &&
+        !getActionsGame('showD3S2') &&
+        getActionsGame('showD2S2')
+      ) {
+        setGameControls([]);
+        setinteractionTxtPosition([-5, -10, 6.2]);
+        setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+        const script = getSceneScript(2, decisions, 'scriptTraitorFound', '');
+        const actions = () => {
+          setActionsGame('showD3S2', true);
+        };
+        setDialogue({ script, actions });
+      }
+    };
+    showScriptTraitorFound();
   }, [pressed, charla]);
 
-  const showDialogueAfterDecisionChoosing = () => {
-    if (!getActionsGame('showD2S2') && getActionsGame('choiceSharing') && pressed === 'r' && charla ) {
-      setGameControls([]);
-      const script = getSceneScript(
-        2,
-        decisions,
-        'scriptAnsweringSurvivorsResources',
-        ''
-      );
-      const actions = () => {
-        setActionsGame('showD2S2', true);
-      }
-      setDialogue({ script , actions});
-    }
+  const showscriptAfterTraitorFound = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptAfterTraitorFound', '');
+    setDialogue({ script });
+    setChoice({
+      content: [
+        {
+          text: 'Decirles que tienes la llave',
+          effect: actionsOpenSafeInGroup,
+        },
+        {
+          text: 'No decirles que tienes la llave',
+          effect: actionsOpenSafeAlone,
+        },
+      ].filter(Boolean),
+      nameChoice: 'choiceSafeSharing',
+    });
+  };
+
+  const showScriptSafeAlone = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptOpenSafeAlone', '');
+    const actions = () => {
+      setActionsGame('showD4S2', true);
+    };
+    setDialogue({ script, actions });
+  };
+
+  const showScriptSafeGroup = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptOpenSafeGroup', '');
+    const actions = () => {
+      setActionsGame('showD4S2', true);
+    };
+    setDialogue({ script, actions });
   };
 
   useEffect(() => {
-    showDialogueAfterDecisionChoosing();
-  }, [actionsGame,pressed,charla]);
+    if (getActionsGame('showD3S2') && !getActionsGame('choiceSafeCharing')) {
+      showscriptAfterTraitorFound();
+    }
+    if (getActionsGame('choiceSafeCharing') && !getActionsGame('showD4S2')) {
+      if (getActionsGame('openSafeAlone')) {
+        showScriptSafeAlone();
+      } else if (getActionsGame('openSafeInGroup')) {
+        showScriptSafeGroup();
+      }
+    }
+  }, [actionsGame]);
 
   useEffect(() => {
     const groupMeeting = () => {

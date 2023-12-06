@@ -27,12 +27,13 @@ const Calle = () => {
   const [actionsGame, decisions, dialogue] = useGameStore((state) => [
     state.actionsGame,
     state.decisions,
+    state.dialogue,
   ]);
 
   const goToBunkerEffect = () => {
     setDecision('followedCrowd', true);
     setDecision('continueGirlfriendSearch', false);
-    setActionsGame('showD3S1', true)
+    setActionsGame('showD3S1', true);
   };
 
   const goForGirlfriendEffect = () => {
@@ -49,10 +50,10 @@ const Calle = () => {
         setChoice([]);
         setTimeout(() => {
           const script = getSceneScript(1, decisions, 'scriptNews');
-          const action = () => {
-            setActionsGame('showD3S1', true);
+          const action= () => {
+            console.log('aaa');
           };
-          setDialogue({ script, action });
+          setDialogue({ script});
           setChoice({
             content: [
               { text: 'Ingresar al bunker', effect: goToBunkerEffect },
@@ -78,7 +79,7 @@ const Calle = () => {
             setPlaceFirebase('bunker');
             setSceneDecisionsFirebase('scene1', { hasKey: false });
             setScene(2);
-            
+
             setPlace('bunker');
             setDecision('hazKey', false);
           };
@@ -92,7 +93,7 @@ const Calle = () => {
             setScene(2);
             setPlace('bunker');
             setDecision('hazKey', true);
-            addToBacklog('key')
+            addToBacklog('key');
           };
           setDialogue({ script, action });
         }

@@ -86,7 +86,7 @@ export const setPlaceFirebase = async (place) => {
     if (res.success == true) {
       console.log('An error has ocurred')
     } else {
-      console.log(res)
+      // console.log(res)
     }
 
   } catch (err) {

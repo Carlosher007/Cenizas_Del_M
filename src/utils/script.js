@@ -257,55 +257,52 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
 
   const scriptAfterTraitorFound = [
     {
-      author: '<strong>...</strong>',
-      text: 'Todos, incluyendo a Alex, se alejan por la tensión de la discusión'
-    },
-    {
       author: '<strong>Alex</strong>',
       text: '(pensamiento) No puede ser. Ahora, con menos recursos la convivencia y supervivencia en el bunker serán más complicada'
     },
+    {
+      author: '<strong>Superviviente A</strong>',
+      text: '¿Qué deberíamos hacer ahora?'
+    },
+    !hasKey && {
+      author: '<strong>Superviviente B</strong>',
+      text: 'Creo que deberíamos abrir la caja fuerte que esta arriba, lo hemos intentado pero no hemos podido abrirla'
+    },
+    !hasKey && {
+      author: '<strong>Superviviente A</strong>',
+      text: 'Alex, crees que podrías ayudarnos a abrir la caja fuerte?'
+    },
+    !hasKey && {
+      author: '<strong>Alex</strong>',
+      text: 'Si claro, vamos a intentarlo'
+    },
+    hasKey && {
+      author: '<strong>Superviviente B</strong>',
+      text: 'Deberiamos encontrar la llave que abre la caja fuerte del segundo piso, es nuestra mejor opcion'
+    },
     hasKey && {
       author: '<strong>Alex</strong>',
-      text: '(pensamiento) ¿Qué debería hacer ahora?'
+      text: '(pensamiento) ¿ Y si la llave que tengo abré esa tal caja fuerte?'
     },
-    hasKey && !wantsToShareKey && {
+    hasKey && {
       author: '<strong>Alex</strong>',
-      text: '(pensamiento) Sospecho que la llave que encontré abre la caja fuerte del bunker. ¿Debería decirle a los demás?'
-    },
-    hasKey && wantsToShareKey && {
-      author: '<strong>Alex</strong>',
-      text: '(pensamiento) La llave que abre la caja fuerte está en una posición vulnerable...'
-    },
-    hasKey && wantsToShareKey && {
-      author: '<strong>Alex</strong>',
-      text: '(pensamiento) ... podría tomarla sin que nadie me viera ...'
-    },
-    !hasKey && {
-      author: '<strong>Alex</strong>',
-      text: '(pensamiento) La única esperanza que nos queda es la caja fuerte del bunker'
-    },
-    !hasKey && {
-      author: '<strong>Alex</strong>',
-      text: '(pensamiento) Supongo que tendré que esperar que la tensión disminuya y que el grupo quiera abrir la caja fuerte'
-    },
+      text: '(pensamiento) ¿Debería decirles que tengo la llave y abrirla juntos, o debería intentar abrirla por mi cuenta?',
+      choice: true
+    }
   ].filter(Boolean)
 
   const scriptOpenSafeAlone = [
     {
       author: '<strong>Alex</strong>',
-      text: '(pensando) Intentaré abrirla por mi cuenta'
+      text: '(pensando) Intentaré abrirla por mi cuenta, ire ahora mismo al segundo piso'
     }
   ]
 
   const scriptOpenSafeGroup = [
     {
       author: '<strong>Alex</strong>',
-      text: '(pensando) Será mejor que espere que la tensión disminuya y abrir la caja fuerte junto a los demás'
+      text: 'Muchachos, yo tengo una llave, podemos intentar abrilar juntos y ver que hay dentro'
     },
-    {
-      author: '<strong>Alex</strong>',
-      text: '(pensando) Mejor evitar mal entendidos'
-    }
   ]
   
   const scriptLostSafeMinigameAlone = [

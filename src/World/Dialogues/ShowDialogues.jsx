@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import ChoicesContainer from '../../components/design/ChoicesContainer';
 import ContainerDialogue from '../../components/design/ContainerDialogue';
 import { useGameStore } from '../../store/game';
