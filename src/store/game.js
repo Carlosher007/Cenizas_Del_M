@@ -10,9 +10,9 @@ export const useGameStore = create(devtools(persist((set, get) => ({
   place: 'Introduction',
   backlog: [],
   decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false },
-  actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2:false , showD4S2:false,},
+  actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeCharing :false},
   dialogue: [],
-  functionAux: null,
+  actionToChange: null,
   choice: [],
   isChoice: false,
   isLoading: false,
@@ -25,9 +25,9 @@ export const useGameStore = create(devtools(persist((set, get) => ({
       place: 'Introduction',
       backlog: [],
       decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false },
-      actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, },
+      actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeCharing :false},
       dialogue: [],
-      functionAux: null,
+      actionToChange: null,
       choice: [],
       isChoice: false,
       isLoading: false,
@@ -38,8 +38,12 @@ export const useGameStore = create(devtools(persist((set, get) => ({
     isLoading
   })),
 
-  setFunctionAux: (functionAux) => set((state) => ({
+setFunctionAux: (functionAux) => set((state) => ({
     functionAux: functionAux || state.functionAux
+  })),
+
+  setActionToChange: (actionToChange) => set((state) => ({
+    actionToChange
   })),
 
   setScene: (scene) => set((state) => ({

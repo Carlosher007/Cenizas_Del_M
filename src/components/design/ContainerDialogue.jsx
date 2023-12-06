@@ -3,8 +3,15 @@ import { useKeyboard } from '../../hooks/useKeyboard';
 import { useGameStore } from '../../store/game';
 import { Dialogue } from './Dialogue';
 
-const ContainerDialogue = ({ content, action }) => {
-  const { resetDialogue, setIsChoice, resetChoice } = useGameStore.getState();
+const ContainerDialogue = ({ content, actionGame, action }) => {
+  const {
+    resetDialogue,
+    setIsChoice,
+    resetChoice,
+    setActionsGame,
+    setDecision,
+    setActionToChange,
+  } = useGameStore.getState();
   const { continueKey } = useKeyboard();
   const [index, setIndex] = useState(0);
   const [author, setAuthor] = useState(content[0].author);
@@ -45,6 +52,14 @@ const ContainerDialogue = ({ content, action }) => {
             if (action) {
               action();
             }
+            if (actionGame) {
+              if (actionGame[1] == 'action') {
+                setActionsGame(actionGame[0], true);
+              } else if (actionGame[1] == 'decision') {
+                setDecision(actionGame[0], true);
+              }
+            }
+            setActionToChange(null);
           }
         } else {
           resetDialogue();
@@ -55,6 +70,14 @@ const ContainerDialogue = ({ content, action }) => {
           if (action) {
             action();
           }
+          if (actionGame) {
+            if (actionGame[1] == 'action') {
+              setActionsGame(actionGame[0], true);
+            } else if (actionGame[1] == 'decision') {
+              setDecision(actionGame[0], true);
+            }
+          }
+          setActionToChange(null);
         }
       }
     }
@@ -67,6 +90,14 @@ const ContainerDialogue = ({ content, action }) => {
       if (action) {
         action();
       }
+      if (actionGame) {
+        if (actionGame[1] == 'action') {
+          setActionsGame(actionGame[0], true);
+        } else if (actionGame[1] == 'decision') {
+          setDecision(actionGame[0], true);
+        }
+      }
+      setActionToChange(null);
     }
   }, [index]);
 

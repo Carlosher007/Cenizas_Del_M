@@ -199,39 +199,38 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
   ]
 
   const scriptAnsweringSurvivorsResources = [
-    !hasFlashlight && !hasKey &&
+    // No tiene nada
+    !wantsToShareKey && !wantsToShareFlashlight &&
     {
       author: '<strong>Alex</strong>',
       text: 'No, no tengo nada en mi mochila'
-    },
-    (hasFlashlight || hasKey) && !wantsToShareKey && !wantsToShareFlashlight &&
-    {
-      author: '<strong>Alex</strong>',
-      text: '(mintiendo) No, no tengo nada en mi mochila'
-    },
-    (hasFlashlight || hasKey) && (wantsToShareKey || wantsToShareFlashlight) &&
-    {
-      author: '<strong>Alex</strong>',
-      text: 'Sí, tengo una ' + stringSharingResources
     },
     (!wantsToShareKey && !wantsToShareFlashlight) &&
     {
       author: '<strong>Superviviente A</strong>',
       text: '(desconfiado) Mmm, ya veo'
     },
-    (hasKey && wantsToShareKey) && {
+    //Quiso compartir algo
+    (wantsToShareKey || wantsToShareFlashlight) &&
+    {
+      author: '<strong>Alex</strong>',
+      text: 'Sí, tengo una ' + stringSharingResources
+    },
+    // Quiso compartir la llave
+    (wantsToShareKey) && {
       author: '<strong>Superviviente B</strong>',
       text: '¿Dónde encontraste esa llave?'
     },
-    (hasKey && wantsToShareKey) && {
+    (wantsToShareKey) && {
       author: '<strong>Alex</strong>',
       text: 'Mientras, corría hacía aquí la encontré en el piso'
     },
-    (hasKey && wantsToShareKey) && {
+    (wantsToShareKey) && {
       author: '<strong>Superviviente B</strong>',
       text: 'Parece ser la llave de la caja fuerte del Bunker. El responsable de ella la dejo caer.'
     },
-    ((hasFlashlight || hasKey) && (wantsToShareKey || wantsToShareFlashlight) ) &&
+    // Quiso compartir cualquier cosa
+    ((wantsToShareKey || wantsToShareFlashlight) ) &&
     {
       author: '<strong>Superviviente A</strong>',
       text: 'Bien, nos será de ayuda'

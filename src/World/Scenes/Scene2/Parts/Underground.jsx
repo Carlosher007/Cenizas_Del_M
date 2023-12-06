@@ -40,6 +40,7 @@ const Underground = () => {
     removeFromBacklog,
     getDialogueLength,
     resetDialogue,
+    setActionToChange
   } = useGameStore.getState();
   const { resetCircleGame } = useCircleGameStore.getState();
   const [decisions, actionsGame] = useGameStore((state) => [
@@ -126,12 +127,14 @@ const Underground = () => {
     setDecision('wantsToShareKey', false);
     setDecision('wantsToShareFlashlight', true);
     removeFromBacklog('flashlight');
+    setDecision('hasFlashlight',false)
   };
 
   const sharingKeyEffect = () => {
     setDecision('wantsToShareKey', true);
     setDecision('wantsToShareFlashlight', false);
     removeFromBacklog('key');
+    setDecision('hasKey',false)
   };
 
   const notSharingEffect = () => {
@@ -174,8 +177,6 @@ const Underground = () => {
           ].filter(Boolean),
           nameChoice: 'choiceSharing',
         });
-      } else if (pressed === 'r' && charla && getActionsGame('showD1S2')) {
-        showDialogueAfterDecisionChoosing();
       }
     };
 
@@ -195,10 +196,8 @@ const Underground = () => {
           'scriptAnsweringSurvivorsResources',
           ''
         );
-        const actions = () => {
-          setActionsGame('showD2S2', true);
-        };
-        setDialogue({ script, actions });
+        setActionToChange(['showD2S2','action']);
+        setDialogue({ script});
       }
     };
 
@@ -215,10 +214,8 @@ const Underground = () => {
         setinteractionTxtPosition([-5, -10, 6.2]);
         setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
         const script = getSceneScript(2, decisions, 'scriptTraitorFound', '');
-        const actions = () => {
-          setActionsGame('showD3S2', true);
-        };
-        setDialogue({ script, actions });
+        setActionToChange(['showD3S2', 'action']);
+        setDialogue({ script });
       }
     };
     showScriptTraitorFound();
@@ -230,6 +227,7 @@ const Underground = () => {
     setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
     const script = getSceneScript(2, decisions, 'scriptAfterTraitorFound', '');
     setDialogue({ script });
+    // setActionToChange(['choiceSafeSharing','action']);
     setChoice({
       content: [
         {
@@ -253,6 +251,7 @@ const Underground = () => {
     const actions = () => {
       setActionsGame('showD4S2', true);
     };
+    setActionToChange(['showD4S2', 'action']);
     setDialogue({ script, actions });
   };
 
@@ -264,17 +263,18 @@ const Underground = () => {
     const actions = () => {
       setActionsGame('showD4S2', true);
     };
+    setActionToChange(['showD4S2', 'action']);
     setDialogue({ script, actions });
   };
 
   useEffect(() => {
-    if (getActionsGame('showD3S2') && !getActionsGame('choiceSafeCharing')) {
+    if (getActionsGame('showD3S2') && !getActionsGame('choiceSafeSharing')) {
       showscriptAfterTraitorFound();
     }
-    if (getActionsGame('choiceSafeCharing') && !getActionsGame('showD4S2')) {
-      if (getActionsGame('openSafeAlone')) {
+    if (getActionsGame('choiceSafeSharing') && !getActionsGame('showD4S2')) {
+      if (decisions.openSafeAlone) {
         showScriptSafeAlone();
-      } else if (getActionsGame('openSafeInGroup')) {
+      } else if (decisions.openSafeInGroup) {
         showScriptSafeGroup();
       }
     }

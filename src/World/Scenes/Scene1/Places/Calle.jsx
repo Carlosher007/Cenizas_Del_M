@@ -21,6 +21,7 @@ const Calle = () => {
     addToBacklog,
     setActionsGame,
     getActionsGame,
+    setActionToChange,
   } = useGameStore.getState();
   const [sound] = useState(() => new Audio('/assets/sounds/tv.wav'));
   const [hasPlayed, setHasPlayed] = useState(false);
@@ -50,9 +51,7 @@ const Calle = () => {
         setChoice([]);
         setTimeout(() => {
           const script = getSceneScript(1, decisions, 'scriptNews');
-          const action= () => {
-            console.log('aaa');
-          };
+          setActionToChange(['showD3S1','action']);
           setDialogue({ script});
           setChoice({
             content: [
@@ -75,24 +74,23 @@ const Calle = () => {
         if (decisions.followedCrowd) {
           const script = getSceneScript(1, [], 'scriptGoToBunker');
           const action = () => {
-            setSceneFireplace(2);
-            setPlaceFirebase('bunker');
-            setSceneDecisionsFirebase('scene1', { hasKey: false });
+            // setSceneFireplace(2);
+            // setPlaceFirebase('bunker');
+            // setSceneDecisionsFirebase('scene1', { hasKey: false });
             setScene(2);
-
             setPlace('bunker');
-            setDecision('hazKey', false);
+            setDecision('hasKey', false);
           };
           setDialogue({ script, action });
         } else if (decisions.continueGirlfriendSearch) {
           const script = getSceneScript(1, [], 'scriptGoToSofia');
           const action = () => {
-            setSceneFireplace(2);
-            setPlaceFirebase('bunker');
-            setSceneDecisionsFirebase('scene1', { hasKey: true });
+            // setSceneFireplace(2);
+            // setPlaceFirebase('bunker');
+            // setSceneDecisionsFirebase('scene1', { hasKey: true });
             setScene(2);
             setPlace('bunker');
-            setDecision('hazKey', true);
+            setDecision('hasKey', true);
             addToBacklog('key');
           };
           setDialogue({ script, action });

@@ -17,11 +17,6 @@ const Experience = () => {
   ]);
   const {setPlace,setScene} = useGameStore.getState();
 
-  useEffect(() => {
-    setScene(1)
-    setPlace('Calle')
-  },[])
-
   const [requestPointerLock, setRequestPointerLock] = useState(true);
   return (
     <>
