@@ -8,6 +8,9 @@ import { keyboardControls } from "../../../hooks/useControls";
 import Ecctrl, { EcctrlAnimation } from "ecctrl";
 import { Alex } from "../../Characters/Alex";
 import { Physics } from "@react-three/rapier";
+import { OldMan } from "./characters/OldMan";
+import { LittleGirl } from "./characters/LittleGirl";
+import Environments from "./Environment";
 
 const City = () => {
   const [place] = useGameStore((state) => [state.place]);
@@ -27,6 +30,7 @@ const City = () => {
   return (
     <>
       <Lights />
+      <Environments />
       <Physics colliders={false} debug>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
@@ -45,6 +49,8 @@ const City = () => {
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
+        <OldMan position={[70, -2.1, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
+        <LittleGirl position={[70, -2.1, -31]} scale={0.9} rotation-y={-Math.PI/2}/>
         <DeadCity position-y={-2} scale={1.5}/>
       </Physics>
     </>

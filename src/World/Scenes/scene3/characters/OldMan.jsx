@@ -1,12 +1,22 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 
 export function OldMan(props) {
-  const group = useRef();
+  // referencia del objeto
+  const old_man= useRef();
+  //Extraer las cosas importantes del modelo
   const { nodes, materials, animations } = useGLTF("/assets/models/scene3/old_man/old-man-animated.glb");
-  const { actions } = useAnimations(animations, group);
+  // Extraer las animaciones
+  const { actions } = useAnimations(animations, old_man);
+  console.log("animations", actions);
+
+  useEffect(() => {
+    const action = actions["laying-down-idle"];
+    action.play();
+  }, []);
+
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={old_man} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature">
           <skinnedMesh
