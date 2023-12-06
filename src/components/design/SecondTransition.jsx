@@ -42,11 +42,12 @@ const text = {
   },
 };
 
-export const InitialTransition = () => {
+export const SecondTransition = () => {
   const { setActionsGame } = useGameStore.getState();
 
   const handleAnimationComplete = () => {
     setActionsGame('showAnimation', false);
+    setActionsGame('showedAnimation', true);
   };
 
   return (

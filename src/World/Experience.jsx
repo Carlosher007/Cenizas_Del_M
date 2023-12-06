@@ -9,6 +9,7 @@ import Scene1 from './Scenes/Scene1/Scene1';
 import { Overlay } from './Scenes/Scene2/Places/ChooseObjects/Overlay';
 import { cameraSettings } from './camera/cameraSetting';
 import Scene2 from './Scenes/Scene2/Scene2';
+import { SecondTransition } from '../components/design/SecondTransition';
 
 const Experience = () => {
   const [scene, actionsGame] = useGameStore((state) => [
@@ -41,6 +42,11 @@ const Experience = () => {
           <Overlay className="z-50" />
         </>
       )}
+      {
+        actionsGame.showAnimation && (
+          <SecondTransition/>
+        )
+      }
     </>
   );
 };

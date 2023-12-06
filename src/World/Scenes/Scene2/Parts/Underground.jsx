@@ -19,6 +19,7 @@ import { Survivor5 } from '../../../Characters/Survivor5';
 import { Survivor6 } from '../../../Characters/Survivor6';
 import { Survivor7 } from '../../../Characters/Survivor7';
 import { Survivor8 } from '../../../Characters/Survivor8';
+import { Bed } from '../Items/Bed';
 import { Lamp } from '../Items/Lamp';
 import { Safe } from '../Items/Safe';
 import { SmallLamp } from '../Items/SmallLamp';
@@ -119,6 +120,7 @@ const Underground = () => {
   }, [lastPressed]);
 
   const [safe, setSafe] = useState(false);
+  const [bed, setBed] = useState(false);
   const [charla, setCharla] = useState(false);
   const [charla1Displayed, setCharla1Displayed] = useState(false);
   const [charla2Displayed, setCharla2Displayed] = useState(false);
@@ -182,7 +184,6 @@ const Underground = () => {
 
     groupMeeting();
 
-
     const showScriptSleep = () => {
       if (
         pressed === 'r' &&
@@ -191,12 +192,7 @@ const Underground = () => {
         getActionsGame('showD2S2')
       ) {
         setGameControls([]);
-        const script = getSceneScript(
-          2,
-          decisions,
-          'scriptToSleep',
-          ''
-        );
+        const script = getSceneScript(2, decisions, 'scriptToSleep', '');
         setDialogue({ script });
       }
     };
@@ -268,27 +264,23 @@ const Underground = () => {
   };
 
   const showDialogueAfterDecisionChoosing = () => {
-    
-      setGameControls([]);
-      const script = getSceneScript(
-        2,
-        decisions,
-        'scriptAnsweringSurvivorsResources',
-        ''
-      );
-      setActionToChange(['showD2S2', 'action']);
-      setDialogue({ script });
+    setGameControls([]);
+    const script = getSceneScript(
+      2,
+      decisions,
+      'scriptAnsweringSurvivorsResources',
+      ''
+    );
+    setActionToChange(['showD2S2', 'action']);
+    setDialogue({ script });
   };
 
   useEffect(() => {
     if (getActionsGame('showD3S2') && !getActionsGame('choiceSafeSharing')) {
       showscriptAfterTraitorFound();
     }
-    if (
-      !getActionsGame('showD2S2') &&
-      getActionsGame('choiceSharing') 
-    ) {
-      showDialogueAfterDecisionChoosing()
+    if (!getActionsGame('showD2S2') && getActionsGame('choiceSharing')) {
+      showDialogueAfterDecisionChoosing();
     }
     if (getActionsGame('choiceSafeSharing') && !getActionsGame('showD4S2')) {
       if (decisions.openSafeAlone) {
@@ -311,6 +303,15 @@ const Underground = () => {
 
     groupMeeting();
   }, [pressed, charla]);
+
+  useEffect(() => {
+    if (pressed === 'r' && bed && !getActionsGame('showedAnimation')) {
+      setActionsGame('showAnimation', true);
+    } else if (pressed === 'r' && bed && getActionsGame('showedAnimation')) {
+      const script = getSceneScript(2, decisions, 'scriptNotGoToBed', '');
+      setDialogue({ script });
+    }
+  }, [pressed, bed]);
 
   const alexURL = '/assets/models/character/alex_main.glb';
   const [speed, setSpeed] = useState(6);
@@ -387,6 +388,8 @@ const Underground = () => {
       <Lamp position={[-4, -5.3, -1]} scale={0.05} rotation-y={-Math.PI / 2} />
       <SmallLamp position={[30, 3, 19]} scale={2} />
       <Safe position={[28.7, -1.7, 18.5]} />
+      <Lamp position={[50, 1, -2]} scale={0.05} />
+
       <Physics>
         <Lights />
         <Sky
@@ -418,6 +421,30 @@ const Underground = () => {
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
+        <RigidBody
+          type="fixed"
+          colliders="cuboid"
+          onCollisionEnter={({ other }) => {
+            if (other.rigidBodyObject) {
+              if (other.rigidBodyObject.name === 'alex') {
+                console.log('col');
+                setinteractionTxtPosition([48, -2, -2.3]);
+                setinteractionTxtBackgroundPosition([48, -2, -2.3]);
+                setinteractionTxt('Presiona R para dormir');
+                setinteractionTxtRotation(-Math.PI / 2);
+                setBed(true);
+              }
+            }
+          }}
+          onCollisionExit={() => {
+            setinteractionTxtPosition([-5, -10, 6.2]);
+            setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+            setBed(false);
+          }}
+        >
+          {/* Camas */}
+          <Bed scale={1.5} position={[48, -3.9, -2.3]} />
+        </RigidBody>
         // Caja fuerte
         <RigidBody
           type="fixed"

@@ -525,6 +525,12 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     }
   ]
 
+   const scriptNotGoToBed = [
+    {
+      author: '<strong>Alex</strong>',
+      text: 'Ya dormí lo suficiente, debería ir a charlar con los demás'
+    }
+  ]
 
   const scripts = {
     scripMeetingSurvivors,
@@ -543,7 +549,8 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     scriptCircleGameLives,
     scriptCircleGameWin,
     scriptCircleGameLose,
-    scriptToSleep
+    scriptToSleep,
+    scriptNotGoToBed
   };
 
   return scripts[nameScript];
