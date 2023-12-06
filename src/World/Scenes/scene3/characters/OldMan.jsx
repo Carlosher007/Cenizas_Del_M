@@ -8,7 +8,7 @@ export function OldMan(props) {
   const { nodes, materials, animations } = useGLTF("/assets/models/scene3/old_man/old-man-animated.glb");
   // Extraer las animaciones
   const { actions } = useAnimations(animations, old_man);
-  console.log("animations", actions);
+  // console.log("animations", actions);
 
   useEffect(() => {
     const action = actions["laying-down-idle"];

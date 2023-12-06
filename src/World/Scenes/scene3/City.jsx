@@ -12,6 +12,14 @@ import { OldMan } from "./characters/OldMan";
 import { LittleGirl } from "./characters/LittleGirl";
 import Environments from "./Environment";
 import withLoading from "../../../components/design/WithLoading";
+import { SuvivorW4 } from "./characters/SurvivorW4";
+import { SurvivorM8 } from "./characters/SurvivorM8";
+import { SurvivorM3 } from "./characters/SurvivorM3";
+import { SurvivorW7 } from "./characters/SurvivorW7";
+import { SurvivorM1 } from "./characters/SurvivorM1";
+import { SurvivorW2 } from "./characters/SurvivorW2";
+import { SurvivorW6 } from "./characters/SurvivorW6";
+import { SurvivorM5 } from "./characters/SurvivorM5";
 
 const City = () => {
   const [place] = useGameStore((state) => [state.place]);
@@ -27,6 +35,13 @@ const City = () => {
     action1: "pickup",
   };
   const [speed, setSpeed] = useState(8);
+  const [gravity, setGravity] = useState([0, -1, 0]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setGravity([0, -10, 0]);
+    }, 5000);
+  }, []);
 
   const {
     setActionsGame,
@@ -40,7 +55,7 @@ const City = () => {
     <>
       <Lights />
       <Environments />
-      <Physics colliders={false} debug>
+      <Physics colliders={false} gravity={gravity} debug>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
             position={[0, 0, 0]}
@@ -58,6 +73,15 @@ const City = () => {
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
+        <SurvivorM3 position={[-4, -3.2, -45.7]} scale={1.65} rotation-y={Math.PI/2}/>
+        <SuvivorW4 position={[30, -3.2, -80]} scale={1.6} rotation-y={-Math.PI/2}/>
+        <SurvivorW7 position={[-1, -3.2, 43]}  scale={1.6} rotation-y={Math.PI/2}/>
+        <SurvivorM8 position={[30, -3.2, 17]} scale={1.65} rotation-y={-Math.PI}/>
+
+        <SurvivorM1 position={[70, -3.2, -17]} scale={1.65} rotation-y={-Math.PI/2}/>
+        <SurvivorW2 position={[58, -2.9, -41]} scale={1.6} rotation-y={-Math.PI/2}/>
+        <SurvivorM5 position={[78, -3.2, -40]} scale={1.65} rotation-y={-Math.PI/2}/>
+        <SurvivorW6 position={[40, -3.2, -14]} scale={1.6} rotation-y={-Math.PI/8}/>
         <OldMan position={[70, -3.5, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
         <LittleGirl position={[70, -3.6, -31]} scale={0.75} rotation-y={-Math.PI/2}/>
         <DeadCity position-y={-3.5} scale={1.5}/>
