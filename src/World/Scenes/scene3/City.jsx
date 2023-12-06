@@ -11,6 +11,7 @@ import { Physics } from "@react-three/rapier";
 import { OldMan } from "./characters/OldMan";
 import { LittleGirl } from "./characters/LittleGirl";
 import Environments from "./Environment";
+import withLoading from "../../../components/design/WithLoading";
 
 const City = () => {
   const [place] = useGameStore((state) => [state.place]);
@@ -57,12 +58,12 @@ const City = () => {
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
-        <OldMan position={[70, -2.1, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
-        <LittleGirl position={[70, -2.1, -31]} scale={0.9} rotation-y={-Math.PI/2}/>
-        <DeadCity position-y={-2} scale={1.5}/>
+        <OldMan position={[70, -3.5, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
+        <LittleGirl position={[70, -3.5, -31]} scale={0.9} rotation-y={-Math.PI/2}/>
+        <DeadCity position-y={-3.5} scale={1.5}/>
       </Physics>
     </>
   );
 };
 
-export default City;
+export default withLoading(City,2500);
