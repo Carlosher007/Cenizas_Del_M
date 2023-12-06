@@ -326,6 +326,13 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     },
   ]
 
+  const scriptToSleep = [
+    {
+      author: '<strong>Superviviente B</strong>',
+      text: 'Creo que deberíamos descansar un poco. Alex, arriba puedes encontrar una cama para dormir'
+    }
+  ]
+
   const scriptPickedItemsSafeAlone = [
     {
       author: '<strong> ... </strong>',
@@ -535,7 +542,8 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     scriptCircleGameInit,
     scriptCircleGameLives,
     scriptCircleGameWin,
-    scriptCircleGameLose
+    scriptCircleGameLose,
+    scriptToSleep
   };
 
   return scripts[nameScript];

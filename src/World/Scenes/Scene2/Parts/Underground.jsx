@@ -40,7 +40,7 @@ const Underground = () => {
     removeFromBacklog,
     getDialogueLength,
     resetDialogue,
-    setActionToChange
+    setActionToChange,
   } = useGameStore.getState();
   const { resetCircleGame } = useCircleGameStore.getState();
   const [decisions, actionsGame] = useGameStore((state) => [
@@ -127,14 +127,14 @@ const Underground = () => {
     setDecision('wantsToShareKey', false);
     setDecision('wantsToShareFlashlight', true);
     removeFromBacklog('flashlight');
-    setDecision('hasFlashlight',false)
+    setDecision('hasFlashlight', false);
   };
 
   const sharingKeyEffect = () => {
     setDecision('wantsToShareKey', true);
     setDecision('wantsToShareFlashlight', false);
     removeFromBacklog('key');
-    setDecision('hasKey',false)
+    setDecision('hasKey', false);
   };
 
   const notSharingEffect = () => {
@@ -182,33 +182,33 @@ const Underground = () => {
 
     groupMeeting();
 
-    const showDialogueAfterDecisionChoosing = () => {
+
+    const showScriptSleep = () => {
       if (
-        !getActionsGame('showD2S2') &&
-        getActionsGame('choiceSharing') &&
         pressed === 'r' &&
-        charla
+        charla &&
+        !getActionsGame('showDSleepS2') &&
+        getActionsGame('showD2S2')
       ) {
         setGameControls([]);
         const script = getSceneScript(
           2,
           decisions,
-          'scriptAnsweringSurvivorsResources',
+          'scriptToSleep',
           ''
         );
-        setActionToChange(['showD2S2','action']);
-        setDialogue({ script});
+        setDialogue({ script });
       }
     };
 
-    showDialogueAfterDecisionChoosing();
+    showScriptSleep();
 
     const showScriptTraitorFound = () => {
       if (
         pressed === 'r' &&
         charla &&
         !getActionsGame('showD3S2') &&
-        getActionsGame('showD2S2')
+        getActionsGame('showDSleepS2')
       ) {
         setGameControls([]);
         setinteractionTxtPosition([-5, -10, 6.2]);
@@ -267,9 +267,28 @@ const Underground = () => {
     setDialogue({ script, actions });
   };
 
+  const showDialogueAfterDecisionChoosing = () => {
+    
+      setGameControls([]);
+      const script = getSceneScript(
+        2,
+        decisions,
+        'scriptAnsweringSurvivorsResources',
+        ''
+      );
+      setActionToChange(['showD2S2', 'action']);
+      setDialogue({ script });
+  };
+
   useEffect(() => {
     if (getActionsGame('showD3S2') && !getActionsGame('choiceSafeSharing')) {
       showscriptAfterTraitorFound();
+    }
+    if (
+      !getActionsGame('showD2S2') &&
+      getActionsGame('choiceSharing') 
+    ) {
+      showDialogueAfterDecisionChoosing()
     }
     if (getActionsGame('choiceSafeSharing') && !getActionsGame('showD4S2')) {
       if (decisions.openSafeAlone) {
