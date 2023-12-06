@@ -27,6 +27,14 @@ const City = () => {
   };
   const [speed, setSpeed] = useState(8);
 
+  const {
+    setActionsGame,
+  } = useGameStore.getState();
+
+  useEffect(()=> {
+    setActionsGame("showBacklog", true);
+  }, [])
+
   return (
     <>
       <Lights />
