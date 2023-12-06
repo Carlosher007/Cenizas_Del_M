@@ -59,7 +59,7 @@ const City = () => {
           </Ecctrl>
         </KeyboardControls>
         <OldMan position={[70, -3.5, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
-        <LittleGirl position={[70, -3.5, -31]} scale={0.9} rotation-y={-Math.PI/2}/>
+        <LittleGirl position={[70, -3.5, -31]} scale={0.75} rotation-y={-Math.PI/2}/>
         <DeadCity position-y={-3.5} scale={1.5}/>
       </Physics>
     </>
