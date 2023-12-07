@@ -73,10 +73,10 @@ const City = () => {
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
-        <SurvivorM3 position={[-4, -3.2, -45.7]} scale={1.65} rotation-y={Math.PI/2}/>
-        <SuvivorW4 position={[30, -3.2, -80]} scale={1.6} rotation-y={-Math.PI/2}/>
+        <SurvivorM3 position={[-4, -3.5, -45.7]} scale={1.8} rotation-y={Math.PI/2}/>
+        <SuvivorW4 position={[30, -3.45, -80]} scale={1.6} rotation-y={-Math.PI/2}/>
         <SurvivorW7 position={[-1, -3.2, 43]}  scale={1.6} rotation-y={Math.PI/2}/>
-        <SurvivorM8 position={[30, -3.2, 17]} scale={1.65} rotation-y={-Math.PI}/>
+        <SurvivorM8 position={[30, -3.5, 17]} scale={1.65} rotation-y={-Math.PI}/>
 
         <SurvivorM1 position={[70, -3.2, -17]} scale={1.65} rotation-y={-Math.PI/2}/>
         <SurvivorW2 position={[58, -2.9, -41]} scale={1.6} rotation-y={-Math.PI/2}/>
