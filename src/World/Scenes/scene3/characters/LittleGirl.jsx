@@ -66,66 +66,9 @@ export function LittleGirl(props) {
         <group name="Armature004" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
           <primitive object={nodes.mixamorigHips_4} />
         </group>
-        <group name="Node_7004" position={[0, 1.274, 2.257]} />
-        <mesh
-          name="Mesh_3002"
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh_3002.geometry}
-          material={materials["mat_3-Mei_hair_d.jpg.007"]}
-          position={[0, 225.731, -127.38]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <mesh
-          name="Mesh_0002"
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh_0002.geometry}
-          material={materials["mat_0-Mei_head_d.jpg.007"]}
-          position={[0, 225.731, -127.38]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <mesh
-          name="Mesh_6002"
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh_6002.geometry}
-          material={materials["mat_6-Mei_body_d.jpg.007"]}
-          position={[0, 225.731, -127.38]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <mesh
-          name="Mesh_4002"
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh_4002.geometry}
-          material={materials["mat_4-Mei_eyes_d.jpg.007"]}
-          position={[0, 225.731, -127.38]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <mesh
-          name="Mesh_5002"
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh_5002.geometry}
-          material={materials["mat_5-Mei_arms_d.jpg.007"]}
-          position={[0, 225.731, -127.38]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
-        />
-        <group name="Node_7005" position={[0, 1.274, 2.257]} />
-        <group name="Armature005" rotation={[Math.PI / 2, 0, 0]} scale={0.01}>
-          <primitive object={nodes.mixamorigHips_5} />
-        </group>
       </group>
     </group>
   );
 }
 
 useGLTF.preload("assets/models/scene3/character_kid/little-girl-animated.glb");
-
-
