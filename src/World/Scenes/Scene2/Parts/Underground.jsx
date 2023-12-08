@@ -36,12 +36,14 @@ const Underground = () => {
     setDecision,
     getActionsGame,
     getDecisions,
+    setScene,
     addToBacklog,
     isInBacklog,
     removeFromBacklog,
     getDialogueLength,
     resetDialogue,
     setActionToChange,
+    resetBacklogItemsSome,
   } = useGameStore.getState();
   const { resetCircleGame } = useCircleGameStore.getState();
   const [decisions, actionsGame] = useGameStore((state) => [
@@ -142,6 +144,9 @@ const Underground = () => {
   const notSharingEffect = () => {
     setDecision('wantsToShareKey', false);
     setDecision('wantsToShareFlashlight', false);
+    if (!isInBacklog('key')) {
+      setActionsGame('hasNone', true);
+    }
   };
 
   const actionsOpenSafeInGroup = () => {
@@ -153,6 +158,7 @@ const Underground = () => {
   };
 
   useEffect(() => {
+    // Primero
     const groupMeeting = () => {
       if (pressed === 'r' && charla && !getActionsGame('choiceSharing')) {
         setGameControls([]);
@@ -184,6 +190,7 @@ const Underground = () => {
 
     groupMeeting();
 
+    // Tercero
     const showScriptSleep = () => {
       if (
         pressed === 'r' &&
@@ -192,6 +199,8 @@ const Underground = () => {
         getActionsGame('showD2S2')
       ) {
         setGameControls([]);
+        setinteractionTxtPosition([-5, -10, 6.2]);
+        setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
         const script = getSceneScript(2, decisions, 'scriptToSleep', '');
         setDialogue({ script });
       }
@@ -199,6 +208,7 @@ const Underground = () => {
 
     showScriptSleep();
 
+    // Cuarto
     const showScriptTraitorFound = () => {
       if (
         pressed === 'r' &&
@@ -215,15 +225,25 @@ const Underground = () => {
       }
     };
     showScriptTraitorFound();
+
+    if (
+      pressed === 'r' &&
+      charla &&
+      getActionsGame('showD4S2') &&
+      !getActionsGame('showD5S2')
+    ) {
+      showScriptGoToSafe();
+    }
   }, [pressed, charla]);
 
+  // Quinto
   const showscriptAfterTraitorFound = () => {
     setGameControls([]);
     setinteractionTxtPosition([-5, -10, 6.2]);
     setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
     const script = getSceneScript(2, decisions, 'scriptAfterTraitorFound', '');
+    setActionToChange(['choiceSafeSharing', 'action']);
     setDialogue({ script });
-    // setActionToChange(['choiceSafeSharing','action']);
     setChoice({
       content: [
         {
@@ -239,32 +259,37 @@ const Underground = () => {
     });
   };
 
+  // Sexto V1
   const showScriptSafeAlone = () => {
     setGameControls([]);
     setinteractionTxtPosition([-5, -10, 6.2]);
     setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
     const script = getSceneScript(2, decisions, 'scriptOpenSafeAlone', '');
-    const actions = () => {
+    const action = () => {
       setActionsGame('showD4S2', true);
     };
     setActionToChange(['showD4S2', 'action']);
-    setDialogue({ script, actions });
+    setDialogue({ script, action });
   };
 
+  // Sexto V2
   const showScriptSafeGroup = () => {
     setGameControls([]);
     setinteractionTxtPosition([-5, -10, 6.2]);
     setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
     const script = getSceneScript(2, decisions, 'scriptOpenSafeGroup', '');
-    const actions = () => {
+    const action = () => {
       setActionsGame('showD4S2', true);
     };
     setActionToChange(['showD4S2', 'action']);
-    setDialogue({ script, actions });
+    setDialogue({ script, action });
   };
 
+  // Segundo
   const showDialogueAfterDecisionChoosing = () => {
     setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
     const script = getSceneScript(
       2,
       decisions,
@@ -272,6 +297,15 @@ const Underground = () => {
       ''
     );
     setActionToChange(['showD2S2', 'action']);
+    setDialogue({ script });
+  };
+
+  const showScriptGoToSafe = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptGoToSafe', '');
+    // cambiar showd5s2
     setDialogue({ script });
   };
 
@@ -287,28 +321,134 @@ const Underground = () => {
         showScriptSafeAlone();
       } else if (decisions.openSafeInGroup) {
         showScriptSafeGroup();
+      } else {
+        setActionsGame('showD4S2', true);
+        setActionsGame('hasNone',true)
+      }
+    }
+    // if (getActionsGame('showD4S2') && !getActionsGame('showD5S2')) {
+    //   showScriptGoToSafe();
+    // }
+    if (getActionsGame('playedMinigame')) {
+      //Si gano el juego
+      if (getActionsGame('winMiniGame')) {
+        //Si tiene el intercomunicador
+        if (isInBacklog('wokiToki')) {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptPickedItemsSafeAlone',
+            ''
+          );
+          setActionToChange(['knowsAboutSofia', 'decision']);
+          const action = () => {
+            resetDialogue();
+            setScene(3);
+            resetBacklogItemsSome();
+            setActionsGame('knowsAboutSofia', true);
+          };
+          setDialogue({ script, action });
+        } else {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptWinSafeMinigameGroup',
+            ''
+          );
+          const action = () => {
+            resetDialogue();
+
+            setScene(3);
+          };
+          setDialogue({ script, action });
+        }
+      } else {
+        // Si perdio el juego
+
+        // Lo hizo solo
+        if (decisions.openSafeAlone) {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptLostSafeMinigameAlone',
+            ''
+          );
+          const action = () => {
+            resetDialogue();
+
+            setScene(3);
+          };
+          setDialogue({ script, action });
+        } else {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptLostSafeMinigameGroup',
+            ''
+          );
+          const action = () => {
+            resetDialogue();
+
+            setScene(3);
+          };
+          setDialogue({ script, action });
+        }
       }
     }
   }, [actionsGame]);
 
   useEffect(() => {
     const groupMeeting = () => {
-      if (pressed === 'r' && safe) {
+      if (
+        pressed === 'r' &&
+        safe &&
+        getActionsGame('showD4S2') &&
+        !getActionsGame('playedMinigame')
+      ) {
+        console.log('ususu');
         setActionsGame('showBacklog', false);
+        setActionsGame('showD5S2', true);
         resetCircleGame();
         setPlace('game');
         window.location.reload();
+      } else if (pressed === 'r' && safe && !getActionsGame('showD4S2')) {
+        setGameControls([]);
+        setinteractionTxtPosition([-5, -10, 6.2]);
+        setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+        const script = getSceneScript(2, decisions, 'scriptNotSafe', '');
+        setDialogue({ script });
       }
     };
 
     groupMeeting();
-  }, [pressed, charla]);
+  }, [pressed, safe]);
 
   useEffect(() => {
-    if (pressed === 'r' && bed && !getActionsGame('showedAnimation')) {
+    // Cuarto
+    if (
+      pressed === 'r' &&
+      bed &&
+      !getActionsGame('showedAnimation') &&
+      getActionsGame('showD2S2')
+    ) {
       setActionsGame('showAnimation', true);
-    } else if (pressed === 'r' && bed && getActionsGame('showedAnimation')) {
+    } else if (
+      pressed === 'r' &&
+      bed &&
+      getActionsGame('showedAnimation') &&
+      getActionsGame('showD2S2') &&
+      !getActionsGame('playedMinigame')
+    ) {
+      setGameControls([]);
+      setinteractionTxtPosition([-5, -10, 6.2]);
+      setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
       const script = getSceneScript(2, decisions, 'scriptNotGoToBed', '');
+      setDialogue({ script });
+    } else if (pressed === 'r' && bed && !getActionsGame('showD2S2')) {
+      setGameControls([]);
+      setinteractionTxtPosition([-5, -10, 6.2]);
+      setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+      const script = getSceneScript(2, decisions, 'scriptNotGoToBed2', '');
       setDialogue({ script });
     }
   }, [pressed, bed]);

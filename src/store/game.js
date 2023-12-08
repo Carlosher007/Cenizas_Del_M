@@ -9,8 +9,8 @@ export const useGameStore = create(devtools(persist((set, get) => ({
   scene: 0,
   place: 'Introduction',
   backlog: [],
-  decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false },
-  actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeCharing :false, showAnimation:false, showedAnimation: false, showDSleepS2:false},
+  decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false },
+  actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeSharing :false, showAnimation:false, showedAnimation: false, showDSleepS2:false, showD5S2:false, playedMinigame: false, hasNone:false},
   dialogue: [],
   actionToChange: null,
   choice: [],
@@ -24,8 +24,8 @@ export const useGameStore = create(devtools(persist((set, get) => ({
       scene: 0,
       place: 'Introduction',
       backlog: [],
-      decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false },
-      actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeCharing: false, showAnimation: false, showedAnimation: false, showDSleepS2: false },
+      decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false },
+      actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeSharing: false, showAnimation: false, showedAnimation: false, showDSleepS2: false, showD5S2: false, playedMinigame: false, hasNone: false },
       dialogue: [],
       actionToChange: null,
       choice: [],
@@ -66,6 +66,11 @@ setFunctionAux: (functionAux) => set((state) => ({
 
   removeFromBacklog: (item) => set((state) => ({
     backlog: state.backlog.filter((backlogItem) => backlogItem !== item)
+  })),
+
+  // Borrar todo del inventario menos el item 'wokiToki' y 'medical'
+  resetBacklogItemsSome: () => set((state) => ({
+    backlog: state.backlog.filter((backlogItem) => backlogItem === 'wokiToki' || backlogItem === 'medical')
   })),
 
   setDecision: (decision, value) => set((state) => ({

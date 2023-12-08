@@ -140,7 +140,7 @@ export const Overlay = () => {
               <div className={`button-bottom ${'not-selected'}`}></div>
               <div className="button-base"></div>
             </button>
-            {backlog.length === 4 && (
+            {backlog.length >= 2 && (
               <button
                 className={` pointer-events-auto  cursor-pointer font-pixelcraft button ${'not-selected'}`}
                 type="button"

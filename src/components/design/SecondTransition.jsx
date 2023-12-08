@@ -48,6 +48,7 @@ export const SecondTransition = () => {
   const handleAnimationComplete = () => {
     setActionsGame('showAnimation', false);
     setActionsGame('showedAnimation', true);
+    setActionsGame('showDSleepS2',true);
   };
 
   return (

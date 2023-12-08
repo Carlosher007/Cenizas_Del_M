@@ -12,9 +12,10 @@ import Scene2 from './Scenes/Scene2/Scene2';
 import { SecondTransition } from '../components/design/SecondTransition';
 
 const Experience = () => {
-  const [scene, actionsGame] = useGameStore((state) => [
+  const [scene, actionsGame,isLoading] = useGameStore((state) => [
     state.scene,
     state.actionsGame,
+    state.isLoading
   ]);
   const {setPlace,setScene} = useGameStore.getState();
 
@@ -33,20 +34,17 @@ const Experience = () => {
       >
         {scene === 0 && <Introduction />}
         {scene === 1 && <Scene1 />}
-        {scene === 2 && <Scene2/> }
+        {scene === 2 && <Scene2 />}
+        {scene === 3 && <Html>Scene 3</Html>}
       </Canvas>
       <ShowDialogues className="z-50" />
-      {actionsGame.showOverlay && (
+      {actionsGame.showOverlay && !isLoading && (
         <>
           <Leva hidden className="z-50" />
           <Overlay className="z-50" />
         </>
       )}
-      {
-        actionsGame.showAnimation && (
-          <SecondTransition/>
-        )
-      }
+      {actionsGame.showAnimation && <SecondTransition />}
     </>
   );
 };

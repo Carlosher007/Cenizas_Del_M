@@ -158,7 +158,7 @@ const ScriptScene1 = (decisions, nameScript) => {
 }
 
 const ScriptScene2 = (decisions, nameScript, auxiliary) => {
-  const { hasFlashlight, hasKey, wantsToShare, hasCommunicator, hasMedkit, wantsToShareKey, wantsToShareFlashlight } = decisions
+  const { hasFlashlight, hasKey, wantsToShare, hasCommunicator, hasMedkit, wantsToShareKey, wantsToShareFlashlight, openSafeAlone } = decisions
 
   const stringSharingResources = wantsToShareFlashlight && wantsToShareKey ? 'linterna y una llave' : wantsToShareFlashlight ? 'linterna' : 'llave'
 
@@ -230,17 +230,17 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       text: 'Parece ser la llave de la caja fuerte del Bunker. El responsable de ella la dejo caer.'
     },
     // Quiso compartir cualquier cosa
-    ((wantsToShareKey || wantsToShareFlashlight) ) &&
+    ((wantsToShareKey || wantsToShareFlashlight)) &&
     {
       author: '<strong>Superviviente A</strong>',
       text: 'Bien, nos será de ayuda'
     },
   ].filter(Boolean)
 
-  
+
   const scriptTraitorFound = [
     {
-      author: '<strong>Alex</strong>',
+      author: '<strong>Superviviente A</strong>',
       text: 'Hemos estado perdiendo suministros últimamente. ¿Alguien tiene alguna idea de lo que está sucediendo?'
     },
     {
@@ -252,7 +252,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       text: 'Tranquilos muchachos, lo resolveremos y buscaremos al culpable.'
     }
   ]
-  
+
 
   const scriptAfterTraitorFound = [
     {
@@ -303,7 +303,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       text: 'Muchachos, yo tengo una llave, podemos intentar abrilar juntos y ver que hay dentro'
     },
   ]
-  
+
   const scriptLostSafeMinigameAlone = [
     {
       author: '<strong>Alex</strong>',
@@ -311,7 +311,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     },
     {
       author: '<strong>Alex</strong>',
-      text: 'Tendré que dejarlo o los demás comenzarán a sospechar'
+      text: 'Tendré que dejarlo o los demás comenzarán a sospechar. Al menos consegui esta especie de recurso medico.'
     }
   ]
 
@@ -338,45 +338,45 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       author: '<strong> ... </strong>',
       text: '[Alex toma los elementos escogidos]'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Alex</strong>',
       text: 'Creo saber cómo usar este comunicador...'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Comunicador</strong>',
       text: '...ubicado en las coordenadas 34.567, -78.901.'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Comunicador</strong>',
       text: 'Alex, si estás ahí, espero que  escuches esto.'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Comunicador</strong>',
       text: 'Necesitamos refuerzos y recursos.'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Comunicador</strong>',
       text: 'Si hay alguien escuchando, respondan.'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Alex</strong>',
       text: 'Esa es la voz de Sofía...'
     },
-    hasCommunicator && {
+    {
       author: '<strong>Alex</strong>',
       text: 'Debo ir a buscarla; me iré de este lugar'
     },
-    !hasCommunicator && {
+    {
       author: '<strong>Alex</strong>',
       text: 'Será mejor que me retiré antes de que alguien me descubra'
     },
     {
       author: '<strong> ... </strong>',
-      text: '[Alex se retirá del bunker con esperanzas de hallar mejores oportunidades fuera de él]'
+      text: '[Alex se retirá del bunker con esperanzas de hallar mejores oportunidades fuera de él, aunque antes de irse le roban algunas cosas]'
     }
   ]
 
-  const scriptLostSafeMinigameGroup = [
+  const [scriptLostSafeMinigameGroup] = [
     {
       author: '<strong>Superviviente A</strong>',
       text: '¿Qué pasa Alex, está atorada la puerta de la caja fuerte?'
@@ -429,7 +429,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       author: '<strong> ... </strong>',
       text: '[Alex se retirá del bunker con esperanzas de hallar mejores oportunidades fuera de él]'
     }
-    
+
   ]
 
   const scriptWinSafeMinigameGroup = [
@@ -487,7 +487,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
       author: '<strong> ... </strong>',
       text: '15 días después'
     }
-  ] 
+  ]
 
   const scriptCircleGameInit = [
     {
@@ -525,10 +525,31 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     }
   ]
 
-   const scriptNotGoToBed = [
+  const scriptNotGoToBed = [
     {
       author: '<strong>Alex</strong>',
       text: 'Ya dormí lo suficiente, debería ir a charlar con los demás'
+    }
+  ]
+
+  const scriptNotGoToBed2 = [
+    {
+      author: '<strong>Alex</strong>',
+      text: 'No puedo dormir, debería ir a charlar con los demás'
+    }
+  ]
+
+  const scriptNotSafe = [
+    {
+      author: '<strong>Alex</strong>',
+      text: 'No se muy bien que hacer con esto, debería ir a charlar con los demás'
+    }
+  ]
+
+  const scriptGoToSafe = [
+    {
+      author: '<strong>Superviviente A</strong>',
+      text: 'La caja fuerte esta en el segundo piso Alex, ayudanos a abrirla'
     }
   ]
 
@@ -550,7 +571,10 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     scriptCircleGameWin,
     scriptCircleGameLose,
     scriptToSleep,
-    scriptNotGoToBed
+    scriptNotGoToBed,
+    scriptNotGoToBed2,
+    scriptGoToSafe,
+    scriptNotSafe
   };
 
   return scripts[nameScript];
@@ -576,14 +600,14 @@ const ScriptIntroduction = () => {
   return script
 }
 
-export const getSceneScript = (scene, decisions, nameScript, auxiliary)=> {
+export const getSceneScript = (scene, decisions, nameScript, auxiliary) => {
   switch (scene) {
     case 0:
       return ScriptIntroduction()
     case 1:
       return ScriptScene1(decisions, nameScript)
     case 2:
-      return ScriptScene2(decisions, nameScript,auxiliary)
+      return ScriptScene2(decisions, nameScript, auxiliary)
     default:
       return {}
   }
