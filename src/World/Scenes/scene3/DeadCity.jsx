@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 
 export function DeadCity(props) {
-  const { nodes, materials } = useGLTF('/assets/models/scene3/new_dead_city.glb')
+  const { nodes, materials } = useGLTF('/assets/models/scene3/dead_city.glb')
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
@@ -769,4 +769,4 @@ export function DeadCity(props) {
   )
 }
 
-useGLTF.preload('/assets/models/scene3/new_dead_city.glb')
+useGLTF.preload('/assets/models/scene3/dead_city.glb')
