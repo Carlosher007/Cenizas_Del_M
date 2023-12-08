@@ -376,7 +376,7 @@ const ScriptScene2 = (decisions, nameScript, auxiliary) => {
     }
   ]
 
-  const [scriptLostSafeMinigameGroup] = [
+  const scriptLostSafeMinigameGroup = [
     {
       author: '<strong>Superviviente A</strong>',
       text: '¿Qué pasa Alex, está atorada la puerta de la caja fuerte?'
