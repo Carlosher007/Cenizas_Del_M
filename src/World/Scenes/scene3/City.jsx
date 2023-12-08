@@ -55,7 +55,7 @@ const City = () => {
     <>
       <Lights />
       <Environments />
-      <Physics colliders={false} gravity={gravity} >
+      <Physics colliders={false} gravity={gravity} debug>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
             position={[0, 0, 0]}
