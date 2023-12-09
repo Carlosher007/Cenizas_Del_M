@@ -1,9 +1,10 @@
-import City from "./City";
+import City from "./City"
+import StealthMinigame from "./Parts/StealthMinigame";
 
 const Scene3 = () => {
   return (
     <>
-      <City/>
+      <StealthMinigame/>
     </>
   )
 }
