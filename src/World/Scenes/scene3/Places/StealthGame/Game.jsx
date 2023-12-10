@@ -1,10 +1,27 @@
 import React, { useState, useEffect, useRef} from 'react';
 import './Environment.css';
 import Maps from './Maps';
+import { useStealthGameStore } from '../../../../../store/stealth-game';
+import { useGameStore } from '../../../../../store/game';
+
 
 const Game = () => {
 
-  const [level, setLevel] = useState(0)
+  const {setLevel, setLives, setWin} = useStealthGameStore.getState();
+
+  const {setPlace} = useGameStore.getState();
+
+  const [level, lives, win] = useStealthGameStore(
+    (state) => [
+      state.level,
+      state.lives,
+      state.win
+    ]
+  );
+
+
+
+  //const [level, setLevel] = useState(2)
   const [position, setPosition] = useState(Maps[level].player);
   const [obstacles, setObstacles] = useState(Maps[level].obstacles);
 
@@ -14,7 +31,6 @@ const Game = () => {
   const [rightPressed, setRightPressed] = useState(false);
 
   const [tic, setTic] = useState(0);
-
 
 
   const collidesWall = (positions, dir) => {
@@ -47,13 +63,26 @@ const Game = () => {
     // 0 -> up, 1 -> right, 2 -> down, 3 -> left
 
     for (let i = 0; i < obstacles.length; i++) {
-      // console.log("Player: ", position)
-      // console.log("Obstacle: ", obstacles[i])
       if (y + 20 > obstacles[i].y && x + 20 > obstacles[i].x && y < obstacles[i].y + 20 && x < obstacles[i].x + 20 ) {
         return true
       }
 
     }
+    return false
+  }
+
+  const collidesGoal = (positions) => {
+
+    const {x, y} = positions
+
+    const goalX = Maps[level].goal.x
+
+    const goalY = Maps[level].goal.y
+
+    if (y + 20 > goalY && x + 20 > goalX && y < goalY + 40 && x < goalX + 40 ) {
+      return true
+    }
+
     return false
   }
 
@@ -70,73 +99,108 @@ const Game = () => {
   
     // Check if lost
 
-    if (collidesObstacle(position)) {
-      setPosition(Maps[level].player)
-    }
+   
+    if (collidesGoal(position)) {
+      if (level < 2) {
+        setLevel(level + 1)
+        setPosition(Maps[level + 1].player)
+        setObstacles(Maps[level + 1].obstacles)
+      } else {
+        setPlace('calle')
+        setWin(true)
+      }
 
-    // Player controls
-    if (upPressed) {
-        if (!collidesWall(position, 0)) {
-            setPosition((prev) => ({...prev, y: prev.y - 10}))
+
+    } else {
+
+      if (collidesObstacle(position)) {
+        if (lives > 0) {
+          setPosition(Maps[level].player)
+          setLives(lives - 1)
+        } else {
+          setPlace('calle')
         }
         
-    }
+      } 
+  
 
-    if (downPressed) {
-        if (!collidesWall(position, 2)) {
-            setPosition((prev) => ({...prev, y: prev.y + 10}))
-        }
-        
-    }
-
-    if (rightPressed) {
-
-      if (!collidesWall(position, 1)) {
-        setPosition((prev) => ({...prev, x: prev.x + 10}))
+      // Player controls
+      if (upPressed) {
+          if (!collidesWall(position, 0)) {
+              setPosition((prev) => ({...prev, y: prev.y - 10}))
+          }
+          
       }
-    }
 
-    if (leftPressed) {
-      if (!collidesWall(position, 3)) {
-        setPosition((prev) => ({...prev, x: prev.x - 10}))
+      if (downPressed) {
+          if (!collidesWall(position, 2)) {
+              setPosition((prev) => ({...prev, y: prev.y + 10}))
+          }
+          
       }
-    }
 
-    // Obstacles movement
-    setObstacles(obstacles.map(e => {
-      const x = e.x
-      const y = e.y 
-      if (e.type == 0) {
-        if (e.dir == 0) {
-          if (!collidesWall({x, y}, 1)) {
-            return {...e, x: x + 5}
-          } else {
-            return {...e, dir: 3}
-          }
-        } else {
-          if (!collidesWall({x, y}, 3)) {
-            return {...e, x: x - 5}
-          } else {
-            return {...e, dir: 0}
-          }
-        }
-      } else if (e.type == 1) {
-        if (e.dir == 0) {
-          if (!collidesWall({x, y}, 2)) {
-            return {...e, y: y + 5}
-          } else {
-            return {...e, dir: 1}
-          }
-        } else {
-          if (!collidesWall({x, y}, 0)) {
-            return {...e, y: y - 5}
-          } else {
-            return {...e, dir: 0}
-          }
+      if (rightPressed) {
+
+        if (!collidesWall(position, 1)) {
+          setPosition((prev) => ({...prev, x: prev.x + 10}))
         }
       }
-    }))
 
+      if (leftPressed) {
+        if (!collidesWall(position, 3)) {
+          setPosition((prev) => ({...prev, x: prev.x - 10}))
+        }
+      }
+
+      // Obstacles movement
+      setObstacles(obstacles.map(e => {
+        const x = e.x
+        const y = e.y 
+        if (e.type == 0) {
+          if (e.dir == 0) {
+            if (!collidesWall({x, y}, 1)) {
+              return {...e, x: x + 5}
+            } else {
+              return {...e, dir: 3}
+            }
+          } else {
+            if (!collidesWall({x, y}, 3)) {
+              return {...e, x: x - 5}
+            } else {
+              return {...e, dir: 0}
+            }
+          }
+        } else if (e.type == 1) {
+          if (e.dir == 0) {
+            if (!collidesWall({x, y}, 2)) {
+              return {...e, y: y + 5}
+            } else {
+              return {...e, dir: 1}
+            }
+          } else {
+            if (!collidesWall({x, y}, 0)) {
+              return {...e, y: y - 5}
+            } else {
+              return {...e, dir: 0}
+            }
+          }
+        } else if (e.type == 2) {
+          if (e.dir == 0) {
+            if (!collidesWall({x, y}, 2)) {
+              return {...e, y: y + 10}
+            } else {
+              return {...e, dir: 1}
+            }
+          } else {
+            if (!collidesWall({x, y}, 0)) {
+              return {...e, y: y - 10}
+            } else {
+              return {...e, dir: 0}
+            }
+          }
+        }
+      }))
+    } 
   }, [tic])
 
 
@@ -170,27 +234,39 @@ const Game = () => {
   }, []);
 
   return (
-    <div className="game-cosdntainer" style={{
-      position: "relative",
-      width: `${Maps[level].space.x}px`,
-      height: `${Maps[level].space.y}px`,
-      margin: "auto",
-      border: "1px solid #000",
-      overflow: "hidden"
-    }}>
-      <div
-        className="player"
-        style={{ left: `${position.x}px`, top: `${position.y}px` }}
-      />
-      {
-        obstacles.map((e, i) =>
-          <div key={i}
-            className="obstacle"
-            style={{ left: `${e.x}px`, top: `${e.y}px` }}
-          />
-         )
-      }
-    </div>
+    <>
+      <div style={{
+        position: "relative",
+        width: `${Maps[level].space.x}px`,
+        height: `${Maps[level].space.y}px`,
+        margin: "auto",
+        border: "1px solid #000",
+        overflow: "hidden"
+      }}>
+        <div
+            className="player"
+            style={{ left: `${position.x}px`, top: `${position.y}px` }}
+        />
+        <div
+            className="goal"
+            style={{ left: `${Maps[level].goal.x}px`, top: `${Maps[level].goal.y}px` }}
+        />
+        <div
+          className="entity"
+          style={{ left: `${position.x}px`, top: `${position.y}px`, backgroundColor: 'red'}}
+        />
+        {
+          obstacles.map((e, i) =>
+            <div key={i}
+              className="entity"
+              style={{ left: `${e.x}px`, top: `${e.y}px`, backgroundColor: e.type < 2 ? 'blue' : 'purple'}}
+            />
+            )
+        }
+      </div>
+      <p>Vidas: {lives}</p>
+      <p>Nivel: {level + 1}</p>
+    </>
   );
 };
 

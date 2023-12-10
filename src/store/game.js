@@ -2,8 +2,10 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { useCircleGameStore } from './circle-game'
+import { useStealthGameStore } from './stealth-game'
 
 const {resetCircleGame} = useCircleGameStore.getState()
+const {resetStealthGame} = useStealthGameStore.getState()
 
 export const useGameStore = create(devtools(persist((set, get) => ({
   scene: 0,
@@ -19,6 +21,7 @@ export const useGameStore = create(devtools(persist((set, get) => ({
 
   reset: () => {
     resetCircleGame();
+    resetStealthGame()
     set((state) => ({
       scene: 0,
       place: 'Introduction',
