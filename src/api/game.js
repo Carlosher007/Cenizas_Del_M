@@ -27,7 +27,6 @@ export const getSceneDecisions = async (scene) => {
   try {
     const { email } = useAuthStore.getState().userLogged
     const { data } = await getUserGame(email, scene)
-    setDecisions(data)
     return { type: 'success', data }
   } catch (err) {
     console.log(err)
@@ -40,7 +39,6 @@ export const setSceneDecisions = async (scene, decisions) => {
   try {
     const { email } = useAuthStore.getState().userLogged
     await editUserGame(email, scene, decisions)
-    setDecisions(decisions)
     return { type: 'success' }
   } catch (err) {
     console.log(err)
@@ -52,7 +50,6 @@ export const setSceneDecisionsFirebase = async (scene, decisions) => {
   try {
     const { email } = useAuthStore.getState().userLogged
     await editUserGame(email, scene, decisions)
-    setDecisions(decisions)
     return { type: 'success' }
   } catch (err) {
     console.log(err)
@@ -86,7 +83,7 @@ export const setPlaceFirebase = async (place) => {
     if (res.success == true) {
       console.log('An error has ocurred')
     } else {
-      console.log(res)
+      // console.log(res)
     }
 
   } catch (err) {

@@ -6,7 +6,7 @@ const ChoiceOption = ({ props, setSelectedOptio }) => {
 
   const onHandleClick = () => {
     setSelectedOption(props.index);
-  }
+  };
 
   return (
     <div className="flex w-full items-center">
@@ -29,7 +29,7 @@ const ChoiceOption = ({ props, setSelectedOptio }) => {
           selected ? 'selected' : 'not-selected'
         }`}
         type="button"
-        ontouchstart
+        onTouchStart
         style={{ outline: 'none' }}
         onClick={onHandleClick}
       >

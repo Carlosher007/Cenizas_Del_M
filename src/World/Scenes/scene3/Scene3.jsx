@@ -8,9 +8,7 @@ const Scene3 = () => {
   return (
     <>
       {'calle' === place && <City/>}
-      {'calle' != place && <StealthMinigame/>}
-
-      {/* {'minigame' === place && <StealthMinigame/>} */}
+      {'minijuego' == place && <StealthMinigame/>}
     </>
   )
 }

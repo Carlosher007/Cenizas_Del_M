@@ -13,7 +13,15 @@ import LineGame from './Line';
 const GameCircle = () => {
   const { setColoredParts, setLevel, setIsPlaying, setWin , setFirstTime} =
     useCircleGameStore.getState();
-  const { setDialogue, setActionsGame, setPlace , resetDialogue} = useGameStore.getState();
+  const {
+    setDialogue,
+    setActionsGame,
+    setPlace,
+    resetDialogue,
+    getActionsGame,
+    addToBacklog,
+    removeFromBacklog,
+  } = useGameStore.getState();
 
   useEffect(() => {
     const showIninitScript = () => {
@@ -36,6 +44,8 @@ const GameCircle = () => {
       state.firstTime,
     ]
   );
+
+  const [decisions] = useGameStore((state) => [state.decisions]);
 
   const [circleScale, setCircleScale] = useState();
   const [lineScale, setLineScale] = useState({});
@@ -165,10 +175,26 @@ const GameCircle = () => {
         const showScript = () => {
           const script = getSceneScript(2, [], 'scriptCircleGameLose', '');
           const action = () => {
-            console.log('me fui');
             setActionsGame('winMiniGame', false);
-            setPlace('bunker')
+            setActionsGame('playedMinigame', true)
+            removeFromBacklog('key')
             resetDialogue()
+            // Perdio y no tenía la llave
+            if(getActionsGame('hasNone')){
+              setActionsGame('showOverlay', false);
+              setPlace('bunker');
+            }
+            // Perdio, tenia la llave y la compartio
+            else if(decisions.openSafeInGroup){
+              setActionsGame('showOverlay', false);
+              setPlace('bunker');
+            }
+            // Perdio, tenia la llave y no la compartio
+            else {
+              addToBacklog('medical')
+              setActionsGame('showOverlay', false);
+              setPlace('bunker');
+            }
           };
           setDialogue({ script, action });
         };
@@ -178,10 +204,27 @@ const GameCircle = () => {
         const showScript = () => {
           const script = getSceneScript(2, [], 'scriptCircleGameWin', '');
           const action = () => {
-            console.log('me fui');
+            setActionsGame('playedMinigame', true);
             setActionsGame('winMiniGame', true);
-            setPlace('chooseObjects')
+            removeFromBacklog('key');
             resetDialogue();
+            // Gano y no tenia la llave
+            if(getActionsGame('hasNone')){
+              setActionsGame('showOverlay', false);
+              setPlace('bunker');
+              addToBacklog('medical');
+            }
+            // Gano, tenia la llave y la compartio
+            else if(decisions.openSafeInGroup){
+              addToBacklog('medical');
+              setActionsGame('showOverlay', false);
+              setPlace('bunker');
+            }
+            // Gano, tenia la llave y no la compartio
+            else{
+              setActionsGame('showOverlay', true);
+              setPlace('chooseObjects');
+            }
           };
           setDialogue({ script, action });
         };

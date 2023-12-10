@@ -1,30 +1,31 @@
-import { KeyboardControls, Sky, Text, useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
-import Ecctrl, { EcctrlAnimation } from "ecctrl";
-import { Howl } from "howler";
-import React, { useEffect, useRef, useState } from "react";
-import { keyboardControls } from "../../../../hooks/useControls";
-import { useGameStore } from "../../../../store/game";
-import { getSceneScript } from "../../../../utils/script";
-import { Alex } from "../../../Characters/Alex";
-import Backlog from "../../../../components/design/Backlog";
-import { Bunker } from "../Places/Bunker";
-import { BunkerTecho } from "../Places/BunkerTecho";
-import Lights from "../Places/Lights";
-import { Lamp } from "../Items/Lamp";
-import { Survivor1 } from "../../../Characters/Survivor1";
-import { Survivor2 } from "../../../Characters/Survivor2";
-import { Survivor3 } from "../../../Characters/Survivor3";
-import { Survivor4 } from "../../../Characters/Survivor4";
-import { Survivor5 } from "../../../Characters/Survivor5";
-import { Survivor6 } from "../../../Characters/Survivor6";
-import { Survivor7 } from "../../../Characters/Survivor7";
-import { Survivor8 } from "../../../Characters/Survivor8";
-import { SmallLamp } from "../Items/SmallLamp";
-import { Safe } from "../Items/Safe";
-import withLoading from "../../../../components/design/WithLoading";
-import { useCircleGameStore } from "../../../../store/circle-game";
+import { KeyboardControls, Sky, Text, useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
+import Ecctrl, { EcctrlAnimation } from 'ecctrl';
+import { Howl } from 'howler';
+import React, { useEffect, useRef, useState } from 'react';
+import Backlog from '../../../../components/design/Backlog';
+import withLoading from '../../../../components/design/WithLoading';
+import { keyboardControls } from '../../../../hooks/useControls';
+import { useCircleGameStore } from '../../../../store/circle-game';
+import { useGameStore } from '../../../../store/game';
+import { getSceneScript } from '../../../../utils/script';
+import { Alex } from '../../../Characters/Alex';
+import { Survivor1 } from '../../../Characters/Survivor1';
+import { Survivor2 } from '../../../Characters/Survivor2';
+import { Survivor3 } from '../../../Characters/Survivor3';
+import { Survivor4 } from '../../../Characters/Survivor4';
+import { Survivor5 } from '../../../Characters/Survivor5';
+import { Survivor6 } from '../../../Characters/Survivor6';
+import { Survivor7 } from '../../../Characters/Survivor7';
+import { Survivor8 } from '../../../Characters/Survivor8';
+import { Bed } from '../Items/Bed';
+import { Lamp } from '../Items/Lamp';
+import { Safe } from '../Items/Safe';
+import { SmallLamp } from '../Items/SmallLamp';
+import { Bunker } from '../Places/Bunker';
+import { BunkerTecho } from '../Places/BunkerTecho';
+import Lights from '../Places/Lights';
 
 const Underground = () => {
   const {
@@ -35,19 +36,23 @@ const Underground = () => {
     setDecision,
     getActionsGame,
     getDecisions,
+    setScene,
     addToBacklog,
-    removetoBacklog,
+    isInBacklog,
+    removeFromBacklog,
     getDialogueLength,
     resetDialogue,
+    setActionToChange,
+    resetBacklogItemsSome,
   } = useGameStore.getState();
-  const {resetCircleGame} = useCircleGameStore.getState()
+  const { resetCircleGame } = useCircleGameStore.getState();
   const [decisions, actionsGame] = useGameStore((state) => [
     state.decisions,
     state.actionsGame,
   ]);
 
-  const [pressed, setPressed] = useState("none");
-  const [lastPressed, setLastPressed] = useState("none");
+  const [pressed, setPressed] = useState('none');
+  const [lastPressed, setLastPressed] = useState('none');
   const [listenersAdded, setListenersAdded] = useState(false);
   const [wPressed, setWPressed] = useState(false);
   const [aPressed, setAPressed] = useState(false);
@@ -56,49 +61,57 @@ const Underground = () => {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      setLastPressed("none");
-      if (e.code === "KeyR") {
-        setPressed("r");
-      } else if (e.code === "Enter") {
-        setPressed("enter");
-      } else if (e.code === "KeyW") {
+      setLastPressed('none');
+      if (e.code === 'KeyR') {
+        setPressed('r');
+      } else if (e.code === 'Enter') {
+        setPressed('enter');
+      } else if (e.code === 'KeyW') {
         setWPressed(true);
-      } else if (e.code === "KeyA") {
+      } else if (e.code === 'KeyA') {
         setAPressed(true);
-      } else if (e.code === "KeyS") {
+      } else if (e.code === 'KeyS') {
         setSPressed(true);
-      } else if (e.code === "KeyD") {
+      } else if (e.code === 'KeyD') {
         setDPressed(true);
       }
     };
 
     const handleKeyUp = (e) => {
-      setPressed("none");
-      if (e.code === "KeyR") {
-        setLastPressed("r");
-      } else if (e.code === "Enter") {
-        setLastPressed("enter");
-      } else if (e.code === "KeyW") {
+      setPressed('none');
+      if (e.code === 'KeyR') {
+        setLastPressed('r');
+      } else if (e.code === 'Enter') {
+        setLastPressed('enter');
+      } else if (e.code === 'KeyW') {
         setWPressed(false);
-      } else if (e.code === "KeyA") {
+      } else if (e.code === 'KeyA') {
         setAPressed(false);
-      } else if (e.code === "KeyS") {
+      } else if (e.code === 'KeyS') {
         setSPressed(false);
-      } else if (e.code === "KeyD") {
+      } else if (e.code === 'KeyD') {
         setDPressed(false);
       }
     };
 
     if (!listenersAdded) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.addEventListener("keyup", handleKeyUp);
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keyup', handleKeyUp);
       setListenersAdded(true);
     }
+
+    setActionsGame('showOverlay', false);
+
+    const resetDialogueWithoutInteraction = () => {
+      resetDialogue();
+    };
+    resetDialogueWithoutInteraction();
+    setActionsGame('showBacklog', true);
   }, []);
 
   const [gameControls, setGameControls] = useState(keyboardControls);
   useEffect(() => {
-    if (lastPressed === "enter") {
+    if (lastPressed === 'enter') {
       const dialogueLength = getDialogueLength();
       if (dialogueLength === 0) {
         setGameControls(keyboardControls);
@@ -109,89 +122,359 @@ const Underground = () => {
   }, [lastPressed]);
 
   const [safe, setSafe] = useState(false);
+  const [bed, setBed] = useState(false);
   const [charla, setCharla] = useState(false);
   const [charla1Displayed, setCharla1Displayed] = useState(false);
   const [charla2Displayed, setCharla2Displayed] = useState(false);
 
   const sharingFlashlightEffect = () => {
-    setDecision("wantsToShareKey", false);
-    setDecision("wantsToShareFlashlight", true);
+    setDecision('wantsToShareKey', false);
+    setDecision('wantsToShareFlashlight', true);
+    removeFromBacklog('flashlight');
+    setDecision('hasFlashlight', false);
   };
 
   const sharingKeyEffect = () => {
-    setDecision("wantsToShareKey", true);
-    setDecision("wantsToShareFlashlight", false);
+    setDecision('wantsToShareKey', true);
+    setDecision('wantsToShareFlashlight', false);
+    removeFromBacklog('key');
+    setDecision('hasKey', false);
   };
 
   const notSharingEffect = () => {
-    setDecision("wantsToShareKey", false);
-    setDecision("wantsToShareFlashlight", false);;
+    setDecision('wantsToShareKey', false);
+    setDecision('wantsToShareFlashlight', false);
+    if (!isInBacklog('key')) {
+      setActionsGame('hasNone', true);
+    }
+  };
+
+  const actionsOpenSafeInGroup = () => {
+    setDecision('openSafeInGroup', true);
+  };
+
+  const actionsOpenSafeAlone = () => {
+    setDecision('openSafeAlone', true);
   };
 
   useEffect(() => {
+    // Primero
     const groupMeeting = () => {
-      if (pressed === "r" && charla && !charla1Displayed) {
+      if (pressed === 'r' && charla && !getActionsGame('choiceSharing')) {
         setGameControls([]);
         setinteractionTxtPosition([-5, -10, 6.2]);
         setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
-        const script = getSceneScript(2, [], 'scripMeetingSurvivors', '');
+        const script = getSceneScript(
+          2,
+          decisions,
+          'scripMeetingSurvivors',
+          ''
+        );
         setDialogue({ script });
-        setChoice([]);
         setChoice({
           content: [
-            { text: "No compartir nada", effect: notSharingEffect },
-            { text: "Compartir la linterna", effect: sharingFlashlightEffect },
-            { text: "Compartir la llave", effect: sharingKeyEffect },
-          ],
-          nameChoice: "choiceSharing",
+            { text: 'No compartir nada', effect: notSharingEffect },
+            isInBacklog('flashlight') && {
+              text: 'Compartir la linterna',
+              effect: sharingFlashlightEffect,
+            },
+            isInBacklog('key') && {
+              text: 'Compartir la llave',
+              effect: sharingKeyEffect,
+            },
+          ].filter(Boolean),
+          nameChoice: 'choiceSharing',
         });
-        setCharla1Displayed(true);
       }
     };
 
     groupMeeting();
-  }, [pressed, charla]);
 
-
-  useEffect(() => {
-    const groupMeeting = () => {
-      if (pressed === "r" && safe) {
-        setActionsGame("showBacklog", false);
-        resetCircleGame()
-        setPlace('game');
-        window.location.reload();
+    // Tercero
+    const showScriptSleep = () => {
+      if (
+        pressed === 'r' &&
+        charla &&
+        !getActionsGame('showDSleepS2') &&
+        getActionsGame('showD2S2')
+      ) {
+        setGameControls([]);
+        setinteractionTxtPosition([-5, -10, 6.2]);
+        setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+        const script = getSceneScript(2, decisions, 'scriptToSleep', '');
+        setDialogue({ script });
       }
     };
 
-    groupMeeting();
+    showScriptSleep();
+
+    // Cuarto
+    const showScriptTraitorFound = () => {
+      if (
+        pressed === 'r' &&
+        charla &&
+        !getActionsGame('showD3S2') &&
+        getActionsGame('showDSleepS2')
+      ) {
+        setGameControls([]);
+        setinteractionTxtPosition([-5, -10, 6.2]);
+        setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+        const script = getSceneScript(2, decisions, 'scriptTraitorFound', '');
+        setActionToChange(['showD3S2', 'action']);
+        setDialogue({ script });
+      }
+    };
+    showScriptTraitorFound();
+
+    if (
+      pressed === 'r' &&
+      charla &&
+      getActionsGame('showD4S2') &&
+      !getActionsGame('showD5S2')
+    ) {
+      showScriptGoToSafe();
+    }
   }, [pressed, charla]);
 
+  // Quinto
+  const showscriptAfterTraitorFound = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptAfterTraitorFound', '');
+    setActionToChange(['choiceSafeSharing', 'action']);
+    setDialogue({ script });
+    setChoice({
+      content: [
+        {
+          text: 'Decirles que tienes la llave',
+          effect: actionsOpenSafeInGroup,
+        },
+        {
+          text: 'No decirles que tienes la llave',
+          effect: actionsOpenSafeAlone,
+        },
+      ].filter(Boolean),
+      nameChoice: 'choiceSafeSharing',
+    });
+  };
+
+  // Sexto V1
+  const showScriptSafeAlone = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptOpenSafeAlone', '');
+    const action = () => {
+      setActionsGame('showD4S2', true);
+    };
+    setActionToChange(['showD4S2', 'action']);
+    setDialogue({ script, action });
+  };
+
+  // Sexto V2
+  const showScriptSafeGroup = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptOpenSafeGroup', '');
+    const action = () => {
+      setActionsGame('showD4S2', true);
+    };
+    setActionToChange(['showD4S2', 'action']);
+    setDialogue({ script, action });
+  };
+
+  // Segundo
+  const showDialogueAfterDecisionChoosing = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(
+      2,
+      decisions,
+      'scriptAnsweringSurvivorsResources',
+      ''
+    );
+    setActionToChange(['showD2S2', 'action']);
+    setDialogue({ script });
+  };
+
+  const showScriptGoToSafe = () => {
+    setGameControls([]);
+    setinteractionTxtPosition([-5, -10, 6.2]);
+    setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+    const script = getSceneScript(2, decisions, 'scriptGoToSafe', '');
+    // cambiar showd5s2
+    setDialogue({ script });
+  };
+
   useEffect(() => {
-    if (actionsGame.choiceSharing) {
-      setGameControls([]);
-      const script = getSceneScript(2, [], 'scriptAnsweringSurvivorsResources', '');
-      setDialogue({ script });
+    if (getActionsGame('showD3S2') && !getActionsGame('choiceSafeSharing')) {
+      showscriptAfterTraitorFound();
+    }
+    if (!getActionsGame('showD2S2') && getActionsGame('choiceSharing')) {
+      showDialogueAfterDecisionChoosing();
+    }
+    if (getActionsGame('choiceSafeSharing') && !getActionsGame('showD4S2')) {
+      if (decisions.openSafeAlone) {
+        showScriptSafeAlone();
+      } else if (decisions.openSafeInGroup) {
+        showScriptSafeGroup();
+      } else {
+        setActionsGame('showD4S2', true);
+        setActionsGame('hasNone',true)
+      }
+    }
+    // if (getActionsGame('showD4S2') && !getActionsGame('showD5S2')) {
+    //   showScriptGoToSafe();
+    // }
+    if (getActionsGame('playedMinigame')) {
+      //Si gano el juego
+      if (getActionsGame('winMiniGame')) {
+        //Si tiene el intercomunicador
+        if (isInBacklog('wokiToki')) {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptPickedItemsSafeAlone',
+            ''
+          );
+          setActionToChange(['knowsAboutSofia', 'decision']);
+          const action = () => {
+            resetDialogue();
+            setScene(3);
+            setPlace('minijuego')
+            resetBacklogItemsSome();
+            setActionsGame('knowsAboutSofia', true);
+          };
+          setDialogue({ script, action });
+        } else {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptWinSafeMinigameGroup',
+            ''
+          );
+          const action = () => {
+            resetDialogue();
+
+            setScene(3);
+            setPlace('minijuego')
+          };
+          setDialogue({ script, action });
+        }
+      } else {
+        // Si perdio el juego
+
+        // Lo hizo solo
+        if (decisions.openSafeAlone) {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptLostSafeMinigameAlone',
+            ''
+          );
+          const action = () => {
+            resetDialogue();
+
+            setScene(3);
+            setPlace('minijuego')
+          };
+          setDialogue({ script, action });
+        } else {
+          const script = getSceneScript(
+            2,
+            decisions,
+            'scriptLostSafeMinigameGroup',
+            ''
+          );
+          const action = () => {
+            resetDialogue();
+
+            setScene(3);
+            setPlace('minijuego')
+          };
+          setDialogue({ script, action });
+        }
+      }
     }
   }, [actionsGame]);
 
-  const alexURL = "/assets/models/character/alex_main.glb";
+  useEffect(() => {
+    const groupMeeting = () => {
+      if (
+        pressed === 'r' &&
+        safe &&
+        getActionsGame('showD4S2') &&
+        !getActionsGame('playedMinigame')
+      ) {
+        console.log('ususu');
+        setActionsGame('showBacklog', false);
+        setActionsGame('showD5S2', true);
+        resetCircleGame();
+        setPlace('game');
+        window.location.reload();
+      } else if (pressed === 'r' && safe && !getActionsGame('showD4S2')) {
+        setGameControls([]);
+        setinteractionTxtPosition([-5, -10, 6.2]);
+        setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+        const script = getSceneScript(2, decisions, 'scriptNotSafe', '');
+        setDialogue({ script });
+      }
+    };
+
+    groupMeeting();
+  }, [pressed, safe]);
+
+  useEffect(() => {
+    // Cuarto
+    if (
+      pressed === 'r' &&
+      bed &&
+      !getActionsGame('showedAnimation') &&
+      getActionsGame('showD2S2')
+    ) {
+      setActionsGame('showAnimation', true);
+    } else if (
+      pressed === 'r' &&
+      bed &&
+      getActionsGame('showedAnimation') &&
+      getActionsGame('showD2S2') &&
+      !getActionsGame('playedMinigame')
+    ) {
+      setGameControls([]);
+      setinteractionTxtPosition([-5, -10, 6.2]);
+      setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+      const script = getSceneScript(2, decisions, 'scriptNotGoToBed', '');
+      setDialogue({ script });
+    } else if (pressed === 'r' && bed && !getActionsGame('showD2S2')) {
+      setGameControls([]);
+      setinteractionTxtPosition([-5, -10, 6.2]);
+      setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+      const script = getSceneScript(2, decisions, 'scriptNotGoToBed2', '');
+      setDialogue({ script });
+    }
+  }, [pressed, bed]);
+
+  const alexURL = '/assets/models/character/alex_main.glb';
   const [speed, setSpeed] = useState(6);
 
   const animationSet = {
-    idle: "idle",
-    walk: "walking",
-    run: "running",
-    jump: "moving-jump",
-    jumpIdle: "idle-jump",
-    jumpLand: "idle",
-    fall: "idle", // This is for falling from high sky
-    action1: "pickup",
+    idle: 'idle',
+    walk: 'walking',
+    run: 'running',
+    jump: 'moving-jump',
+    jumpIdle: 'idle-jump',
+    jumpLand: 'idle',
+    fall: 'idle', // This is for falling from high sky
+    action1: 'pickup',
   };
 
   const [interactionTxtPosition, setinteractionTxtPosition] = useState([
     -5, -10, 6.2,
   ]);
-  const [interactionTxt, setinteractionTxt] = useState("Presiona R para abrir");
+  const [interactionTxt, setinteractionTxt] = useState('Presiona R para abrir');
   const [interactionTxtRotation, setinteractionTxtRotation] = useState(
     -Math.PI
   );
@@ -249,6 +532,8 @@ const Underground = () => {
       <Lamp position={[-4, -5.3, -1]} scale={0.05} rotation-y={-Math.PI / 2} />
       <SmallLamp position={[30, 3, 19]} scale={2} />
       <Safe position={[28.7, -1.7, 18.5]} />
+      <Lamp position={[50, 1, -2]} scale={0.05} />
+
       <Physics>
         <Lights />
         <Sky
@@ -280,15 +565,39 @@ const Underground = () => {
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
+        <RigidBody
+          type="fixed"
+          colliders="cuboid"
+          onCollisionEnter={({ other }) => {
+            if (other.rigidBodyObject) {
+              if (other.rigidBodyObject.name === 'alex') {
+                console.log('col');
+                setinteractionTxtPosition([48, -2, -2.3]);
+                setinteractionTxtBackgroundPosition([48, -2, -2.3]);
+                setinteractionTxt('Presiona R para dormir');
+                setinteractionTxtRotation(-Math.PI / 2);
+                setBed(true);
+              }
+            }
+          }}
+          onCollisionExit={() => {
+            setinteractionTxtPosition([-5, -10, 6.2]);
+            setinteractionTxtBackgroundPosition([-5, -10, 6.2]);
+            setBed(false);
+          }}
+        >
+          {/* Camas */}
+          <Bed scale={1.5} position={[48, -3.9, -2.3]} />
+        </RigidBody>
         // Caja fuerte
         <RigidBody
           type="fixed"
           onCollisionEnter={({ other }) => {
             if (other.rigidBodyObject) {
-              if (other.rigidBodyObject.name === "alex") {
+              if (other.rigidBodyObject.name === 'alex') {
                 setinteractionTxtPosition([29.2, 0.2, 18.5]);
                 setinteractionTxtBackgroundPosition([29.1, 0.2, 18.5]);
-                setinteractionTxt("Presiona R para abrir");
+                setinteractionTxt('Presiona R para abrir');
                 setSafe(true);
                 setinteractionTxtRotation(Math.PI / 2);
               }
@@ -312,7 +621,7 @@ const Underground = () => {
           colliders="cuboid"
           onCollisionEnter={({ other }) => {
             if (other.rigidBodyObject) {
-              if (other.rigidBodyObject.name === "alex") {
+              if (other.rigidBodyObject.name === 'alex') {
                 setSpeed(10);
               }
             }
@@ -338,7 +647,7 @@ const Underground = () => {
           colliders="cuboid"
           onCollisionEnter={({ other }) => {
             if (other.rigidBodyObject) {
-              if (other.rigidBodyObject.name === "alex") {
+              if (other.rigidBodyObject.name === 'alex') {
                 setSpeed(10);
               }
             }
@@ -547,10 +856,10 @@ const Underground = () => {
           type="fixed"
           onCollisionEnter={({ other }) => {
             if (other.rigidBodyObject) {
-              if (other.rigidBodyObject.name === "alex") {
+              if (other.rigidBodyObject.name === 'alex') {
                 setinteractionTxtPosition([41.5, -6, 7]);
                 setinteractionTxtBackgroundPosition([41.5, -6, 7.1]);
-                setinteractionTxt("Presiona R para hablar");
+                setinteractionTxt('Presiona R para hablar');
                 setCharla(true);
                 setinteractionTxtRotation(-Math.PI);
               }
@@ -562,14 +871,11 @@ const Underground = () => {
             setCharla(false);
           }}
         >
-          <CuboidCollider
-            position={[41.5, -9, 7]}
-            args={[1.1, 1.5, 0.025]}
-          />
+          <CuboidCollider position={[41.5, -9, 7]} args={[1.1, 1.5, 0.025]} />
         </RigidBody>
       </Physics>
     </>
   );
 };
 
-export default withLoading(Underground,2600);
+export default withLoading(Underground, 2600);
