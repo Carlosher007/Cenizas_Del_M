@@ -2,22 +2,29 @@ import { Html } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Leva } from 'leva';
 import { Suspense, useEffect, useState } from 'react';
+import { SecondTransition } from '../components/design/SecondTransition';
+import Test from '../components/design/Test';
+import Test2 from '../components/design/Test2';
 import { useGameStore } from '../store/game';
 import ShowDialogues from './Dialogues/ShowDialogues';
 import Introduction from './Scenes/Introudction/Introduction';
+import Fin from './Scenes/Scene1/Places/Fin';
 import Scene1 from './Scenes/Scene1/Scene1';
 import { Overlay } from './Scenes/Scene2/Places/ChooseObjects/Overlay';
-import { cameraSettings } from './camera/cameraSetting';
 import Scene2 from './Scenes/Scene2/Scene2';
-import { SecondTransition } from '../components/design/SecondTransition';
+import { cameraSettings } from './camera/cameraSetting';
 
 const Experience = () => {
-  const [scene, actionsGame,isLoading] = useGameStore((state) => [
+  const [scene, actionsGame, isLoading] = useGameStore((state) => [
     state.scene,
     state.actionsGame,
-    state.isLoading
+    state.isLoading,
   ]);
-  const {setPlace,setScene} = useGameStore.getState();
+  const { setPlace, setScene } = useGameStore.getState();
+
+  // useEffect(() => {
+  //   setScene(9);
+  // }, []);
 
   const [requestPointerLock, setRequestPointerLock] = useState(true);
   return (
@@ -36,6 +43,9 @@ const Experience = () => {
         {scene === 1 && <Scene1 />}
         {scene === 2 && <Scene2 />}
         {scene === 3 && <Html>Scene 3</Html>}
+        {scene === 99 && <Test />}
+        {scene === 999 && <Fin />}
+        {scene === 9 && <Test2 />}
       </Canvas>
       <ShowDialogues className="z-50" />
       {actionsGame.showOverlay && !isLoading && (

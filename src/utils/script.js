@@ -600,6 +600,354 @@ const ScriptIntroduction = () => {
   return script
 }
 
+const ScriptScene3 = (decisions, nameScript, backlog) => {
+
+  /* ------------------- Dialogo de introducción a la escena ------------------ */
+
+  //showD1S3 
+  const introduction = [
+    decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado las coordenadas que dijó Sofía '
+    },
+    !decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado nada bueno por aquí'
+    },
+  ].filter(Boolean)
+
+  /* ---------------------- Dialogo para ayudar a alguien --------------------- */
+
+  // choiceHelpToSomeone
+  // decision: helpToOldMen
+  //decision: helpToChild => Solo aparece si decisions.knowsAboutSofia es false
+  //decision: helpToNoBody => Solo aparece si decisions.knowsAboutSofia es true
+  // El choice va a ser ayudar a alguien o no ayudar a nadie, la ultima aparece solo si decisions.knowsAboutSofia es true
+  const helpToSomeone = [
+    {
+      author: '<strong>Alex</strong>',
+      text: '¿Qué es eso que esta a lo lejos?'
+    },
+    decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: 'Para ser un anciano que necesita ayuda'
+    },
+    !decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: 'Para ser un anciano que necesita ayuda, pero tambien hay una niña al otro lado'
+    },
+    {
+      author: '<strong>Anciano</strong>',
+      text: '(Sufriendo) Por favor, necesito ayuda. Estoy herido!'
+    },
+    !decisions.knowsAboutSofia && {
+      author: '<strong>Niña</strong>',
+      text: '(Llorando) Estoy perdido y no encuentro a mi madre, alguien por favor ayudeme!'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: '¿Debería intentar ayudar?',
+      choice: true
+    },
+  ].filter(Boolean)
+
+  // showD2S3
+  // decision: helpToOldMen
+  // decision: isOldMenDead
+  // removeFromBacklog('medical')
+  const helpToOldMen = [
+    {
+      author: '<strong>Alex</strong>',
+      text: 'Tranquilo, haré lo que pueda para ayudarte'
+    },
+    // Tiene el suministro medico
+    backlog.includes('medical') && {
+      author: '<strong>Alex</strong>',
+      text: 'Vale, creo que esto podra ayudarte, voy a sanarte la herida, mientras tanto toma estas pastas'
+    },
+    backlog.includes('medical') && {
+      author: '<strong>Alex</strong>',
+      text: 'Creo que ya está, con esto deberías estar bien señor'
+    },
+    backlog.includes('medical') && {
+      author: '<strong>Anciano</strong>',
+      text: 'Muchas gracias muchacho, que Dios lo bendiga'
+    },
+    // No tiene el suministro medico
+    !backlog.includes('medical') && {
+      author: '<strong>Alex</strong>',
+      text: 'Voy a intentar curarte señor, hare todo lo que pueda'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) No tengo nada para ayudarlo, creo que va a morir'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>Anciano</strong>',
+      text: 'Tranquilo muchacho, tampoco hay mucho por hacer, mi hora a llegado, gracias por intentarlo'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>...</strong>',
+      text: 'El anciano muere....'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>Alex</strong>',
+      text: 'Juró que lo intente, pero me faltó tener algo para poder cerrar la herida, que mierda es esta!'
+    },
+  ].filter(Boolean)
+
+  /* ------------------ Dialogo despues de ayudar al anciano ------------------ */
+  // Solo pasa si Alex no sabe donde esta su novia. Si SABE DONDE esta, no pasara este dialogo y seguira directamente a la escena de los maleantes
+
+  // showD3S3
+  // actions: showFinishStory
+  // actions: finishStory
+  const effectHelpToOldMen = [
+    // El anciano no esta muerto
+    !decisions.isOldMenDead && {
+      author: '<strong>...</strong>',
+      text: 'La decisión de ayudar al anciano y salvarlo generó respeto entre los sobrevivientes que estaban llegando a la zona, los cuales se acercan'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>Sobreviviente A</strong>',
+      text: '(aplaudiendo la acción de Alex) Bien hecho. No todos están dispuestos a ayudar en estos tiempos'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>Sobreviviente B</strong>',
+      text: '(mirando a Alex) Oye, gracias por hacer esto. Necesitamos más personas solidarias como tú'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>Sobreviviente A</strong>',
+      text: 'Hemos estado buscando a más personas dispuestas a ayudar. Con tu acto de generosidad, creemos que podrías ser una adición valiosa a nuestro grupo.'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>Alex</strong>',
+      text: '(sorprendido) ¿Unirme a su grupo? No estoy seguro...'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>Alex</strong>',
+      text: '(sonriendo) En un mundo así, es bueno tener aliados confiables. Si estás dispuesto, nos gustaría que te unieras a nosotros.'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>Alex</strong>',
+      text: 'Está bien, me uniré..'
+    },
+    !decisions.isOldMenDead && {
+      author: '<strong>...</strong>',
+      text: 'FIN'
+    },
+
+    // El anciano murio
+    decisions.isOldMenDead && {
+      author: '<strong>...</strong>',
+      text: 'Un grupo de sobrevivientes se acercan hasta llegar a donde Alex y ven al anciano muerto'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>Superviviente A</strong>',
+      text: '(frunciendo el ceño) ¿Qué está pasando? ¿Por qué no se mueve?'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>Superviviente B</strong>',
+      text: '(mirando a Alex con desconfianza) ¡Tú! ¿Qué le hiciste'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>Superviviente C</strong>',
+      text: '(señalando acusadoramente a Alex) ¡Miren, el anciano estaba bien antes de que este tipo llegara!'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>....</strong>',
+      text: 'La tensión aumenta y los demás supervivientes comienzan a rodear a Alex, visiblemente enfadados'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>Superviviente A</strong>',
+      text: ' (agresivo) En estos tiempos, no podemos permitirnos cargar con personas peligrosas. Debemos protegernos'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>...</strong>',
+      text: 'Sin darle a Alex la oportunidad de explicarse, el grupo, lleno de ira y miedo, ataca a Alex. La situación se vuelve caótica mientras intentan tomar justicia por sus propias manos'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>...</strong>',
+      text: 'La violencia aumenta, y el grupo, convencido de la culpabilidad de Alex, lo somete. La decisión de ayudar al anciano se convierte en un trágico giro del destino para , un giro que desata su muerte'
+    },
+    decisions.isOldMenDead && {
+      author: '<strong>...</strong>',
+      text: 'FIN'
+    },
+  ].filter(Boolean)
+
+  /* ----------------------------- Ayudar al Niña ----------------------------- */
+
+  // showD3S3
+  // Seguir con la escena de los maleantes
+  // decision: helpToChild
+  const helpToChild = [
+    {
+      author: '<strong>Alex</strong>',
+      text: 'Hola niña,¿como estás?, ¿cual es tu nombre?'
+    },
+    {
+      author: '<strong>Niña</strong>',
+      text: 'Hola, me llamo Veronica'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: '¿Por que estas llorando Veronica? ¿Te encuentras bien?'
+    },
+    {
+      author: '<strong>Veronica</strong>',
+      text: 'Me he perdido, salí a explorar pero unos perros me persiguieron, corrí muy lejos y ya no se como volver'
+    },
+    {
+      author: '<strong>Veronica</strong>',
+      text: 'Antes de irme tomé un mapa con la ubicación del bunker, pero no se como llegar, ¿Podrías ayudarme? '
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: 'Si claro, tampoco es que tenga mucho que hacer, con gusto te ayudare'
+    },
+    {
+      author: '<strong>...</strong>',
+      text: 'Veronica le da el mapa a Alex y siguen su busqueda al nuevo bunker'
+    },
+  ]
+
+  /* ---------------------------- No ayudar a nadie --------------------------- */
+  // showD5S3
+  // Seguir con la escena de los maleantes
+  const helpToNoBody = [
+    {
+      author: '<strong>...</strong>',
+      text: 'Alex decide no detenerse y seguir hacia su objetivo. Aunque se siente mal por no ayudar, la urgencia de reunirse con Sofía lo impulsa a seguir adelante.'
+    },
+  ]
+
+  /* ----------------------------- El grupo hostil ---------------------------- */
+
+  // choiceFaceGroup
+  // Este dialogo inicia el minijuego
+  //Recordar cuando finalice minijuego hacer playedMiniGame2 a true, es un actionsGame
+  const IntroHostilGroup = [
+    {
+      author: '<strong>...</strong>',
+      text: 'Avanzando hacia el nuevo bunker, Alex se topa con un grupo de supervivientes hostiles, hay miradas desconfiadas y armas a la vista'
+    },
+    {
+      author: '<strong>Lider del grupo</strong>',
+      text: '(amenazante) ¿Quién eres y qué estás haciendo aquí?'
+    },
+    decisions.helpToChild && {
+      author: '<strong>...</strong>',
+      text: 'La niña muy asustada sale corriendo, aunque Alex se quedá quieto diciendole al grupo que la deje ir'
+    },
+    {
+      author: '<strong>...</strong>',
+      text: '¡Solo estoy buscando a alguien! Dejenme ir, no les dare ningún problema'
+    },
+    {
+      author: '<strong>Lider del grupo</strong>',
+      text: '(con risa malvada) ja-ja-ja-ja eso núnca pasara amigo mío. Veo que tienes una mochila, y la quiero. A demás, no hemos comido en un buen tiempo, ¿o no chicos...?'
+    },
+  ].filter(Boolean)
+
+  // Con el juego cambia el winMiniGame2
+  const introMinigame = [
+    {
+      author: '<strong>...</strong>',
+      text: 'Alex viendo que su vida estaba en peligro, corre lejos del grupo hostil esquivando los disparos y escondiendose en un lugar aparentemente seguro'
+    },
+  ]
+
+  // showD5S3
+  const winMiniGame = [
+    decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: 'Creo que ya es seguro. Seguire con la busqueda de Sofía'
+    },
+    !decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: 'Creo que ya es seguro. Seguire con la busqueda de ese nuevo bunker que menciono la niña'
+    },
+  ].filter(Boolean)
+
+  //showD5S3
+  // actions: showFinishStory => Si no tiene botiquin => ES DECIR VA A EL PLACE DE FINISH STORY
+  // actions: finishStory => Si no tiene botiquin
+  // removeFromBacklog('medical') => Si tiene el botiquin
+  //Solo pasa si playedMiniGame2 es true y si no tiene el botiquin en backlog
+  const lostMiniGame = [
+    {
+      author: '<strong>...</strong>',
+      text: 'Alex lográ huir nuevamente a un lugar seguro, pero desgraciadamente le dieron un tiro en su pierna'
+    },
+    backlog.includes('medical') && {
+      author: '<strong>...</strong>',
+      text: ' Afortunadamente, cuenta con su botiquín, por lo que trata sus herdias y sigue adelante'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>...</strong>',
+      text: ' Sin un botiquín, no puede detener la hemorragia de sus heridas.'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>...</strong>',
+      text: 'Alex camina, pero la pérdida de sangre es demasiado. Su fuerza se desvanece, y lamentablemente, no puede continuar'
+    },
+    !backlog.includes('medical') && {
+      author: '<strong>...</strong>',
+      text: 'FIN.'
+    },
+  ].filter(Boolean)
+
+  //showD6S3
+  // actions: showFinishStory
+  // actions: finishStory
+  const comeToNewBunker = [
+    {
+      author: '<strong>...</strong>',
+      text: 'Después de superar innumerables desafíos, Alex llega al nuevo bunker. Se encuentra con Sofía, y la emoción de la reunión marca el inicio de una nueva etapa para ambos en ese refugio'
+    },
+    {
+      author: '<strong>Sofia</strong>',
+      text: 'Alex! Pense que no te volveria a ver'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: 'Siempre estuve pensando en ti, sabia que te encontraria'
+    },
+    {
+      author: '<strong>...</strong>',
+      text: 'Ambos se abrazan fuertemente, como si el simple contacto pudiera confirmar que están juntos y a salvo. Después del abrazo, se miran el uno al otro con complicidad'
+    },
+    {
+      author: '<strong>Sofia</strong>',
+      text: 'Pasamos por tanto. Pensé que...'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: '(interrumpiendo) Estamos aquí ahora. Eso es lo que importa.'
+    }, 
+    {
+      author: '<strong>...</strong>',
+      text: 'FIN'
+    },
+  ]
+
+  const script = {
+    introduction,
+    helpToSomeone,
+    helpToOldMen,
+    effectHelpToOldMen,
+    helpToChild,
+    helpToNoBody,
+    IntroHostilGroup,
+    introMinigame,
+    winMiniGame,
+    lostMiniGame,
+    comeToNewBunker
+  }
+  return script[nameScript]
+}
+
 export const getSceneScript = (scene, decisions, nameScript, auxiliary) => {
   switch (scene) {
     case 0:
@@ -608,6 +956,8 @@ export const getSceneScript = (scene, decisions, nameScript, auxiliary) => {
       return ScriptScene1(decisions, nameScript)
     case 2:
       return ScriptScene2(decisions, nameScript, auxiliary)
+    case 3:
+      return ScriptScene3(decisions, nameScript, auxiliary)
     default:
       return {}
   }
