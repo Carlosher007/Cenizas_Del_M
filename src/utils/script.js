@@ -624,6 +624,15 @@ const ScriptScene3 = (decisions, nameScript, backlog) => {
   //decision: helpToNoBody => Solo aparece si decisions.knowsAboutSofia es true
   // El choice va a ser ayudar a alguien o no ayudar a nadie, la ultima aparece solo si decisions.knowsAboutSofia es true
   const helpToSomeone = [
+    //temporal
+    decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado las coordenadas que dijó Sofía '
+    },
+    !decisions.knowsAboutSofia && {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado nada bueno por aquí'
+    },//
     {
       author: '<strong>Alex</strong>',
       text: '¿Qué es eso que esta a lo lejos?'
@@ -841,7 +850,7 @@ const ScriptScene3 = (decisions, nameScript, backlog) => {
       text: 'La niña muy asustada sale corriendo, aunque Alex se quedá quieto diciendole al grupo que la deje ir'
     },
     {
-      author: '<strong>...</strong>',
+      author: '<strong> Alex </strong>',
       text: '¡Solo estoy buscando a alguien! Dejenme ir, no les dare ningún problema'
     },
     {
