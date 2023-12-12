@@ -19,8 +19,6 @@ const Game = () => {
     ]
   );
 
-
-
   //const [level, setLevel] = useState(2)
   const [position, setPosition] = useState(Maps[level].player);
   const [obstacles, setObstacles] = useState(Maps[level].obstacles);
@@ -93,8 +91,6 @@ const Game = () => {
   
     return () => clearInterval(interval);
   }, []);
-
-
   useEffect(()=> {
   
     // Check if lost
@@ -106,7 +102,8 @@ const Game = () => {
         setPosition(Maps[level + 1].player)
         setObstacles(Maps[level + 1].obstacles)
       } else {
-        setPlace('calle')
+        // Win
+        setPlace('fin')
         setWin(true)
       }
 
@@ -118,9 +115,9 @@ const Game = () => {
           setPosition(Maps[level].player)
           setLives(lives - 1)
         } else {
-          setPlace('calle')
+          // Game over 
+          setPlace('fallenA')
         }
-        
       } 
   
 
