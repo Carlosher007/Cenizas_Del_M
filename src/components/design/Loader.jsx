@@ -12,15 +12,24 @@ function Loading() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    document.body.style.backgroundColor = 'rgb(89, 89, 127)';
+    return () => {
+      document.body.style.backgroundColor = null;
+    };
+  }, []);
+
   return (
     <Html>
-      <div className="container">
-        <progress
-          className="nes-progress is-pattern bar"
-          value={progress}
-          max="100"
-        ></progress>
-        <h1 className="etiquetaH1 font-pixelcraft">Cargando...</h1>
+      <div className="miComponente">
+        <div className="container">
+          <progress
+            className="nes-progress is-pattern bar"
+            value={progress}
+            max="100"
+          ></progress>
+          <h1 className="etiquetaH1 font-pixelcraft">Cargando...</h1>
+        </div>
       </div>
     </Html>
   );

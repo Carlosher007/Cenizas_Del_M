@@ -1,16 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
+import { useCharactersElementsStore } from "../../../../store/characters";
 
-export function FallenAlex(props) {
-  const fallen_alex = useRef();
-  const { nodes, materials, animations } = useGLTF("assets/models/character/fallen_alex.glb");
-  const { actions } = useAnimations(animations, fallen_alex);
+export function ShotAlex(props) {
+
+  const shot_alex = useRef();
+  const { nodes, materials, animations } = useGLTF("assets/models/character/AlexScene3.glb");
+  const { actions } = useAnimations(animations, shot_alex);
+  const [animation] = useCharactersElementsStore.getState()
   useEffect(() => {
-    const action = actions["hurt"];
+    const action = actions[animation];
     action.play();
   }, []);
   return (
-    <group ref={fallen_alex} {...props} dispose={null}>
+    <group ref={shot_alex} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature">
           <skinnedMesh
@@ -90,18 +93,27 @@ export function FallenAlex(props) {
           <skinnedMesh
             name="Wolf3D_Teeth"
             geometry={nodes.Wolf3D_Teeth.geometry}
-            material={materials["Wolf3D_Teeth.001"]}
+            material={materials.Wolf3D_Teeth}
             skeleton={nodes.Wolf3D_Teeth.skeleton}
             morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
             morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
           />
           <primitive object={nodes.Hips} />
         </group>
+        <group name="Armature001">
+          <primitive object={nodes.Hips_1} />
+        </group>
+        <group name="Armature002">
+          <primitive object={nodes.Hips_2} />
+        </group>
       </group>
     </group>
   );
 }
 
-useGLTF.preload("assets/models/character/fallen_alex.glb");
+useGLTF.preload("assets/models/character/AlexScene3.glb");
+
+
+
 
 

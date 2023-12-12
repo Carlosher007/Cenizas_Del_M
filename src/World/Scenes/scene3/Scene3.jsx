@@ -2,7 +2,6 @@ import City from "./City"
 import StealthMinigame from "./Parts/StealthMinigame";
 import { useGameStore } from '../../../store/game';
 import Fin from "./Fin";
-import { FallenAlex } from "./characters/FallenAlex";
 import InjuredAlex from "./InjuredAlex";
 
 const Scene3 = () => {
@@ -11,9 +10,9 @@ const Scene3 = () => {
   return (
     <>
       {'calle' === place && <City/>}
-      {'minijuego' == place && <StealthMinigame/>}
+      {'minigame' == place && <StealthMinigame/>}
       {'fin' == place && <Fin/>}
-      {'fallenA' == place && <InjuredAlex/>}
+      {'shotAlex' == place && <InjuredAlex/>}
     </>
   )
 }

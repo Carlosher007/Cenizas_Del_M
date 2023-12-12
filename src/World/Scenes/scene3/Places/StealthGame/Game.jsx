@@ -3,6 +3,7 @@ import './Environment.css';
 import Maps from './Maps';
 import { useStealthGameStore } from '../../../../../store/stealth-game';
 import { useGameStore } from '../../../../../store/game';
+import withLoading from '../../../../../components/design/WithLoading';
 
 
 const Game = () => {
@@ -116,7 +117,7 @@ const Game = () => {
           setLives(lives - 1)
         } else {
           // Game over 
-          setPlace('fallenA')
+          setPlace('shotAlex')
         }
       } 
   
