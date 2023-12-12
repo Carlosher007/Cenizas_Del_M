@@ -22,7 +22,16 @@ import { SurvivorM5 } from "./characters/SurvivorM5";
 import { useGameStore } from "../../../store/game";
 import { getSceneScript } from "../../../utils/script";
 
+
+
+
 const City = () => {
+  const [decisions, backlog, dialogue] = useGameStore((state) => [
+    state.decisions,
+    state.backlog,
+    state.dialogue
+  ]);
+
   const [place] = useGameStore((state) => [state.place]);
   const alexURL = "/assets/models/character/alex_main.glb";
   const animationSet = {
@@ -44,7 +53,8 @@ const City = () => {
     removetoBacklog,
     getDialogueLength,
     resetDialogue,
-    setChoice
+    setChoice,
+    setPlace
   } = useGameStore.getState();
 
   const [speed, setSpeed] = useState(8);
@@ -154,15 +164,51 @@ const City = () => {
     if (pressed === "r" && closeNeedHelp) {
       
       setChoice([]);
-      const script = getSceneScript(3, [], "helpToSomeone", []); 
-      setDialogue({script: script});
+
+      const helpManKnowsSophia = () => {
+        const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
+
+        setDialogue({script: scriptHelpedMan})
+
+      }
+
+      const notHelpedOldMan = () => {
+        const scriptNotHelped = getSceneScript(3, decisions, "helpToNoBody", []);  
+
+        setDialogue({script: scriptNotHelped})
+      }
+
+      const helpKid = () => {
+        const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);    
+        console.log(scriptHelpedKid)
+        //setDialogue({script: scriptHelpedKid})
+        setDialogue(scriptHelpedKid)
+        resetDialogue()
+        console.log(dialogue)
+      }
+
+
+      const sendToMinigame = () => {
+        //setPlace("minijuego")
+        console.log('hey')
+      }
+
+
+      const script = getSceneScript(3, decisions, "helpToSomeone", []); 
       setChoice({
         content: [
-          { text: 'Ayudar Niño', effect: ()=>{} },
-          { text: 'Ayudar Anciano', effect: ()=>{} },
-        ],
+          // Knows about Sophia
+          decisions.knowsAboutSofia && { text: 'Ayudar al anciano', effect: helpManKnowsSophia },
+          decisions.knowsAboutSofia && { text: 'No ayudar al anciano', effect: notHelpedOldMan },
+          //Doesn't know
+          !decisions.knowsAboutSofia && { text: 'Ayudar a la Niña', effect: helpKid },
+          !decisions.knowsAboutSofia && { text: 'Ayudar al Anciano', effect: sendToMinigame },
+        ].filter(Boolean),
         nameChoice: 'choiceKidOldMan',
       });
+      setDialogue({script: script});
+
+      
     }
   }, [pressed, closeNeedHelp])
 
@@ -172,7 +218,7 @@ const City = () => {
     <>
       <Lights />
       <Environments />
-      <Physics colliders={false} gravity={gravity} debug>
+      <Physics colliders={false} gravity={gravity}>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
             position={[0, 0, 0]}
@@ -199,8 +245,14 @@ const City = () => {
         <SurvivorW2 position={[58, -2.9, -41]} scale={1.6} rotation-y={-Math.PI/2}/>
         <SurvivorM5 position={[78, -3.2, -40]} scale={1.65} rotation-y={-Math.PI/2}/>
         <SurvivorW6 position={[40, -3.2, -14]} scale={1.6} rotation-y={-Math.PI/8}/>
-        <OldMan position={[70, -3.5, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
-        <LittleGirl position={[70, -3.6, -31]} scale={0.75} rotation-y={-Math.PI/2}/>
+        <OldMan position={[70, -3.6, -31]} scale={1.65} rotation-y={-Math.PI/2}/>
+
+        {
+          !decisions.knowsAboutSofia 
+          &&
+          <LittleGirl position={[70, -3.5, -24]} scale={0.75} rotation-y={-Math.PI/2}/>
+        }
+        
         <DeadCity position-y={-3.5} scale={1.5} />
 
 

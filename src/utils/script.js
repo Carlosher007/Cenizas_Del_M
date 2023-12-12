@@ -667,13 +667,13 @@ const ScriptScene3 = (decisions, nameScript, backlog) => {
   //decision: helpToNoBody => Solo aparece si decisions.knowsAboutSofia es true
   // El choice va a ser ayudar a alguien o no ayudar a nadie, la ultima aparece solo si decisions.knowsAboutSofia es true
   const helpToSomeone = [
-    decisions.knowsAboutSofia && {
+      decisions.knowsAboutSofia && {
         author: '<strong>Alex</strong>',
-        text: 'Es un anciano que necesita ayuda'
+        text: '(pensando) Es un anciano que necesita ayuda'
       },
       !decisions.knowsAboutSofia && {
         author: '<strong>Alex</strong>',
-        text: 'ES un anciano que necesita ayuda, pero tambien hay una niña al otro lado'
+        text: '(pensando) Es un anciano que necesita ayuda, pero tambien hay una niña al otro lado'
       },
       {
         author: '<strong>Anciano</strong>',
