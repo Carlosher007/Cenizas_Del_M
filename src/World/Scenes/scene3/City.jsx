@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { setPlaceInGame } from "../../../api/game";
 import { DeadCity } from "./DeadCity";
 import Lights from "../Scene1/Lights";
-import { KeyboardControls } from "@react-three/drei";
+import { KeyboardControls, Text} from "@react-three/drei";
 import { keyboardControls } from "../../../hooks/useControls";
 import Ecctrl, { EcctrlAnimation } from "ecctrl";
 import { Alex } from "../../Characters/Alex";
@@ -44,9 +44,11 @@ const City = () => {
     removetoBacklog,
     getDialogueLength,
     resetDialogue,
+    setChoice
   } = useGameStore.getState();
 
   const [speed, setSpeed] = useState(8);
+
   const [gravity, setGravity] = useState([0, -1, 0]);
 
   useEffect(() => {
@@ -57,8 +59,9 @@ const City = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      const script = getSceneScript(3, [], 'helpToSomeone', []);
-      setDialogue({script:script});
+      resetDialogue()
+      const introScript = getSceneScript(3, [], "introduction", []); 
+      setDialogue({script:introScript});
 
     }, 2500);
   }, [])
@@ -71,6 +74,99 @@ const City = () => {
   useEffect(()=> {
     setActionsGame("showBacklog", true);
   }, [])
+  
+  const [interactionTxtPosition, setinteractionTxtPosition] = useState([
+    0, 0,0 
+  ]);
+
+  const [interactionTxt, setinteractionTxt] = useState("Presiona R para abrir");
+
+  const [interactionTxtRotation, setinteractionTxtRotation] = useState(
+    -Math.PI
+  );
+
+  const [
+    interactionTxtBackgroundPosition,
+    setinteractionTxtBackgroundPosition,
+  ] = useState(0, 0, 0);
+
+  const [closeNeedHelp, setCloseNeedHelp] = useState(false)
+
+  const [pressed, setPressed] = useState("none");
+  const [lastPressed, setLastPressed] = useState("none");
+  const [listenersAdded, setListenersAdded] = useState(false);
+  const [wPressed, setWPressed] = useState(false);
+  const [aPressed, setAPressed] = useState(false);
+  const [sPressed, setSPressed] = useState(false);
+  const [dPressed, setDPressed] = useState(false);
+
+
+
+  useState(() =>{
+
+    console.log('dsdasderz<xs')
+  }, [pressed])
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      setLastPressed("none");
+      if (e.code === "KeyR") {
+        setPressed("r");
+      } else if (e.code === "Enter") {
+        setPressed("enter");
+      } else if (e.code === "KeyW") {
+        setWPressed(true);
+      } else if (e.code === "KeyA") {
+        setAPressed(true);
+      } else if (e.code === "KeyS") {
+        setSPressed(true);
+      } else if (e.code === "KeyD") {
+        setDPressed(true);
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      setPressed("none");
+      if (e.code === "KeyR") {
+        setLastPressed("r");
+      } else if (e.code === "Enter") {
+        setLastPressed("enter");
+      } else if (e.code === "KeyW") {
+        setWPressed(false);
+      } else if (e.code === "KeyA") {
+        setAPressed(false);
+      } else if (e.code === "KeyS") {
+        setSPressed(false);
+      } else if (e.code === "KeyD") {
+        setDPressed(false);
+      }
+    };
+
+    if (!listenersAdded) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
+      setListenersAdded(true);
+    }
+  }, []);
+
+
+  useEffect(()=>{
+    if (pressed === "r" && closeNeedHelp) {
+      
+      setChoice([]);
+      const script = getSceneScript(3, [], "helpToSomeone", []); 
+      setDialogue({script: script});
+      setChoice({
+        content: [
+          { text: 'Ayudar Niño', effect: ()=>{} },
+          { text: 'Ayudar Anciano', effect: ()=>{} },
+        ],
+        nameChoice: 'choiceKidOldMan',
+      });
+    }
+  }, [pressed, closeNeedHelp])
+
+
 
   return (
     <>
@@ -90,7 +186,7 @@ const City = () => {
             animated
           >
             <EcctrlAnimation characterURL={alexURL} animationSet={animationSet}>
-              <Alex position={[0, -1.25, 0]} scale={1.65} />
+              <Alex position={[0, -1.25, 0]} scale={1.65}/>
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
@@ -105,25 +201,58 @@ const City = () => {
         <SurvivorW6 position={[40, -3.2, -14]} scale={1.6} rotation-y={-Math.PI/8}/>
         <OldMan position={[70, -3.5, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
         <LittleGirl position={[70, -3.6, -31]} scale={0.75} rotation-y={-Math.PI/2}/>
-        <DeadCity position-y={-3.5} scale={1.5}/>
+        <DeadCity position-y={-3.5} scale={1.5} />
 
 
         {/**Colliders */}
-        <RigidBody
+        <RigidBody type="fixed"
           
           onCollisionEnter={({ other }) => {
             if (other.rigidBodyObject) {
               if (other.rigidBodyObject.name === 'alex') {
-                console.log('hola')
+                setinteractionTxt('Presiona R para interactuar')
+                setinteractionTxtPosition([70, 0.5, -28])
+                setinteractionTxtRotation(-Math.PI/2)
+                setinteractionTxtBackgroundPosition([70, 0.5, -28])
+                setCloseNeedHelp(true)
               }
             }
           }}
           onCollisionExit={() => {
-       
+            setinteractionTxtPosition([-5, -4, 6.2])
+            setinteractionTxtBackgroundPosition([-5, -4, 6.2])
+            setCloseNeedHelp(false)
           }}
         >
-          <CuboidCollider position={[5, 0, -20]} args={[1.1, 1.5, 0.025]} />
+          <CuboidCollider position={[70, -4, -28]} args={[3, 3, 5]} />
         </RigidBody>
+
+        {/* FLOATING TEXT */}
+
+        <group>
+          <mesh
+            position={interactionTxtBackgroundPosition}
+            rotation-y={interactionTxtRotation}
+          >
+            <planeGeometry attach="geometry" args={[3, 0.6]} />
+            <meshBasicMaterial
+              attach="material"
+              color="white"
+              opacity={0.7}
+              transparent
+            />
+          </mesh>
+          <Text
+            position={interactionTxtPosition}
+            rotation-y={interactionTxtRotation}
+            fontSize={0.25}
+            color="black"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {interactionTxt}
+          </Text>
+        </group>
 
       </Physics>
     </>
