@@ -7,11 +7,7 @@ import { useGameStore } from '../store/game'
 
 const Game = () => {
   const [isLoading] = useGameStore((state) => [state.isLoading])
-const {setPlace,setActionsGame} = useGameStore.getState()
-  // useEffect(() => {
-  //   setPlace('bunker')
-  //   setActionsGame('showOverlay',false)
-  // },[])
+const {setPlace,setActionsGame,setScene} = useGameStore.getState()
 
   return (
     <>

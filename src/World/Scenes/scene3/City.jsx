@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { setPlaceInGame } from "../../../api/game";
-import { useGameStore } from "../../../store/game";
 import { DeadCity } from "./DeadCity";
 import Lights from "../Scene1/Lights";
 import { KeyboardControls } from "@react-three/drei";
 import { keyboardControls } from "../../../hooks/useControls";
 import Ecctrl, { EcctrlAnimation } from "ecctrl";
 import { Alex } from "../../Characters/Alex";
-import { Physics } from "@react-three/rapier";
+import { Physics, CuboidCollider, RigidBody} from "@react-three/rapier";
 import { OldMan } from "./characters/OldMan";
 import { LittleGirl } from "./characters/LittleGirl";
 import Environments from "./Environment";
@@ -20,6 +19,8 @@ import { SurvivorM1 } from "./characters/SurvivorM1";
 import { SurvivorW2 } from "./characters/SurvivorW2";
 import { SurvivorW6 } from "./characters/SurvivorW6";
 import { SurvivorM5 } from "./characters/SurvivorM5";
+import { useGameStore } from "../../../store/game";
+import { getSceneScript } from "../../../utils/script";
 
 const City = () => {
   const [place] = useGameStore((state) => [state.place]);
@@ -34,6 +35,17 @@ const City = () => {
     fall: "idle", // This is for falling from high sky
     action1: "pickup",
   };
+
+  const {
+    setDialogue,
+    setDecision,
+    getDecisions,
+    addToBacklog,
+    removetoBacklog,
+    getDialogueLength,
+    resetDialogue,
+  } = useGameStore.getState();
+
   const [speed, setSpeed] = useState(8);
   const [gravity, setGravity] = useState([0, -1, 0]);
 
@@ -42,6 +54,15 @@ const City = () => {
       setGravity([0, -10, 0]);
     }, 5000);
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const script = getSceneScript(3, [], 'helpToSomeone', []);
+      setDialogue({script:script});
+
+    }, 2500);
+  }, [])
+
 
   const {
     setActionsGame,
@@ -85,6 +106,25 @@ const City = () => {
         <OldMan position={[70, -3.5, -24]} scale={1.65} rotation-y={-Math.PI/2}/>
         <LittleGirl position={[70, -3.6, -31]} scale={0.75} rotation-y={-Math.PI/2}/>
         <DeadCity position-y={-3.5} scale={1.5}/>
+
+
+        {/**Colliders */}
+        <RigidBody
+          
+          onCollisionEnter={({ other }) => {
+            if (other.rigidBodyObject) {
+              if (other.rigidBodyObject.name === 'alex') {
+                console.log('hola')
+              }
+            }
+          }}
+          onCollisionExit={() => {
+       
+          }}
+        >
+          <CuboidCollider position={[5, 0, -20]} args={[1.1, 1.5, 0.025]} />
+        </RigidBody>
+
       </Physics>
     </>
   );

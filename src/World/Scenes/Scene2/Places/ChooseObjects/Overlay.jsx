@@ -1,13 +1,14 @@
 import { atom, useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { useGameStore } from '../../../../../store/game';
 import '../../../../../css/choice.css';
+import { useGameStore } from '../../../../../store/game';
 import { scenes } from './ChooseObjects';
 
 export const slideAtom = atom(0);
 
 export const Overlay = () => {
-  const { addToBacklog, removeFromBacklog, setPlace, setActionsGame } = useGameStore.getState();
+  const { addToBacklog, removeFromBacklog, setPlace, setActionsGame } =
+    useGameStore.getState();
   const [backlog] = useGameStore((state) => [state.backlog]);
   const [slide, setSlide] = useAtom(slideAtom);
   const [displaySlide, setDisplaySlide] = useState(slide);
@@ -55,8 +56,8 @@ export const Overlay = () => {
   };
 
   const changeToPlace = () => {
-    setActionsGame('showOverlay',false)
-    setPlace('bunker')
+    setActionsGame('showOverlay', false);
+    setPlace('bunker');
   };
 
   return (
@@ -121,7 +122,7 @@ export const Overlay = () => {
             <button
               className={` pointer-events-auto  cursor-pointer font-pixelcraft button ${'selected'}`}
               type="button"
-              ontouchstart
+              onTouchStart
               style={{ outline: 'none' }}
               onClick={handleClick}
             >
@@ -132,7 +133,7 @@ export const Overlay = () => {
             <button
               className={` pointer-events-auto  cursor-pointer font-pixelcraft button ${'not-selected'}`}
               type="button"
-              ontouchstart
+              onTouchStart
               style={{ outline: 'none' }}
               onClick={handleClick2}
             >
@@ -140,11 +141,11 @@ export const Overlay = () => {
               <div className={`button-bottom ${'not-selected'}`}></div>
               <div className="button-base"></div>
             </button>
-            {backlog.length === 4 && (
+            {backlog.length >= 2 && (
               <button
                 className={` pointer-events-auto  cursor-pointer font-pixelcraft button ${'not-selected'}`}
                 type="button"
-                ontouchstart
+                onTouchStart
                 style={{ outline: 'none' }}
                 onClick={changeToPlace}
               >

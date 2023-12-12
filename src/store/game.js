@@ -2,16 +2,20 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { useCircleGameStore } from './circle-game'
+import { useStealthGameStore } from './stealth-game'
 
 const {resetCircleGame} = useCircleGameStore.getState()
+const {resetStealthGame} = useStealthGameStore.getState()
 
 export const useGameStore = create(devtools(persist((set, get) => ({
   scene: 0,
   place: 'Introduction',
   backlog: [],
-  decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false },
-  actionsGame: { showD1: false, showD2: false, showBacklog: false, winMiniGame: false, showOverlay:false },
+  decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false, helpToOldMen: false, helpToChild: false, helpToNoBody: false, isOldMenDead: false },
+
+  actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeSharing: false, showAnimation: false, showedAnimation: false, showDSleepS2: false, showD5S2: false, playedMinigame: false, hasNone: false, showD1S3: false, choiceHelpToSomeone: false, showD2S3: false, finishStory: false, showFinishStory: false, showD3S3: false, showD4S3: false, choiceFaceGroup: false, winMiniGame2: false, showD5S3: false, playedMiniGame2: false },
   dialogue: [],
+  actionToChange: null,
   choice: [],
   isChoice: false,
   isLoading: false,
@@ -19,13 +23,16 @@ export const useGameStore = create(devtools(persist((set, get) => ({
 
   reset: () => {
     resetCircleGame();
+    resetStealthGame()
     set((state) => ({
       scene: 0,
       place: 'Introduction',
       backlog: [],
-      decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, hasComunicator: false, hasMedicalSuply: false, knowsAboutSofia: false },
-      actionsGame: { showD1: false, showD2: false, showBacklog: false, winMiniGame: false, showOverlay: false },
+      decisions: { checkedNews: false, continueGirlfriendSearch: false, followedCrowd: false, hasBackpack: false, hasFlashlight: false, hasKey: false, openSafeAlone: false, openSafeInGroup: false, deliveredKey: false, knowsAboutSofia: false, wantsToShareKey: false, wantsToShareFlashlight: false, helpToOldMen: false, helpToChild: false, helpToNoBody: false, isOldMenDead: false },
+
+      actionsGame: { showD1: false, showD2: false, showD3S1: false, showBacklog: false, winMiniGame: false, showOverlay: false, showD1S2: false, showD2S2: false, choiceSharing: false, choiceBunkerOrSofia: false, showD3S2: false, showD4S2: false, choiceSafeSharing: false, showAnimation: false, showedAnimation: false, showDSleepS2: false, showD5S2: false, playedMinigame: false, hasNone: false, showD1S3: false, choiceHelpToSomeone: false, showD2S3: false, finishStory: false, showFinishStory: false, showD3S3: false, showD4S3: false, choiceFaceGroup: false, winMiniGame2: false, showD5S3: false , playedMiniGame2: false},
       dialogue: [],
+      actionToChange: null,
       choice: [],
       isChoice: false,
       isLoading: false,
@@ -34,6 +41,14 @@ export const useGameStore = create(devtools(persist((set, get) => ({
 
   setIsLoading: (isLoading) => set((state) => ({
     isLoading
+  })),
+
+setFunctionAux: (functionAux) => set((state) => ({
+    functionAux: functionAux || state.functionAux
+  })),
+
+  setActionToChange: (actionToChange) => set((state) => ({
+    actionToChange
   })),
 
   setScene: (scene) => set((state) => ({
@@ -52,8 +67,15 @@ export const useGameStore = create(devtools(persist((set, get) => ({
     backlog: []
   })),
 
+  isInBacklog: (item) => get().backlog.includes(item),
+
   removeFromBacklog: (item) => set((state) => ({
     backlog: state.backlog.filter((backlogItem) => backlogItem !== item)
+  })),
+
+  // Borrar todo del inventario menos el item 'wokiToki' y 'medical'
+  resetBacklogItemsSome: () => set((state) => ({
+    backlog: state.backlog.filter((backlogItem) => backlogItem === 'wokiToki' || backlogItem === 'medical')
   })),
 
   setDecision: (decision, value) => set((state) => ({
@@ -61,6 +83,10 @@ export const useGameStore = create(devtools(persist((set, get) => ({
       ...state.decisions,
       [decision]: value
     }
+  })),
+
+  setDecisions: (decisions) => set((state) => ({
+    decisions
   })),
 
   setDialogue: (dialogue) => set((state) => ({
