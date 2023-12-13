@@ -7,49 +7,23 @@ import { useCharactersElementsStore } from "../../../store/characters";
 import { getSceneScript } from "../../../utils/script";
 
 const InjuredAlex = () => {
-  const { backlog, setDialogue, getDialogueLength, dialogue, resetDialogue } =
+  const { backlog, setDialogue } =
     useGameStore.getState();
-  const [dialoguesFinished, setDialoguesFinished] = useState(false);
   const { setAnimation } = useCharactersElementsStore.getState();
 
-  const keepAlive = () => {
-    if (backlog.some((element) => element === "medical")) {
-      setAnimation("happy-idle");
-    } else {
-      setAnimation("dying");
-    }
-  };
-
   useEffect(() => {
-    if (dialoguesFinished) {
-      keepAlive();
-    }
-  }, [dialoguesFinished]);
-
-  useEffect(() => {
-    const showD = () => {
-      setTimeout(() => {
-        const script = getSceneScript(3, [], "lostMiniGame", []);
-        setDialogue({ script: script });
-        console.log("", getDialogueLength() )
-      }, 2500);
-      if (getDialogueLength() === 0) {
-        setDialoguesFinished(true);
+    const action = () => {
+      if (backlog.some((element) => element === "medical")) {
+        setAnimation("happy-idle");
+      } else {
+        setAnimation("dying");
       }
-    };
-    showD();
+    }
+    setTimeout(() => {
+      const script = getSceneScript(3, [], "lostMiniGame", backlog);
+      setDialogue({ script: script, action });
+    }, 2500);
   }, []);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     const script = getSceneScript(3, [], 'lostMiniGame', []);
-  //     setDialogue({ script: script });
-  //     // Asume que 'script' es un array y que se acaban los diálogos cuando no hay más elementos en el array
-  //     if (dialogue.length === 0) {
-  //       setDialoguesFinished(true);
-  //     }
-  //   }, 2500);
-  // }, []);
 
   useEffect(() => {
     document.body.style.backgroundColor = "#490001";

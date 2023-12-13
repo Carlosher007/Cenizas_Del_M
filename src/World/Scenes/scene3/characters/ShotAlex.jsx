@@ -12,13 +12,12 @@ export function ShotAlex(props) {
   useEffect(() => {
     const action = actions[animation];
     if (animation === "dying") {
-      action.setLoop(false); 
-      console.log("Entró")
+      action.setLoop(false);
       action.play();
     } else {
       action.play();
     }
-  }, []);
+  }, [animation]);
   return (
     <group ref={shot_alex} {...props} dispose={null}>
       <group name="Scene">

@@ -5,11 +5,14 @@ import { getSceneScript } from "../../../utils/script";
 import { useGameStore } from "../../../store/game";
 
 const GrupoHostil = () => {
-  const { setDialogue } = useGameStore.getState();  
+  const { setDialogue, setPlace } = useGameStore.getState();  
   useEffect(() => {
+    const action = () => {
+      setPlace("minigame");
+    }
     setTimeout(() => {
       const script = getSceneScript(3, [], "IntroHostilGroup", []);
-      setDialogue({ script: script });
+      setDialogue({ script: script, action });
     }, 2500);
   }, []);
   return (
