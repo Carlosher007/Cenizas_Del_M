@@ -94,7 +94,7 @@ const Test2 = () => {
           setDecision('isOldMenDead', true);
         }
         setActionsGame('showD2S3', true);
-      };
+      };  
       setDialogue({ script, action });
     }
 
