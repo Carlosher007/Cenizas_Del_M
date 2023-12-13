@@ -967,7 +967,7 @@ const ScriptScene3 = (decisions, nameScript, backlog) => {
     },
     {
       author: '<strong>Alex</strong>',
-      text: '(interrumpiendo) Estamos aquí ahora. Eso es lo que importa. Y ahí estaba junto a mi Sofía, imaginándonos un paraíso para escapar un poco de la realidad y disfrutar nuestro reencuentro.'
+      text: '(interrumpiendo) Estamos aquí ahora. Eso es lo que importa. Y ahí estaba junto a Sofía, imaginándonos un paraíso para escapar un poco de la realidad y disfrutar nuestro reencuentro.'
     }, 
     {
       author: '<strong>...</strong>',
