@@ -8,7 +8,7 @@ export function ShotAlex(props) {
     "assets/models/character/AlexScene3.glb"
   );
   const { actions } = useAnimations(animations, shot_alex);
-  const { animation } = useCharactersElementsStore.getState();
+  const { animation, setAnimation } = useCharactersElementsStore.getState();
   useEffect(() => {
     const action = actions[animation];
     if (animation === "dying") {
@@ -18,6 +18,11 @@ export function ShotAlex(props) {
       action.play();
     }
   }, [animation]);
+
+  useEffect(() => {
+    setAnimation("injured");
+  }, [animation]);
+
   return (
     <group ref={shot_alex} {...props} dispose={null}>
       <group name="Scene">
