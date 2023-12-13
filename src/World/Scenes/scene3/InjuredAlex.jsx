@@ -7,14 +7,17 @@ import { useCharactersElementsStore } from "../../../store/characters";
 import { getSceneScript } from "../../../utils/script";
 
 const InjuredAlex = () => {
-  const { backlog, setDialogue } =
+  const { backlog, setDialogue, setPlace, removeFromBacklog} =
     useGameStore.getState();
   const { setAnimation } = useCharactersElementsStore.getState();
 
   useEffect(() => {
     const action = () => {
       if (backlog.some((element) => element === "medical")) {
+        window.location.reload()
+        removeFromBacklog('medical')
         setAnimation("happy-idle");
+        setPlace('fin')
       } else {
         setAnimation("dying");
       }

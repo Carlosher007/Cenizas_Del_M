@@ -183,7 +183,7 @@ const City = () => {
       const helpOldMan = () => {
         setTimeout(() => {
           const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
-          setDialogue({script: scriptHelpedMan, action: goToDelicuentsGroup})
+          setDialogue({script: scriptHelpedMan, action: decisions.knowsAboutSofia ? goToDelicuentsGroup : () => {}})
         }, 500)
       }
 
