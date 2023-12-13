@@ -7,7 +7,7 @@ import { useCharactersElementsStore } from "../../../store/characters";
 import { getSceneScript } from "../../../utils/script";
 
 const InjuredAlex = () => {
-  const { backlog, setDialogue, setPlace, removeFromBacklog} =
+  const { backlog, setDialogue, setPlace, removeFromBacklog, resetAnimation} =
     useGameStore.getState();
   const { setAnimation } = useCharactersElementsStore.getState();
 
@@ -19,14 +19,33 @@ const InjuredAlex = () => {
         setAnimation("happy-idle");
         setPlace('fin')
       } else {
-        setAnimation("dying");
+        setAnimation("dead");
       }
     }
     setTimeout(() => {
       const script = getSceneScript(3, [], "lostMiniGame", backlog);
       setDialogue({ script: script, action });
     }, 2500);
+    return () => {
+      setAnimation("injured");
+    };
   }, []);
+  // useEffect(() => {
+  //   const action = () => {
+  //     if (backlog.some((element) => element === "medical")) {
+  //       window.location.reload()
+  //       removeFromBacklog('medical')
+  //       setAnimation("happy-idle");
+  //       setPlace('fin')
+  //     } else {
+  //       setAnimation("dying");
+  //     }
+  //   }
+  //   setTimeout(() => {
+  //     const script = getSceneScript(3, [], "lostMiniGame", backlog);
+  //     setDialogue({ script: script, action });
+  //   }, 2500);
+  // }, []);
 
   useEffect(() => {
     document.body.style.backgroundColor = "#490001";

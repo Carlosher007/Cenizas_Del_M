@@ -262,10 +262,10 @@ const City = () => {
             position={[0, 0, 0]}
             autoBalance={false}
             maxVelLimit={speed}
-            capsuleRadius={0.35}
-            floatHeight={0}
+            capsuleRadius={0.45}
+            floatHeight={0.1}
             capsuleHalfHeight={0.91}
-            friction={0.2}
+            friction={0.1}
             name="alex"
             animated
           >
@@ -279,22 +279,25 @@ const City = () => {
           scale={1.8}
           rotation-y={Math.PI / 2}
         />
+        <CuboidCollider position={[-4,-2,-45.7]} args={[0.5,1.2,0.5]} />
         <SuvivorW4
           position={[30, -3.45, -80]}
           scale={1.6}
           rotation-y={-Math.PI / 2}
         />
+        <CuboidCollider position={[30,-2,-80]} args={[0.5,1.2,0.5]} />
         <SurvivorW7
           position={[-1, -3.2, 43]}
           scale={1.6}
           rotation-y={Math.PI / 2}
         />
+        <CuboidCollider position={[-1,-2,43]} args={[0.5,1.2,0.5]} />
         <SurvivorM8
           position={[30, -3.5, 17]}
           scale={1.65}
           rotation-y={-Math.PI}
         />
-
+        <CuboidCollider position={[30,-2,16.5]} args={[0.5,1.2,0.5]} />
         <SurvivorM1
           position={[70, -3.2, -17]}
           scale={1.65}
@@ -305,16 +308,19 @@ const City = () => {
           scale={1.6}
           rotation-y={-Math.PI / 2}
         />
+        <CuboidCollider position={[58,-3,-41]} args={[1.3,1.2,0.5]} />
         <SurvivorM5
           position={[78, -3.2, -40]}
           scale={1.65}
           rotation-y={-Math.PI / 2}
         />
+        <CuboidCollider position={[78,-2,-40]} args={[0.5,1.2,0.5]} />
         <SurvivorW6
           position={[40, -3.2, -14]}
           scale={1.6}
           rotation-y={-Math.PI / 8}
         />
+        <CuboidCollider position={[40,-2,-14]} args={[0.5,1.2,0.5]} />
         <OldMan
           position={[70, -3.6, -31]}
           scale={1.65}

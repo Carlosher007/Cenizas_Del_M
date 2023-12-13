@@ -8,33 +8,16 @@ export function ShotAlex(props) {
     "assets/models/character/AlexScene3.glb"
   );
   const { actions } = useAnimations(animations, shot_alex);
-  const { animation, setAnimation } = useCharactersElementsStore.getState();
-  // useEffect(() => {
-  //   const action = actions[animation];
-  //   if (animation === "dying") {
-  //     action.setLoop(false);
-  //     action.play();
-  //   } else {
-  //     action.play();
-  //   }
-  // }, [animation]);
+  const { animation } = useCharactersElementsStore.getState();
 
-  // useEffect(() => {
-  //   setAnimation("injured");
-  // }, [animation]);
   useEffect(() => {
     const action = actions[animation];
-    if (animation === "dying") {
-      // action.setLoop(false);
+    if (animation === "dead") {
       action.play();
     } else {
       action.play();
     }
   }, [animation]);
-
-  useEffect(() => {
-    setAnimation("injured");
-  }, []); // Se ejecuta solo una vez cuando el componente se monta
 
   return (
     <group ref={shot_alex} {...props} dispose={null}>
