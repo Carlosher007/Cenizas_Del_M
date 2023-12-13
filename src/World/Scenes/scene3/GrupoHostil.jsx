@@ -4,17 +4,17 @@ import withLoading from "../../../components/design/WithLoading";
 import { getSceneScript } from "../../../utils/script";
 import { useGameStore } from "../../../store/game";
 
-const Fin = () => {
+const GrupoHostil = () => {
   const { setDialogue } = useGameStore.getState();  
   useEffect(() => {
     setTimeout(() => {
-      const script = getSceneScript(3, [], "comeToNewBunker", []);
+      const script = getSceneScript(3, [], "IntroHostilGroup", []);
       setDialogue({ script: script });
     }, 2500);
   }, []);
   return (
-    <Gif url="assets/models/scene3/background/couple2.gif" width={"100%"} />
+    <Gif url="assets/models/scene3/background/people-guns.gif" width={"100%"} />
   );
 };
 
-export default withLoading(Fin, 2500);
+export default withLoading(GrupoHostil, 2500);

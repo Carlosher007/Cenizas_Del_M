@@ -124,6 +124,20 @@ const City = () => {
         >
           <CuboidCollider position={[5, 0, -20]} args={[1.1, 1.5, 0.025]} />
         </RigidBody>
+        <RigidBody
+          onCollisionEnter={({ other }) => {
+            if (other.rigidBodyObject) {
+              if (other.rigidBodyObject.name === 'alex') {
+                console.log('Tocó el otro')
+              }
+            }
+          }}
+          onCollisionExit={() => {
+       
+          }}
+        >
+          <CuboidCollider position={[15, 0.5, -80]} args={[10, 5.5, 0.01]} />
+        </RigidBody>
 
       </Physics>
     </>

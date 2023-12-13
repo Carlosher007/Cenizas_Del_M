@@ -3,14 +3,21 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useCharactersElementsStore } from "../../../../store/characters";
 
 export function ShotAlex(props) {
-
   const shot_alex = useRef();
-  const { nodes, materials, animations } = useGLTF("assets/models/character/AlexScene3.glb");
+  const { nodes, materials, animations } = useGLTF(
+    "assets/models/character/AlexScene3.glb"
+  );
   const { actions } = useAnimations(animations, shot_alex);
-  const [animation] = useCharactersElementsStore.getState()
+  const { animation } = useCharactersElementsStore.getState();
   useEffect(() => {
     const action = actions[animation];
-    action.play();
+    if (animation === "dying") {
+      action.setLoop(false); 
+      console.log("Entró")
+      action.play();
+    } else {
+      action.play();
+    }
   }, []);
   return (
     <group ref={shot_alex} {...props} dispose={null}>
@@ -112,8 +119,3 @@ export function ShotAlex(props) {
 }
 
 useGLTF.preload("assets/models/character/AlexScene3.glb");
-
-
-
-
-
