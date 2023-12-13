@@ -25,16 +25,7 @@ const Test = () => {
     state.backlog,
   ]);
 
-  // useEffect(() => {
-  //   reset();
-  //   setActionsGame('showBacklog', true);
-  //   setDecision('knowsAboutSofia', true);
-  //   setDecision('helpToOldMen', false);
-  //   setDecision('helpToChild', false);
-  //   setDecision('helpToNoBody', true);
-  //   setActionsGame('showBacklog',false)
-  //   setLoad(true);
-  // }, []);
+  // useEffep
 
   /* ------------------- Mostrar el Dialogo de introducción ------------------- */
   // Eliminar el if de laod, ese es de prueba

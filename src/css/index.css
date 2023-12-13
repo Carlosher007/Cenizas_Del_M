@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @font-face {
   font-family: 'PIXEL-CRAFT';
   src: url('/assets/fonts/PixelifySans-VariableFont_wght.ttf');
@@ -24,7 +23,6 @@ body,
   padding: 0;
   user-select: none;
   overflow: hidden;
-  background: rgb(89, 89, 127);
 }
 
 body {
