@@ -260,8 +260,15 @@ const Game = () => {
             )
         }
       </div>
-      <p>Vidas: {lives}</p>
-      <p>Nivel: {level + 1}</p>
+      <div class="panel">
+        <p>* Utiliza las flechas del teclado para mover el cuadro rojo y llevarlo a la zona verde</p>
+        <br />
+        <p>* Esquiva los cuadros de distinto color o perderas vidas</p>
+        <br />
+        <p>Vidas: {lives}</p>
+        <p>Nivel: {level + 1}</p>
+      </div>
+      
     </>
   );
 };
