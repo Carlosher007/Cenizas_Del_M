@@ -47,7 +47,7 @@ const City = () => {
     setDecision,
     getDecisions,
     addToBacklog,
-    removetoBacklog,
+    removeFromBacklog,
     getDialogueLength,
     resetDialogue,
     setChoice,
@@ -182,6 +182,13 @@ const City = () => {
             "helpToOldMen",
             backlog
           );
+
+          if (backlog.includes('medical')) {
+            removeFromBacklog('medical')
+          } else if (!decisions.knowsAboutSofia) {
+            setDecision('isOldMenDead', true)
+          }
+
           setDialogue({
             script: scriptHelpedMan,
             action: decisions.knowsAboutSofia

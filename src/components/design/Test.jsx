@@ -28,7 +28,7 @@ const Test = () => {
   // useEffect(() => {
   //   reset();
   //   setActionsGame('showBacklog', true);
-  //   setDecision('knowsAboutSofia', true);
+  //   ision('knowsAboutSofia', true);
   //   setDecision('helpToOldMen', false);
   //   setDecision('helpToChild', false);
   //   setDecision('helpToNoBody', true);
