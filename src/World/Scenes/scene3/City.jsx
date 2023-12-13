@@ -218,10 +218,10 @@ const City = () => {
     <>
       <Lights />
       <Environments />
-      <Physics colliders={false} gravity={gravity}>
+      <Physics debug colliders={false} gravity={gravity}>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
-            position={[0, 0, 0]}
+            position={[1, 0, 0]}
             autoBalance={false}
             maxVelLimit={speed}
             capsuleRadius={0.35}
