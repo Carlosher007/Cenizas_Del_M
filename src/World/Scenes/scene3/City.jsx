@@ -54,6 +54,7 @@ const City = () => {
     getDialogueLength,
     resetDialogue,
     setChoice,
+    setScene,
     setPlace
   } = useGameStore.getState();
 
@@ -167,10 +168,19 @@ const City = () => {
       //   setDialogue({script: scriptNotHelped})
       // }
 
+      const goToDelicuentsGroup = () => {
+        setPlace("grupoH")
+        window.location.reload()
+      }
+ 
+
       const helpKid = () => {
+
+
+
         setTimeout(() => {
           const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);    
-          setDialogue({script: scriptHelpedKid})
+          setDialogue({script: scriptHelpedKid, action: goToDelicuentsGroup})
         }, 500)
       }
 
