@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [background, setBackground] = useState('rgb(89, 89, 127)');
+  const [background, setBackground] = useState('#48494a');
 
   const changeBackground = (color) => {
     setBackground(color);

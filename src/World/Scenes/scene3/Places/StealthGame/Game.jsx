@@ -7,7 +7,6 @@ import withLoading from '../../../../../components/design/WithLoading';
 
 
 const Game = () => {
-
   const {setLevel, setLives, setWin} = useStealthGameStore.getState();
 
   const {setPlace} = useGameStore.getState();
@@ -30,7 +29,6 @@ const Game = () => {
   const [rightPressed, setRightPressed] = useState(false);
 
   const [tic, setTic] = useState(0);
-
 
   const collidesWall = (positions, dir) => {
     const {x, y} = positions
@@ -229,7 +227,7 @@ const Game = () => {
 
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
-  }, []);
+  }, []); 
 
   return (
     <>

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Html } from "@react-three/drei";
 import "../../css/progress-bar.css";
+import { useTheme } from "../layout/ThemeContext";
 
 function Loading() {
   const [progress, setProgress] = React.useState(0);
@@ -12,12 +13,8 @@ function Loading() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    document.body.style.backgroundColor = 'rgb(89, 89, 127)';
-    return () => {
-      document.body.style.backgroundColor = null;
-    };
-  }, []);
+  const {changeBackground} = useTheme()
+  changeBackground('rgb(89, 89, 127)')
 
   return (
     <Html>
