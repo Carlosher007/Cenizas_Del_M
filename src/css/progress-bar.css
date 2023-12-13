@@ -1,4 +1,4 @@
-html {
+.miComponente {
   height: 100%;
   margin: 0;
   display: flex;
@@ -6,7 +6,7 @@ html {
   justify-content: center;
 }
 
-.container {
+.miComponente .container {
   position: absolute;
   display: flex;
   color: rgb(255, 255, 255);
@@ -15,7 +15,7 @@ html {
   justify-content: center;
 }
 
-.bar {
+.miComponente .bar {
   width: 30rem;
   min-width: 30rem;
   max-width: 30rem;
@@ -23,7 +23,7 @@ html {
   min-height: 3rem;
 }
 
-.etiquetaH1 {
+.miComponente .etiquetaH1 {
   font-size: 1.5rem;  
   margin-top: 20px; 
 }

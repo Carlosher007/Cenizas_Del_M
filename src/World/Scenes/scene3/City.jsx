@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { setPlaceInGame } from "../../../api/game";
 import { DeadCity } from "./DeadCity";
 import Lights from "../Scene1/Lights";
-import { KeyboardControls, Text} from "@react-three/drei";
+import { KeyboardControls, Text } from "@react-three/drei";
 import { keyboardControls } from "../../../hooks/useControls";
 import Ecctrl, { EcctrlAnimation } from "ecctrl";
 import { Alex } from "../../Characters/Alex";
-import { Physics, CuboidCollider, RigidBody} from "@react-three/rapier";
+import { Physics, CuboidCollider, RigidBody } from "@react-three/rapier";
 import { OldMan } from "./characters/OldMan";
 import { LittleGirl } from "./characters/LittleGirl";
 import Environments from "./Environment";
@@ -22,14 +22,11 @@ import { SurvivorM5 } from "./characters/SurvivorM5";
 import { useGameStore } from "../../../store/game";
 import { getSceneScript } from "../../../utils/script";
 
-
-
-
 const City = () => {
   const [decisions, backlog, actionsGame] = useGameStore((state) => [
     state.decisions,
     state.backlog,
-    state.actionsGame
+    state.actionsGame,
   ]);
   const [load, setLoad] = useState(false);
   const [place] = useGameStore((state) => [state.place]);
@@ -54,7 +51,8 @@ const City = () => {
     getDialogueLength,
     resetDialogue,
     setChoice,
-    setPlace
+    setScene,
+    setPlace,
   } = useGameStore.getState();
 
   const [speed, setSpeed] = useState(8);
@@ -67,26 +65,23 @@ const City = () => {
     }, 5000);
   }, []);
 
-    // useEffect(() => {
-    //   setTimeout(() => {
-    //     resetDialogue()
-    //     const introScript = getSceneScript(3, [], "introduction", []); 
-    //     setDialogue({script:introScript});
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     resetDialogue()
+  //     const introScript = getSceneScript(3, [], "introduction", []);
+  //     setDialogue({script:introScript});
 
-    //   }, 2500);
-    // }, [])
+  //   }, 2500);
+  // }, [])
 
+  const { setActionsGame } = useGameStore.getState();
 
-  const {
-    setActionsGame,
-  } = useGameStore.getState();
-
-  useEffect(()=> {
+  useEffect(() => {
     setActionsGame("showBacklog", true);
-  }, [])
-  
+  }, []);
+
   const [interactionTxtPosition, setinteractionTxtPosition] = useState([
-    -5, -4, 6.2
+    -5, -4, 6.2,
   ]);
 
   const [interactionTxt, setinteractionTxt] = useState("Presiona R para abrir");
@@ -100,7 +95,7 @@ const City = () => {
     setinteractionTxtBackgroundPosition,
   ] = useState(-5, -4, 6.2);
 
-  const [closeNeedHelp, setCloseNeedHelp] = useState(false)
+  const [closeNeedHelp, setCloseNeedHelp] = useState(false);
 
   const [pressed, setPressed] = useState("none");
   const [lastPressed, setLastPressed] = useState("none");
@@ -152,67 +147,93 @@ const City = () => {
     }
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (pressed === "r" && closeNeedHelp) {
       // const helpManKnowsSophia = () => {
-      //   const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
+      //   const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);
 
       //   setDialogue({script: scriptHelpedMan})
 
       // }
 
       // const notHelpedOldMan = () => {
-      //   const scriptNotHelped = getSceneScript(3, decisions, "helpToNoBody", []);  
+      //   const scriptNotHelped = getSceneScript(3, decisions, "helpToNoBody", []);
 
       //   setDialogue({script: scriptNotHelped})
       // }
 
+      const goToDelicuentsGroup = () => {
+        setPlace("grupoH");
+        window.location.reload();
+      };
+
       const helpKid = () => {
         setTimeout(() => {
-          const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);    
-          setDialogue({script: scriptHelpedKid})
-        }, 500)
-      }
+          const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);
+          setDialogue({ script: scriptHelpedKid, action: goToDelicuentsGroup });
+        }, 500);
+      };
 
       const helpOldMan = () => {
         setTimeout(() => {
-          const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
-          setDialogue({script: scriptHelpedMan})
-        }, 500)
-      }
+          const scriptHelpedMan = getSceneScript(
+            3,
+            decisions,
+            "helpToOldMen",
+            backlog
+          );
+          setDialogue({
+            script: scriptHelpedMan,
+            action: decisions.knowsAboutSofia
+              ? goToDelicuentsGroup
+              : () => {
+                  setPlace("survivors");
+                  window.location.reload();
+                },
+          });
+        }, 500);
+      };
 
       const helpNobody = () => {
         setTimeout(() => {
-          const scriptHelpedMan = getSceneScript(3, [], "helpToNoBody", []); 
-          setDialogue({script: scriptHelpedMan})
-        }, 500)
-      }
+          const scriptHelpedMan = getSceneScript(3, [], "helpToNoBody", []);
+          setDialogue({ script: scriptHelpedMan, action: goToDelicuentsGroup });
+        }, 500);
+      };
 
-
-
-      const script = getSceneScript(3, decisions, "helpToSomeone", []); 
+      const script = getSceneScript(3, decisions, "helpToSomeone", []);
       setChoice({
         content: [
           // Knows about Sophia
-          decisions.knowsAboutSofia && { text: 'Ayudar al anciano', effect: helpOldMan },
-          decisions.knowsAboutSofia && { text: 'No ayudar al anciano', effect: helpNobody },
+          decisions.knowsAboutSofia && {
+            text: "Ayudar al anciano",
+            effect: helpOldMan,
+          },
+          decisions.knowsAboutSofia && {
+            text: "No ayudar al anciano",
+            effect: helpNobody,
+          },
           //Doesn't know
-          !decisions.knowsAboutSofia && { text: 'Ayudar a la Niña', effect: helpKid },
-          !decisions.knowsAboutSofia && { text: 'Ayudar al Anciano', effect: helpOldMan },
+          !decisions.knowsAboutSofia && {
+            text: "Ayudar a la Niña",
+            effect: helpKid,
+          },
+          !decisions.knowsAboutSofia && {
+            text: "Ayudar al Anciano",
+            effect: helpOldMan,
+          },
         ].filter(Boolean),
-        nameChoice: 'choiceKidOldMan',
+        nameChoice: "choiceKidOldMan",
       });
-      setDialogue({script: script});
-
-      
+      setDialogue({ script: script });
     }
-  }, [pressed, closeNeedHelp])
+  }, [pressed, closeNeedHelp]);
 
   useEffect(() => {
     if (!actionsGame.showD1S2) {
-      const script = getSceneScript(3, decisions, 'introduction', backlog);
+      const script = getSceneScript(3, decisions, "introduction", backlog);
       const action = () => {
-        setActionsGame('showD1S3', true);
+        setActionsGame("showD1S3", true);
       };
       setDialogue({ script, action });
     }
@@ -223,7 +244,6 @@ const City = () => {
   //     console.log('hola')
   //   }
   // }, [pressed, closeNeedHelp])
-
 
   return (
     <>
@@ -243,51 +263,100 @@ const City = () => {
             animated
           >
             <EcctrlAnimation characterURL={alexURL} animationSet={animationSet}>
-              <Alex position={[0, -1.25, 0]} scale={1.65}/>
+              <Alex position={[0, -1.25, 0]} scale={1.65} />
             </EcctrlAnimation>
           </Ecctrl>
         </KeyboardControls>
-        <SurvivorM3 position={[-4, -3.5, -45.7]} scale={1.8} rotation-y={Math.PI/2}/>
-        <SuvivorW4 position={[30, -3.45, -80]} scale={1.6} rotation-y={-Math.PI/2}/>
-        <SurvivorW7 position={[-1, -3.2, 43]}  scale={1.6} rotation-y={Math.PI/2}/>
-        <SurvivorM8 position={[30, -3.5, 17]} scale={1.65} rotation-y={-Math.PI}/>
+        <SurvivorM3
+          position={[-4, -3.5, -45.7]}
+          scale={1.8}
+          rotation-y={Math.PI / 2}
+        />
+        <SuvivorW4
+          position={[30, -3.45, -80]}
+          scale={1.6}
+          rotation-y={-Math.PI / 2}
+        />
+        <SurvivorW7
+          position={[-1, -3.2, 43]}
+          scale={1.6}
+          rotation-y={Math.PI / 2}
+        />
+        <SurvivorM8
+          position={[30, -3.5, 17]}
+          scale={1.65}
+          rotation-y={-Math.PI}
+        />
 
-        <SurvivorM1 position={[70, -3.2, -17]} scale={1.65} rotation-y={-Math.PI/2}/>
-        <SurvivorW2 position={[58, -2.9, -41]} scale={1.6} rotation-y={-Math.PI/2}/>
-        <SurvivorM5 position={[78, -3.2, -40]} scale={1.65} rotation-y={-Math.PI/2}/>
-        <SurvivorW6 position={[40, -3.2, -14]} scale={1.6} rotation-y={-Math.PI/8}/>
-        <OldMan position={[70, -3.6, -31]} scale={1.65} rotation-y={-Math.PI/2}/>
+        <SurvivorM1
+          position={[70, -3.2, -17]}
+          scale={1.65}
+          rotation-y={-Math.PI / 2}
+        />
+        <SurvivorW2
+          position={[58, -2.9, -41]}
+          scale={1.6}
+          rotation-y={-Math.PI / 2}
+        />
+        <SurvivorM5
+          position={[78, -3.2, -40]}
+          scale={1.65}
+          rotation-y={-Math.PI / 2}
+        />
+        <SurvivorW6
+          position={[40, -3.2, -14]}
+          scale={1.6}
+          rotation-y={-Math.PI / 8}
+        />
+        <OldMan
+          position={[70, -3.6, -31]}
+          scale={1.65}
+          rotation-y={-Math.PI / 2}
+        />
 
-        {
-          !decisions.knowsAboutSofia 
-          &&
-          <LittleGirl position={[70, -3.5, -24]} scale={0.75} rotation-y={-Math.PI/2}/>
-        }
-        
+        {!decisions.knowsAboutSofia && (
+          <LittleGirl
+            position={[70, -3.5, -24]}
+            scale={0.75}
+            rotation-y={-Math.PI / 2}
+          />
+        )}
+
         <DeadCity position-y={-3.5} scale={1.5} />
 
-
         {/**Colliders */}
-        <RigidBody type="fixed"
-          
+        <RigidBody
+          type="fixed"
           onCollisionEnter={({ other }) => {
             if (other.rigidBodyObject) {
-              if (other.rigidBodyObject.name === 'alex') {
-                setinteractionTxt('Presiona R para interactuar')
-                setinteractionTxtPosition([70, 0.5, -28])
-                setinteractionTxtRotation(-Math.PI/2)
-                setinteractionTxtBackgroundPosition([70, 0.5, -28])
-                setCloseNeedHelp(true)
+              if (other.rigidBodyObject.name === "alex") {
+                setinteractionTxt("Presiona R para interactuar");
+                setinteractionTxtPosition([70, 0.5, -28]);
+                setinteractionTxtRotation(-Math.PI / 2);
+                setinteractionTxtBackgroundPosition([70, 0.5, -28]);
+                setCloseNeedHelp(true);
               }
             }
           }}
           onCollisionExit={() => {
-            setinteractionTxtPosition([-5, -4, 6.2])
-            setinteractionTxtBackgroundPosition([-5, -4, 6.2])
-            setCloseNeedHelp(false)
+            setinteractionTxtPosition([-5, -4, 6.2]);
+            setinteractionTxtBackgroundPosition([-5, -4, 6.2]);
+            setCloseNeedHelp(false);
           }}
         >
           <CuboidCollider position={[70, -4, -28]} args={[3, 3, 5]} />
+        </RigidBody>
+        <RigidBody
+          onCollisionEnter={({ other }) => {
+            if (other.rigidBodyObject) {
+              if (other.rigidBodyObject.name === "alex") {
+                console.log("Tocó el otro");
+              }
+            }
+          }}
+          onCollisionExit={() => {}}
+        >
+          <CuboidCollider position={[15, 0.5, -80]} args={[10, 5.5, 0.01]} />
         </RigidBody>
 
         {/* FLOATING TEXT */}
@@ -316,10 +385,9 @@ const City = () => {
             {interactionTxt}
           </Text>
         </group>
-
       </Physics>
     </>
   );
 };
 
-export default withLoading(City,2500);
+export default withLoading(City, 2500);

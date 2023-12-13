@@ -3,6 +3,7 @@ import './Environment.css';
 import Maps from './Maps';
 import { useStealthGameStore } from '../../../../../store/stealth-game';
 import { useGameStore } from '../../../../../store/game';
+import withLoading from '../../../../../components/design/WithLoading';
 
 
 const Game = () => {
@@ -18,8 +19,6 @@ const Game = () => {
       state.win
     ]
   );
-
-
 
   //const [level, setLevel] = useState(2)
   const [position, setPosition] = useState(Maps[level].player);
@@ -93,8 +92,6 @@ const Game = () => {
   
     return () => clearInterval(interval);
   }, []);
-
-
   useEffect(()=> {
   
     // Check if lost
@@ -106,7 +103,8 @@ const Game = () => {
         setPosition(Maps[level + 1].player)
         setObstacles(Maps[level + 1].obstacles)
       } else {
-        setPlace('calle')
+        // Win
+        setPlace('fin')
         setWin(true)
       }
 
@@ -118,9 +116,9 @@ const Game = () => {
           setPosition(Maps[level].player)
           setLives(lives - 1)
         } else {
-          setPlace('calle')
+          // Game over 
+          setPlace('shotAlex')
         }
-        
       } 
   
 

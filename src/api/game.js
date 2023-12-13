@@ -9,7 +9,7 @@ export const setSceneInGame = async (scene) => {
     return { type: 'success' }
   } catch (err) {
     console.log(err)
-    return { type: 'error' }
+    return { type: 'error' }                        
   }
 }
 

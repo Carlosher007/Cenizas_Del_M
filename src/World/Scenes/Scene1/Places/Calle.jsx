@@ -131,7 +131,7 @@ const Calle = () => {
 
   return (
     <>
-      <Gif url="/assets/images/backgrounds/giftreet.gif" />
+      <Gif url="/assets/images/backgrounds/giftreet.gif" width={'100%'}/>
     </>
   );
 };
