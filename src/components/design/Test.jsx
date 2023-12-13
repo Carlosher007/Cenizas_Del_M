@@ -58,7 +58,15 @@ const Test = () => {
       const actionsHelpToNobody = () => {
         setDecision('helpToNobody', true);
       };
-      const actionsHelpToSomebody = () => {};
+      const actionsHelpToSomebody = () => {
+
+        const script = getSceneScript(3, decisions, 'introduction', backlog);
+        const action = () => {
+          setActionsGame('showD1S3', true);
+        };
+        setDialogue({ script, action });
+
+      };
       setChoice({
         content: [
           {
