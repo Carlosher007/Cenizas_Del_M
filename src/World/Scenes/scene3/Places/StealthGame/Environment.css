@@ -20,6 +20,9 @@
   background-color: greenyellow;
 }
 
-
-  
-
+.panel {
+  position: fixed;
+  width: 300px;
+  bottom: -250px;
+  right: 100px; 
+}
