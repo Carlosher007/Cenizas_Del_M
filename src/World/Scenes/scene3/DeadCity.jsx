@@ -66,6 +66,15 @@ export function DeadCity(props) {
           <CuboidCollider args={[0.1, 5, 2.5]} position={[16.6, 0, 19.8]}/>
           <CuboidCollider args={[0.1, 5, 1]} position={[13.2, 0, 26.3]} rotation={[0,-0.95,0]}/>
         </mesh>
+        //Postes de luz
+        <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <CuboidCollider args={[0.25, 3.1, 0.25]} position={[1, 0, 16.9]} />
+          <CuboidCollider args={[0.25, 3.1, 0.25]} position={[-8.2, 0, -7.4]} />
+          <CuboidCollider args={[0.25, 3.1, 0.25]} position={[1, 0, -23.45]} />
+          <CuboidCollider args={[0.25, 3.1, 0.25]} position={[10.6, 0, 4.9]} />
+          <CuboidCollider args={[0.25, 3.1, 0.25]} position={[27.7, 0, -17.2]} />
+          <CuboidCollider args={[0.25, 3.1, 0.25]} position={[10.6, 0, -40.2]} />
+        </mesh>
           <mesh geometry={nodes.Object_10.geometry} material={materials.Model001_Material092_7} />
           <mesh geometry={nodes.Object_10001.geometry} material={materials.Model001_Material092_7} />
           <mesh geometry={nodes.Object_10002.geometry} material={materials.Model001_Material092_7} />
