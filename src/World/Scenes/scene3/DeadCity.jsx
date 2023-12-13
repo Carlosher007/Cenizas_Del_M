@@ -28,6 +28,17 @@ export function DeadCity(props) {
         <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
             <CuboidCollider args={[40, 0.01, 60]} position={[12, 0.75, -12]} />
         </mesh>
+        //Paredes
+        <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+            <CuboidCollider args={[60.625, 3.15, 0.03]} position={[0.26, 0.8, 26.9]} />
+            <CuboidCollider args={[60.625, 3.15, 0.03]} position={[0.26, 0.8, -50.9]} />
+            <CuboidCollider args={[60.625, 3.15, 0.03]} position={[-11.5, 0.8, -10.9]} rotation={[0,Math.PI/2,0]}/>
+            <CuboidCollider args={[60.625, 3.15, 0.03]} position={[36.4, 0.8, -10.9]} rotation={[0,Math.PI/2,0]}/>
+            <CuboidCollider args={[10.625, 3.15, 0.03]} position={[29.9, 0.8, -5.7]} />
+            <CuboidCollider args={[10.625, 3.15, 0.03]} position={[29.9, 0.8, -18.7]} />
+            <CuboidCollider args={[24, 3.15, 0.03]} position={[22.84, 0.8, -34.7]} rotation={[0,Math.PI/2,0]}/>
+            <CuboidCollider args={[24, 3.15, 0.03]} position={[22.84, 0.8, 10.4]} rotation={[0,Math.PI/2,0]}/>
+        </mesh>
           <mesh geometry={nodes.Object_10.geometry} material={materials.Model001_Material092_7} />
           <mesh geometry={nodes.Object_10001.geometry} material={materials.Model001_Material092_7} />
           <mesh geometry={nodes.Object_10002.geometry} material={materials.Model001_Material092_7} />

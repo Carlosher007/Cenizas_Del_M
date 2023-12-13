@@ -221,7 +221,7 @@ const City = () => {
       <Physics debug colliders={false} gravity={gravity}>
         <KeyboardControls map={keyboardControls}>
           <Ecctrl
-            position={[1, 0, 0]}
+            position={[0, 0, 0]}
             autoBalance={false}
             maxVelLimit={speed}
             capsuleRadius={0.35}
