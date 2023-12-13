@@ -39,6 +39,20 @@ export function DeadCity(props) {
             <CuboidCollider args={[24, 3.15, 0.03]} position={[22.84, 0.8, -34.7]} rotation={[0,Math.PI/2,0]}/>
             <CuboidCollider args={[24, 3.15, 0.03]} position={[22.84, 0.8, 10.4]} rotation={[0,Math.PI/2,0]}/>
         </mesh>
+        //Carros
+        <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <CuboidCollider args={[1, 2.5, 2.7]} position={[2.65, 0, -1]} />
+          <CuboidCollider args={[1, 2.5, 2.45]} position={[7, 0, 10.65]} rotation={[0,-1.25,0]}/>
+          <CuboidCollider args={[1, 2.5, 2]} position={[4, 0, 20.8]} rotation={[0,-0.08,0]}/>
+          <CuboidCollider args={[1, 2.5, 2]} position={[-3.8  , 0, -9.7]} rotation={[0,Math.PI/2+0.2,0]}/>
+          <CuboidCollider args={[1, 2.5, 2]} position={[8.8  , 0, -9.5]} rotation={[0,Math.PI/2,0]}/>
+          <CuboidCollider args={[1, 2.5, 2.6]} position={[24.65  , 0, -14.2]} rotation={[0,Math.PI/2-0.97,0]}/>
+          <CuboidCollider args={[1, 2.5, 2.6]} position={[-2  , 0, -22.5]} rotation={[0,-0.1,0]}/>
+          <CuboidCollider args={[1.1, 2.5, 2.6]} position={[8.1  , 0, -27.2]} rotation={[0,-0.55,0]}/>
+          <CuboidCollider args={[1.1, 2.5, 2.4]} position={[8.25  , 0, -31.7]} rotation={[0,0,0]}/>
+          <CuboidCollider args={[1.1, 2.5, 2.4]} position={[3  , 0, -31.85]} rotation={[0,-1.4,0]}/>
+          <CuboidCollider args={[1.1, 2.8, 2.2]} position={[-3.4  , 0, -37.2]} rotation={[0,0.4,0]}/>
+        </mesh>
           <mesh geometry={nodes.Object_10.geometry} material={materials.Model001_Material092_7} />
           <mesh geometry={nodes.Object_10001.geometry} material={materials.Model001_Material092_7} />
           <mesh geometry={nodes.Object_10002.geometry} material={materials.Model001_Material092_7} />
