@@ -344,7 +344,7 @@ const Underground = () => {
           const action = () => {
             resetDialogue();
             setScene(3);
-            setPlace('minijuego')
+            setPlace('calle')
             resetBacklogItemsSome();
             setActionsGame('knowsAboutSofia', true);
           };
@@ -360,7 +360,7 @@ const Underground = () => {
             resetDialogue();
 
             setScene(3);
-            setPlace('minijuego')
+            setPlace('calle')
           };
           setDialogue({ script, action });
         }
@@ -379,7 +379,7 @@ const Underground = () => {
             resetDialogue();
 
             setScene(3);
-            setPlace('minijuego')
+            setPlace('calle')
           };
           setDialogue({ script, action });
         } else {
@@ -393,7 +393,7 @@ const Underground = () => {
             resetDialogue();
 
             setScene(3);
-            setPlace('minijuego')
+            setPlace('calle')
           };
           setDialogue({ script, action });
         }

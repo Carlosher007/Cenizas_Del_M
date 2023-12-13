@@ -614,51 +614,85 @@ const ScriptScene3 = (decisions, nameScript, backlog) => {
       author: '<strong>Alex</strong>',
       text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado nada bueno por aquí'
     },
+    {
+      author: '<strong>Alex</strong>',
+      text: '...'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) ¿Qué son esos gritos? Alguien parece pedir ayuda'
+    },
+    {
+      author: '<strong>Alex</strong>',
+      text: '(pensando) Iré a investigar'
+    }
+    
+    //
+    // {
+    //   author: '<strong>Alex</strong>',
+    //   text: '...'
+    // },
+    // {
+    //   author: '<strong>Alex</strong>',
+    //   text: '¿Qué es eso que esta a lo lejos?'
+    // },
+    // decisions.knowsAboutSofia && {
+    //   author: '<strong>Alex</strong>',
+    //   text: 'Para ser un anciano que necesita ayuda'
+    // },
+    // !decisions.knowsAboutSofia && {
+    //   author: '<strong>Alex</strong>',
+    //   text: 'Para ser un anciano que necesita ayuda, pero tambien hay una niña al otro lado'
+    // },
+    // {
+    //   author: '<strong>Anciano</strong>',
+    //   text: '(Sufriendo) Por favor, necesito ayuda. Estoy herido!'
+    // },
+    // !decisions.knowsAboutSofia && {
+    //   author: '<strong>Niña</strong>',
+    //   text: '(Llorando) Estoy perdido y no encuentro a mi madre, alguien por favor ayudeme!'
+    // },
+    // {
+    //   author: '<strong>Alex</strong>',
+    //   text: '¿Debería intentar ayudar?',
+    //   choice: true
+    // },
   ].filter(Boolean)
 
   /* ---------------------- Dialogo para ayudar a alguien --------------------- */
 
-  // choiceHelpToSomeone
   // decision: helpToOldMen
+  // choiceHelpToSomeone
   //decision: helpToChild => Solo aparece si decisions.knowsAboutSofia es false
   //decision: helpToNoBody => Solo aparece si decisions.knowsAboutSofia es true
   // El choice va a ser ayudar a alguien o no ayudar a nadie, la ultima aparece solo si decisions.knowsAboutSofia es true
   const helpToSomeone = [
-    //temporal
-    decisions.knowsAboutSofia && {
-      author: '<strong>Alex</strong>',
-      text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado las coordenadas que dijó Sofía '
-    },
-    !decisions.knowsAboutSofia && {
-      author: '<strong>Alex</strong>',
-      text: '(pensando) Que bien que logre salir del bunker, ya han pasado algunos días y aún no he encontrado nada bueno por aquí'
-    },//
-    {
-      author: '<strong>Alex</strong>',
-      text: '¿Qué es eso que esta a lo lejos?'
-    },
-    decisions.knowsAboutSofia && {
-      author: '<strong>Alex</strong>',
-      text: 'Para ser un anciano que necesita ayuda'
-    },
-    !decisions.knowsAboutSofia && {
-      author: '<strong>Alex</strong>',
-      text: 'Para ser un anciano que necesita ayuda, pero tambien hay una niña al otro lado'
-    },
-    {
-      author: '<strong>Anciano</strong>',
-      text: '(Sufriendo) Por favor, necesito ayuda. Estoy herido!'
-    },
-    !decisions.knowsAboutSofia && {
-      author: '<strong>Niña</strong>',
-      text: '(Llorando) Estoy perdido y no encuentro a mi madre, alguien por favor ayudeme!'
-    },
-    {
-      author: '<strong>Alex</strong>',
-      text: '¿Debería intentar ayudar?',
-      choice: true
-    },
+      decisions.knowsAboutSofia && {
+        author: '<strong>Alex</strong>',
+        text: '(pensando) Es un anciano que necesita ayuda'
+      },
+      !decisions.knowsAboutSofia && {
+        author: '<strong>Alex</strong>',
+        text: '(pensando) Es un anciano que necesita ayuda, pero tambien hay una niña al otro lado'
+      },
+      {
+        author: '<strong>Anciano</strong>',
+        text: '(Sufriendo) Por favor, necesito ayuda. Estoy herido!'
+      },
+      !decisions.knowsAboutSofia && {
+        author: '<strong>Niña</strong>',
+        text: '(Llorando) Estoy perdido y no encuentro a mi madre, alguien por favor ayudeme!'
+      },
+      {
+        author: '<strong>Alex</strong>',
+        text: '¿A quién debería ayudar?',
+        choice: true
+      }
+   
   ].filter(Boolean)
+
+
+
 
   // showD2S3
   // decision: helpToOldMen
@@ -954,6 +988,7 @@ const ScriptScene3 = (decisions, nameScript, backlog) => {
     lostMiniGame,
     comeToNewBunker
   }
+
   return script[nameScript]
 }
 

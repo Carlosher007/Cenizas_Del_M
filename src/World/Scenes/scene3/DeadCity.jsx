@@ -45,7 +45,7 @@ export function DeadCity(props) {
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_103005.geometry} material={materials.Model001_Material092_95} position={[0, 0, -0.004]} />
         </RigidBody>
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" colliders="trimesh">
           <mesh geometry={nodes.Object_11.geometry} material={materials.Model001_Material092_8} />
         </RigidBody>
         <RigidBody type="fixed">
@@ -192,7 +192,7 @@ export function DeadCity(props) {
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_64.geometry} material={materials.Model001_Material092_60} position={[0, 0, 0.072]} />
         </RigidBody>
-        <RigidBody type="fixed"  colliders="trimesh">
+        <RigidBody type="fixed" colliders="trimesh">
           <mesh geometry={nodes.Object_65.geometry} material={materials.Model001_Material092_61} position={[0, 0, 0.176]} />
         </RigidBody>
         <RigidBody type="fixed">
@@ -216,19 +216,16 @@ export function DeadCity(props) {
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_67006.geometry} material={materials.Model001_Material092_63} position={[0, 0, -0.316]} />
         </RigidBody>
+        <RigidBody type="fixed">
+          <mesh geometry={nodes.Object_67016.geometry} material={materials.Model001_Material092_63} position={[-3.449, 93.827, 0.163]} rotation={[0, 0, Math.PI / 2]} />
+        </RigidBody>
         <RigidBody type="fixed" colliders="trimesh">
           <mesh geometry={nodes.Object_68.geometry} material={materials.Model001_Material092_64} position={[0, 0, 0.18]} />
         </RigidBody>
         <RigidBody type="fixed">
-          <mesh geometry={nodes.Object_68002.geometry} material={materials.Model001_Material092_64} position={[-50.892, 55.352, 5.012]} />
-        </RigidBody>
-        <RigidBody type="fixed">
-          <mesh geometry={nodes.Object_68003.geometry} material={materials.Model001_Material092_64} position={[67.945, 159.334, 4.882]} rotation={[0, 0, -Math.PI]} />
-        </RigidBody>
-        <RigidBody type="fixed">
           <mesh geometry={nodes.Object_7.geometry} material={materials.Model001_Material092_4} />
         </RigidBody>
-        <RigidBody type="fixed"  colliders="trimesh">
+        <RigidBody type="fixed" colliders="trimesh">
           <mesh geometry={nodes.Object_70.geometry} material={materials.Model001_Material092_66} position={[0, 0, 0.011]} />
         </RigidBody>
         <RigidBody type="fixed" colliders="trimesh">
@@ -298,7 +295,13 @@ export function DeadCity(props) {
           <mesh geometry={nodes.Object_81011.geometry} material={materials.Model001_Material092_75} position={[0.055, -10.998, 0.058]} />
         </RigidBody>
         <RigidBody type="fixed">
+          <mesh geometry={nodes.Object_81024.geometry} material={materials.Model001_Material092_75} />
+        </RigidBody>
+        <RigidBody type="fixed">
           <mesh geometry={nodes.Object_82.geometry} material={materials.Model001_Material092_76} />
+        </RigidBody>
+        <RigidBody type="fixed">
+          <mesh geometry={nodes.Object_82002.geometry} material={materials.Model001_Material092_76} />
         </RigidBody>
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_83.geometry} material={materials.Model001_Material092_76} />
@@ -398,7 +401,7 @@ export function DeadCity(props) {
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_103001.geometry} material={materials['Model001_Material092_95.001']} position={[0, 0, -0.004]} />
         </RigidBody>
-        <RigidBody type="fixed"  colliders="trimesh">
+        <RigidBody type="fixed">
           <mesh geometry={nodes.Object_11001.geometry} material={materials['Model001_Material092_8.001']} />
         </RigidBody>
         <RigidBody type="fixed">
@@ -540,9 +543,6 @@ export function DeadCity(props) {
           <mesh geometry={nodes.Object_62001.geometry} material={materials['Model001_Material092_58.001']} position={[0, 0, 0.143]} />
         </RigidBody>
         <RigidBody type="fixed">
-          <mesh geometry={nodes.Object_62002.geometry} material={materials['Model001_Material092_58.001']} position={[1.776, -0.08, -12.683]} />
-        </RigidBody>
-        <RigidBody type="fixed">
           <mesh geometry={nodes.Object_63001.geometry} material={materials['Model001_Material092_59.001']} position={[0, 0, 3.829]} />
         </RigidBody>
         <RigidBody type="fixed">
@@ -652,6 +652,9 @@ export function DeadCity(props) {
         </RigidBody>
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_81023.geometry} material={materials['Model001_Material092_75.001']} position={[0.055, -10.998, 0.058]} />
+        </RigidBody>
+        <RigidBody type="fixed">
+          <mesh geometry={nodes.Object_81025.geometry} material={materials['Model001_Material092_75.001']} />
         </RigidBody>
         <RigidBody type="fixed">
           <mesh geometry={nodes.Object_82001.geometry} material={materials['Model001_Material092_76.001']} />
