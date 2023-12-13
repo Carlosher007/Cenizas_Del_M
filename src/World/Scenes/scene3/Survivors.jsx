@@ -4,7 +4,7 @@ import withLoading from "../../../components/design/WithLoading";
 import { getSceneScript } from "../../../utils/script";
 import { useGameStore } from "../../../store/game";
 
-const Survivers = () => {
+const Survivors = () => {
   const { setDialogue, decisions } = useGameStore.getState();  
   useEffect(() => {
     setTimeout(() => {
@@ -17,4 +17,4 @@ const Survivers = () => {
   );
 };
 
-export default withLoading(Survivers, 2500);
+export default withLoading(Survivors, 2500);

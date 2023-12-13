@@ -4,7 +4,7 @@ import { useGameStore } from '../../../store/game';
 import Fin from "./Fin";
 import InjuredAlex from "./InjuredAlex";
 import GrupoHostil from "./GrupoHostil";
-import Surviver from "./Surviver";
+import Survivors from "./Survivors";
 
 const Scene3 = () => {
   const [place] = useGameStore((state) => [state.place]);
@@ -16,7 +16,7 @@ const Scene3 = () => {
       {'fin' == place && <Fin/>}
       {'shotAlex' == place && <InjuredAlex/>}
       {'grupoH' == place && <GrupoHostil/>}
-      {'survivers' == place && <Surviver/>}
+      {'survivors' == place && <Survivors/>}
     </>
   )
 }
