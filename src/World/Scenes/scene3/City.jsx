@@ -26,12 +26,12 @@ import { getSceneScript } from "../../../utils/script";
 
 
 const City = () => {
-  const [decisions, backlog, dialogue] = useGameStore((state) => [
+  const [decisions, backlog, actionsGame] = useGameStore((state) => [
     state.decisions,
     state.backlog,
-    state.dialogue
+    state.actionsGame
   ]);
-
+  const [load, setLoad] = useState(false);
   const [place] = useGameStore((state) => [state.place]);
   const alexURL = "/assets/models/character/alex_main.glb";
   const animationSet = {
@@ -67,14 +67,14 @@ const City = () => {
     }, 5000);
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      resetDialogue()
-      const introScript = getSceneScript(3, [], "introduction", []); 
-      setDialogue({script:introScript});
+    // useEffect(() => {
+    //   setTimeout(() => {
+    //     resetDialogue()
+    //     const introScript = getSceneScript(3, [], "introduction", []); 
+    //     setDialogue({script:introScript});
 
-    }, 2500);
-  }, [])
+    //   }, 2500);
+    // }, [])
 
 
   const {
@@ -86,7 +86,7 @@ const City = () => {
   }, [])
   
   const [interactionTxtPosition, setinteractionTxtPosition] = useState([
-    0, 0,0 
+    -5, -4, 6.2
   ]);
 
   const [interactionTxt, setinteractionTxt] = useState("Presiona R para abrir");
@@ -98,7 +98,7 @@ const City = () => {
   const [
     interactionTxtBackgroundPosition,
     setinteractionTxtBackgroundPosition,
-  ] = useState(0, 0, 0);
+  ] = useState(-5, -4, 6.2);
 
   const [closeNeedHelp, setCloseNeedHelp] = useState(false)
 
@@ -109,13 +109,6 @@ const City = () => {
   const [aPressed, setAPressed] = useState(false);
   const [sPressed, setSPressed] = useState(false);
   const [dPressed, setDPressed] = useState(false);
-
-
-
-  useState(() =>{
-
-    console.log('dsdasderz<xs')
-  }, [pressed])
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -159,50 +152,53 @@ const City = () => {
     }
   }, []);
 
-
   useEffect(()=>{
     if (pressed === "r" && closeNeedHelp) {
-      
-      setChoice([]);
+      // const helpManKnowsSophia = () => {
+      //   const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
 
-      const helpManKnowsSophia = () => {
-        const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
+      //   setDialogue({script: scriptHelpedMan})
 
-        setDialogue({script: scriptHelpedMan})
+      // }
 
-      }
+      // const notHelpedOldMan = () => {
+      //   const scriptNotHelped = getSceneScript(3, decisions, "helpToNoBody", []);  
 
-      const notHelpedOldMan = () => {
-        const scriptNotHelped = getSceneScript(3, decisions, "helpToNoBody", []);  
-
-        setDialogue({script: scriptNotHelped})
-      }
+      //   setDialogue({script: scriptNotHelped})
+      // }
 
       const helpKid = () => {
-        const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);    
-        console.log(scriptHelpedKid)
-        //setDialogue({script: scriptHelpedKid})
-        setDialogue(scriptHelpedKid)
-        resetDialogue()
-        console.log(dialogue)
+        setTimeout(() => {
+          const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);    
+          setDialogue({script: scriptHelpedKid})
+        }, 500)
       }
 
-
-      const sendToMinigame = () => {
-        //setPlace("minijuego")
-        console.log('hey')
+      const helpOldMan = () => {
+        setTimeout(() => {
+          const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
+          setDialogue({script: scriptHelpedMan})
+        }, 500)
       }
+
+      const helpNobody = () => {
+        setTimeout(() => {
+          const scriptHelpedMan = getSceneScript(3, [], "helpToNoBody", []); 
+          setDialogue({script: scriptHelpedMan})
+        }, 500)
+      }
+
 
 
       const script = getSceneScript(3, decisions, "helpToSomeone", []); 
       setChoice({
         content: [
           // Knows about Sophia
-          decisions.knowsAboutSofia && { text: 'Ayudar al anciano', effect: helpManKnowsSophia },
-          decisions.knowsAboutSofia && { text: 'No ayudar al anciano', effect: notHelpedOldMan },
+          decisions.knowsAboutSofia && { text: 'Ayudar al anciano', effect: helpOldMan },
+          decisions.knowsAboutSofia && { text: 'No ayudar al anciano', effect: helpNobody },
           //Doesn't know
           !decisions.knowsAboutSofia && { text: 'Ayudar a la Niña', effect: helpKid },
-          !decisions.knowsAboutSofia && { text: 'Ayudar al Anciano', effect: sendToMinigame },
+          !decisions.knowsAboutSofia && { text: 'Ayudar al Anciano', effect: helpOldMan },
         ].filter(Boolean),
         nameChoice: 'choiceKidOldMan',
       });
@@ -212,6 +208,21 @@ const City = () => {
     }
   }, [pressed, closeNeedHelp])
 
+  useEffect(() => {
+    if (!actionsGame.showD1S2) {
+      const script = getSceneScript(3, decisions, 'introduction', backlog);
+      const action = () => {
+        setActionsGame('showD1S3', true);
+      };
+      setDialogue({ script, action });
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (pressed === 'r' && closeNeedHelp) {
+  //     console.log('hola')
+  //   }
+  // }, [pressed, closeNeedHelp])
 
 
   return (
