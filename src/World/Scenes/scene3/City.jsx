@@ -172,12 +172,8 @@ const City = () => {
         setPlace("grupoH")
         window.location.reload()
       }
- 
 
       const helpKid = () => {
-
-
-
         setTimeout(() => {
           const scriptHelpedKid = getSceneScript(3, [], "helpToChild", []);    
           setDialogue({script: scriptHelpedKid, action: goToDelicuentsGroup})
@@ -187,14 +183,14 @@ const City = () => {
       const helpOldMan = () => {
         setTimeout(() => {
           const scriptHelpedMan = getSceneScript(3, decisions, "helpToOldMen", backlog);    
-          setDialogue({script: scriptHelpedMan})
+          setDialogue({script: scriptHelpedMan, action: goToDelicuentsGroup})
         }, 500)
       }
 
       const helpNobody = () => {
         setTimeout(() => {
           const scriptHelpedMan = getSceneScript(3, [], "helpToNoBody", []); 
-          setDialogue({script: scriptHelpedMan})
+          setDialogue({script: scriptHelpedMan, action: goToDelicuentsGroup})
         }, 500)
       }
 
