@@ -224,10 +224,10 @@ const City = () => {
             position={[0, 0, 0]}
             autoBalance={false}
             maxVelLimit={speed}
-            capsuleRadius={0.35}
-            floatHeight={0}
+            capsuleRadius={0.45}
+            floatHeight={0.1}
             capsuleHalfHeight={0.91}
-            friction={0.2}
+            friction={0.1}
             name="alex"
             animated
           >
