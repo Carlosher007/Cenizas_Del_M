@@ -40,13 +40,14 @@ const Experience = () => {
         shadows
         camera={cameraSettings}
       >
-        {scene === 0 && <Introduction />}
+        {/* {scene === 0 && <Introduction />}
         {scene === 1 && <Scene1 />}
         {scene === 2 && <Scene2 />}
         {scene === 3 && <Scene3/>}
         {scene === 99 && <Test />}
         {scene === 999 && <Fin />}
-        {scene === 9 && <Test2 />}
+        {scene === 9 && <Test2 />} */}
+        <Scene3/>
       </Canvas>
       <ShowDialogues className="z-50" />
       {actionsGame.showOverlay && !isLoading && (

@@ -5,7 +5,6 @@ export function SurvivorM5(props) {
   const survivorW6 = useRef();
   const { nodes, materials, animations } = useGLTF("assets/models/scene3/sobrevivientes/animated-survivorM5.glb");
   const { actions } = useAnimations(animations, survivorW6);
-  console.log("animations", actions);
 
   useEffect(() => {
     const action = actions["jump"];
